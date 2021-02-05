@@ -28,7 +28,7 @@ public class Writer<T> extends Task<Void> {
     @Override
     protected Void call() throws Exception {
         for(int i = 0; i < 100; i++) {
-            Thread.sleep(75);
+            Thread.sleep(50);
             updateProgress(i, 100);
         }
         runFileWriter();

@@ -7,19 +7,19 @@ import java.util.ArrayList;
 
 public class FileHandler<T> {
 
-    private final Writer<T> writer = new Writer<>();        // task
-    private final Reader<T> reader = new Reader<>();        // task
-    private boolean threadIsRunning = false;                // makes sure that save and open thread does not run at the same time
-    private boolean threadIsWaiting = false;                // makes sure that save and open thread does not run at the same time
-    private ArrayList<T> dataToSave;                        // used for backups
-    private ArrayList<T> dataOpened;                        // used for backups
-    private String fileToOpen;                              // used for backups
-    private String fileToSave;                              // used for backups
-    private String filepath = "src/main/java/database/";    // default path where files are saved and opened from
-    private Alert loadingAlert;                             // loading alert that shows thread progress
+    private final String databasePath = "src/main/java/database/";
+    private final Writer<T> writer = new Writer<>();
+    private final Reader<T> reader = new Reader<>();
+    private boolean threadIsRunning = false;
+    private boolean threadIsWaiting = false;
+    private String preloadedOpenFilename;                       // used for backup when a thread fails
+    private String preloadedSaveFilename;                       // used for backup when a thread fails
+    private ArrayList<T> dataToSave;                            // used for backup when a thread fails
+    private Alert loadingAlert;
 
     public void save(ArrayList<T> toSave, String filename, String msg){
-        fileToSave = filepath + filename;
+        String fileToSave = databasePath + filename;
+        preloadedSaveFilename = filename;
         dataToSave = toSave;
 
         if(threadIsRunning) {
@@ -32,7 +32,8 @@ public class FileHandler<T> {
     }
 
     public void open(String filename, String msg){
-        fileToOpen = filepath + filename;
+        String fileToOpen = databasePath + filename;
+        preloadedOpenFilename = filename;
 
         if(threadIsRunning) {
             threadIsWaiting = true;
@@ -49,7 +50,7 @@ public class FileHandler<T> {
         writer.setData(toSave);
         writer.setFilepath(filepath);
         writer.setFileWriter(new IO_txt());
-        writer.setOnScheduled((e) -> saveScheduled());
+        writer.setOnScheduled((e) -> System.out.println("Save Thread is now running..."));
         writer.setOnSucceeded((e) -> saveSuccessful());
         writer.setOnRunning((e) -> loadingAlert.show());
         writer.setOnFailed(this::saveFailed);
@@ -64,7 +65,7 @@ public class FileHandler<T> {
 
         reader.setFilepath(filepath);
         reader.setFileReader(new IO_txt());
-        reader.setOnScheduled((e) -> openScheduled());
+        reader.setOnScheduled((e) -> System.out.println("Open Thread is now running..."));
         reader.setOnSucceeded((e) -> openSuccessful());
         reader.setOnRunning((e) -> loadingAlert.show());
         reader.setOnFailed(this::openFailed);
@@ -74,21 +75,13 @@ public class FileHandler<T> {
         thread.start();
     }
 
-    private void saveScheduled(){
-        System.out.println("Save Thread is now running...");
-    }
-
-    private void openScheduled(){
-        System.out.println("Open Thread is now running...");
-    }
-
     private void saveSuccessful(){
         loadingAlert.close();
         System.out.println("Save Thread Successful!");
         threadIsRunning = false;
 
         if(threadIsWaiting) {
-            open(fileToOpen, "Opening file...");
+            open(preloadedOpenFilename, "Opening a file...");
             threadIsWaiting = false;
         }
     }
@@ -97,11 +90,10 @@ public class FileHandler<T> {
         loadingAlert.close();
         System.out.println("Open Thread Successful!");
         System.out.println(reader.getValue());
-        dataOpened = reader.getValue();
         threadIsRunning = false;
 
         if(threadIsWaiting) {
-            save(dataToSave, fileToSave, "Saving file...");
+            save(dataToSave, preloadedSaveFilename, "Saving a file...");
             threadIsWaiting = false;
         }
     }
@@ -111,6 +103,12 @@ public class FileHandler<T> {
         threadIsRunning = false;
         System.out.println("Save Thread Failed!");
         System.err.println(e.getSource().getException().getMessage());
+        Dialogs.showWarningDialog(e.getSource().getException().getMessage());
+
+        if(threadIsWaiting) {
+            open(preloadedOpenFilename, "Opening a file...");
+            threadIsWaiting = false;
+        }
     }
 
     private void openFailed(WorkerStateEvent e){
@@ -118,5 +116,11 @@ public class FileHandler<T> {
         threadIsRunning = false;
         System.out.println("Open Thread Failed!");
         System.err.println(e.getSource().getException().getMessage());
+        Dialogs.showWarningDialog(e.getSource().getException().getMessage());
+
+        if(threadIsWaiting) {
+            save(dataToSave, preloadedSaveFilename, "Saving a file...");
+            threadIsWaiting = false;
+        }
     }
 }

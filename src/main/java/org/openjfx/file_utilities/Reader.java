@@ -23,7 +23,7 @@ public class Reader<T> extends Task<ArrayList<T>> {
     @Override
     protected ArrayList<T> call() throws Exception {
         for(int i = 0; i < 100; i++){
-            Thread.sleep(75);
+            Thread.sleep(50);
             updateProgress(i, 100);
         }
         return runFileReader();
