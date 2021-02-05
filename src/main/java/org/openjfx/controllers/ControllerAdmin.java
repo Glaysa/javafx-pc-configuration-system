@@ -8,9 +8,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
+import org.openjfx.file_utilities.FileHandler;
 import org.openjfx.gui_utilities.Dialogs;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ControllerAdmin implements Initializable {
@@ -21,9 +23,16 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextField price;
     @FXML private TextArea cDesc;
     @FXML private ComboBox<?> cType;
+    private final FileHandler<String> filehandler = new FileHandler<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ArrayList<String> data = new ArrayList<>();
+        data.add("Apple");
+        data.add("Ice Cream");
+
+        filehandler.open("test.txt", "Testing opening");
+        filehandler.save(data, "test.txt", "Testing saving");
         ComponentsCollection.setTableView(tableView);
     }
 
