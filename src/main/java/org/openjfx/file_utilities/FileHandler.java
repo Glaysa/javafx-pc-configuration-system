@@ -9,11 +9,11 @@ public class FileHandler<T> {
     @SuppressWarnings("unchecked")
     public void save(ArrayList<T> toSave, String filename, String msg){
         threadHandlers = ThreadHandlers.getInstance();
-        if(threadHandlers.isThreadIsRunning()) {
-            threadHandlers.setThreadIsWaiting(true);
+        if(threadHandlers.isThreadRunning()) {
+            threadHandlers.setThreadWaiting(true);
             System.out.println("Save Thread is waiting...");
         } else {
-            threadHandlers.setThreadIsRunning(true);
+            threadHandlers.setThreadRunning(true);
             threadHandlers.runSaveThread(toSave, filename, msg);
         }
     }
@@ -21,11 +21,11 @@ public class FileHandler<T> {
     @SuppressWarnings("unchecked")
     public void open(String filename, String msg){
         threadHandlers = ThreadHandlers.getInstance();
-        if(threadHandlers.isThreadIsRunning()) {
-            threadHandlers.setThreadIsWaiting(true);
+        if(threadHandlers.isThreadRunning()) {
+            threadHandlers.setThreadWaiting(true);
             System.out.println("Open Thread is waiting...");
         } else {
-            threadHandlers.setThreadIsRunning(true);
+            threadHandlers.setThreadRunning(true);
             threadHandlers.runOpenThread(filename, msg);
         }
     }

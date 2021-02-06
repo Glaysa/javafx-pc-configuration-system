@@ -7,17 +7,35 @@ import java.util.ArrayList;
 
 public class ThreadHandlers<T> extends FileHandler<T> {
 
-    private final String databasePath = "src/main/java/database/";
-    private final Writer<T> writer = new Writer<>();
-    private final Reader<T> reader = new Reader<>();
-    private boolean threadIsRunning = false;
-    private boolean threadIsWaiting = false;
-    private String preloadedOpenFilename;                       // used for backup
-    private String preloadedSaveFilename;                       // used for backup
-    private ArrayList<T> preloadedData;                         // used for backup
-    private Alert loadingAlert;
+    private final String databasePath = "src/main/java/database/";      // where files are saved and opened
+    private final Writer<T> writer = new Writer<>();                    // task that runs on save thread
+    private final Reader<T> reader = new Reader<>();                    // task that runs on open thread
+    private boolean threadRunning = false;                              // tells if a thread is currently running
+    private boolean threadWaiting = false;                              // tells if a thread is waiting to be run
+    private String preloadedOpenFilename;                               // used for backup
+    private String preloadedSaveFilename;                               // used for backup
+    private ArrayList<T> preloadedData;                                 // used for backup
+    private Alert loadingAlert;                                         // Progress alert popup
 
-    void runSaveThread(ArrayList<T> toSave, String filename, String loadingMessage){
+    /** FileHandler class can only use a single instance of this class (Singleton Pattern Implemented) */
+
+    private static ThreadHandlers INSTANCE;
+    public ThreadHandlers() { }
+    public static ThreadHandlers getInstance() {
+        if(INSTANCE == null) INSTANCE = new ThreadHandlers<>();
+        return INSTANCE;
+    }
+
+    /** Thread Operations:
+     * - coded in a way where save thread and open thread does not run at the same time because they both have
+     *   to show their progress alert one at a time.
+     * - with the help of booleans threadRunning and threadWaiting, we can tell which thread is running and waiting.
+     * - when a thread is waiting, it will run after the first thread is finished.
+     * - thread.join() cannot be called because it freezes the UI. It's going to wait for the main thread to finish
+     *   doing it's task, but the main thread is only finished doing it's task when we quit the program, thus
+     *   thread.join() will wait until we close the program and causes the UI to freeze. */
+
+    protected void runSaveThread(ArrayList<T> toSave, String filename, String loadingMessage){
         loadingAlert = Dialogs.showLoadingDialog(writer, loadingMessage);
         preloadedSaveFilename = filename;
         preloadedData = toSave;
@@ -35,7 +53,7 @@ public class ThreadHandlers<T> extends FileHandler<T> {
         thread.start();
     }
 
-    void runOpenThread(String filename, String loadingMessage){
+    protected void runOpenThread(String filename, String loadingMessage){
         loadingAlert = Dialogs.showLoadingDialog(reader, loadingMessage);
         preloadedOpenFilename = filename;
 
@@ -54,11 +72,11 @@ public class ThreadHandlers<T> extends FileHandler<T> {
     private void saveSuccessful(){
         loadingAlert.close();
         System.out.println("Save Thread Successful!");
-        threadIsRunning = false;
+        threadRunning = false;
 
-        if(threadIsWaiting) {
+        if(threadWaiting) {
             open(preloadedOpenFilename, "Opening a file...");
-            threadIsWaiting = false;
+            threadWaiting = false;
         }
     }
 
@@ -66,60 +84,49 @@ public class ThreadHandlers<T> extends FileHandler<T> {
         loadingAlert.close();
         System.out.println("Open Thread Successful!");
         System.out.println(reader.getValue());
-        threadIsRunning = false;
+        threadRunning = false;
 
-        if(threadIsWaiting) {
+        if(threadWaiting) {
             save(preloadedData, preloadedSaveFilename, "Saving a file...");
-            threadIsWaiting = false;
+            threadWaiting = false;
         }
     }
 
     private void saveFailed(WorkerStateEvent e){
         loadingAlert.close();
-        threadIsRunning = false;
+        threadRunning = false;
         System.out.println("Save Thread Failed!");
         System.err.println(e.getSource().getException().getMessage());
         Dialogs.showWarningDialog(e.getSource().getException().getMessage());
 
-        if(threadIsWaiting) {
+        if(threadWaiting) {
             open(preloadedOpenFilename, "Opening a file...");
-            threadIsWaiting = false;
+            threadWaiting = false;
         }
     }
 
     private void openFailed(WorkerStateEvent e){
         loadingAlert.close();
-        threadIsRunning = false;
+        threadRunning = false;
         System.out.println("Open Thread Failed!");
         System.err.println(e.getSource().getException().getMessage());
         Dialogs.showWarningDialog(e.getSource().getException().getMessage());
 
-        if(threadIsWaiting) {
+        if(threadWaiting) {
             save(preloadedData, preloadedSaveFilename, "Saving a file...");
-            threadIsWaiting = false;
+            threadWaiting = false;
         }
     }
 
-    public void setThreadIsRunning(boolean threadIsRunning) {
-        this.threadIsRunning = threadIsRunning;
+    public void setThreadRunning(boolean threadRunning) {
+        this.threadRunning = threadRunning;
     }
 
-    public void setThreadIsWaiting(boolean threadIsWaiting) {
-        this.threadIsWaiting = threadIsWaiting;
+    public void setThreadWaiting(boolean threadWaiting) {
+        this.threadWaiting = threadWaiting;
     }
 
-    public boolean isThreadIsRunning() {
-        return threadIsRunning;
+    public boolean isThreadRunning() {
+        return threadRunning;
     }
-
-    /** File handler class can only use a single instance of this class */
-
-    private static ThreadHandlers INSTANCE;
-
-    public static ThreadHandlers getInstance() {
-        if(INSTANCE == null) INSTANCE = new ThreadHandlers<>();
-        return INSTANCE;
-    }
-
-    public ThreadHandlers() { }
 }
