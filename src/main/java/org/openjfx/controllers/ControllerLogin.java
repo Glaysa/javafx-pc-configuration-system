@@ -36,7 +36,7 @@ public class ControllerLogin {
         } else if(validUser) {
             App.setRoot("customer");
         } else {
-            Dialogs.showWarningDialog("Wrong username/password combination");
+            Dialogs.showWarningDialog("Wrong username/password combination","");
         }
     }
 }

@@ -16,9 +16,10 @@ public class Dialogs {
         alert.showAndWait();
     }
 
-    public static void showWarningDialog(String dialogMessage){
+    public static void showWarningDialog(String dialogMessage, String dialogContent){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(dialogMessage);
+        alert.setContentText(dialogContent);
         alert.setTitle("Warning");
         alert.showAndWait();
     }

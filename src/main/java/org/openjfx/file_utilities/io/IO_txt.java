@@ -1,5 +1,7 @@
-package org.openjfx.file_utilities;
+package org.openjfx.file_utilities.io;
 
+import org.openjfx.file_utilities.FileReaders;
+import org.openjfx.file_utilities.FileWriters;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,7 +19,8 @@ public class IO_txt implements FileWriters, FileReaders {
             }
             x.close();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println("\nSystem error: IO_txt.write()");
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -33,7 +36,9 @@ public class IO_txt implements FileWriters, FileReaders {
                 data.add((T)lines);
             }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println("\nSystem error: IO_txt.read()\n");
+            e.printStackTrace();
+            throw new IllegalArgumentException(e.getMessage());
         }
         return data;
     }

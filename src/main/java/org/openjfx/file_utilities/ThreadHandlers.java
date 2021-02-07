@@ -2,6 +2,10 @@ package org.openjfx.file_utilities;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
+import org.openjfx.custom_exceptions.UnsupportedFileReader;
+import org.openjfx.custom_exceptions.UnsupportedFileWriter;
+import org.openjfx.file_utilities.io.IO_bin;
+import org.openjfx.file_utilities.io.IO_txt;
 import org.openjfx.gui_utilities.Dialogs;
 import java.util.ArrayList;
 
@@ -35,45 +39,71 @@ public class ThreadHandlers<T> extends FileHandler<T> {
      *   doing it's task, but the main thread is only finished doing it's task when we quit the program, thus
      *   thread.join() will wait until we close the program and causes the UI to freeze. */
 
-    protected void runSaveThread(ArrayList<T> toSave, String filename, String loadingMessage){
-        loadingAlert = Dialogs.showLoadingDialog(writer, loadingMessage);
-        preloadedSaveFilename = filename;
-        preloadedData = toSave;
+    private void assignWriters(String filename){
+        String fileExtension = filename.substring(filename.lastIndexOf("."));
+        switch (fileExtension) {
+            case ".txt": writer.setFileWriter(new IO_txt()); break;
+            case ".bin": writer.setFileWriter(new IO_bin()); break;
+            default: throw new UnsupportedFileWriter("File not supported: Please save only *.txt, *.bin");
+        }
+    }
 
-        writer.setData(toSave);
-        writer.setFilepath(databasePath + filename);
-        writer.setFileWriter(new IO_txt());
-        writer.setOnScheduled((e) -> System.out.println("Save Thread is now running..."));
-        writer.setOnSucceeded((e) -> saveSuccessful());
-        writer.setOnRunning((e) -> loadingAlert.show());
-        writer.setOnFailed(this::saveFailed);
+    private void assignReaders(String filename){
+        String fileExtension = filename.substring(filename.lastIndexOf("."));
+        switch (fileExtension) {
+            case ".txt": reader.setFileReader(new IO_txt()); break;
+            case ".bin": reader.setFileReader(new IO_bin()); break;
+            default: throw new UnsupportedFileReader("File not supported: Please open only *.txt, *.bin");
+        }
+    }
 
-        Thread thread = new Thread(writer, "Save Thread");
-        thread.setDaemon(true);
-        thread.start();
+    protected void runSaveThread(ArrayList<T> data, String filename, String loadingMessage){
+        try {
+            loadingAlert = Dialogs.showLoadingDialog(writer, loadingMessage);
+            assignWriters(filename);
+            writer.setData(data);
+            writer.setFilepath(databasePath + filename);
+            writer.setOnScheduled((e) -> System.out.println("Save Thread is now running..."));
+            writer.setOnSucceeded((e) -> saveSuccessful());
+            writer.setOnRunning((e) -> loadingAlert.show());
+            writer.setOnFailed(this::saveFailed);
+
+            Thread thread = new Thread(writer, "Save Thread");
+            thread.setDaemon(true);
+            thread.start();
+
+        } catch (IllegalArgumentException e) {
+            threadRunning = false;
+            Dialogs.showWarningDialog(e.getMessage(),"");
+        }
     }
 
     protected void runOpenThread(String filename, String loadingMessage){
-        loadingAlert = Dialogs.showLoadingDialog(reader, loadingMessage);
-        preloadedOpenFilename = filename;
+        try {
+            loadingAlert = Dialogs.showLoadingDialog(reader, loadingMessage);
+            assignReaders(filename);
+            reader.setFilepath(databasePath + filename);
+            reader.setOnScheduled((e) -> System.out.println("Open Thread is now running..."));
+            reader.setOnSucceeded((e) -> openSuccessful());
+            reader.setOnRunning((e) -> loadingAlert.show());
+            reader.setOnFailed(this::openFailed);
 
-        reader.setFilepath(databasePath + filename);
-        reader.setFileReader(new IO_txt());
-        reader.setOnScheduled((e) -> System.out.println("Open Thread is now running..."));
-        reader.setOnSucceeded((e) -> openSuccessful());
-        reader.setOnRunning((e) -> loadingAlert.show());
-        reader.setOnFailed(this::openFailed);
+            Thread thread = new Thread(reader, "Open Thread");
+            thread.setDaemon(true);
+            thread.start();
 
-        Thread thread = new Thread(reader, "Open Thread");
-        thread.setDaemon(true);
-        thread.start();
+        } catch (IllegalArgumentException e) {
+            threadRunning = false;
+            Dialogs.showWarningDialog(e.getMessage(), "");
+        }
     }
 
     private void saveSuccessful(){
         loadingAlert.close();
-        System.out.println("Save Thread Successful!");
         threadRunning = false;
+        System.out.println("Save Thread Successful!");
 
+        // If a thread is waiting, run it
         if(threadWaiting) {
             open(preloadedOpenFilename, "Opening a file...");
             threadWaiting = false;
@@ -82,10 +112,11 @@ public class ThreadHandlers<T> extends FileHandler<T> {
 
     private void openSuccessful(){
         loadingAlert.close();
+        threadRunning = false;
         System.out.println("Open Thread Successful!");
         System.out.println(reader.getValue());
-        threadRunning = false;
 
+        // If a thread is waiting, run it
         if(threadWaiting) {
             save(preloadedData, preloadedSaveFilename, "Saving a file...");
             threadWaiting = false;
@@ -95,27 +126,51 @@ public class ThreadHandlers<T> extends FileHandler<T> {
     private void saveFailed(WorkerStateEvent e){
         loadingAlert.close();
         threadRunning = false;
-        System.out.println("Save Thread Failed!");
-        System.err.println(e.getSource().getException().getMessage());
-        Dialogs.showWarningDialog(e.getSource().getException().getMessage());
 
+        // Error shown to the user
+        String errorMessage = e.getSource().getException().getMessage();
+        Dialogs.showWarningDialog("System error - Failed to save file", errorMessage);
+
+        // If a thread is waiting, run it
         if(threadWaiting) {
             open(preloadedOpenFilename, "Opening a file...");
             threadWaiting = false;
         }
+
+        // Error shown to developers
+        System.err.println("\nSystem error: Save Thread Failed!\n");
+        e.getSource().getException().printStackTrace();
     }
 
     private void openFailed(WorkerStateEvent e){
         loadingAlert.close();
         threadRunning = false;
-        System.out.println("Open Thread Failed!");
-        System.err.println(e.getSource().getException().getMessage());
-        Dialogs.showWarningDialog(e.getSource().getException().getMessage());
 
+        // Error shown to the user
+        String errorMessage = e.getSource().getException().getMessage();
+        Dialogs.showWarningDialog("System error - Failed to open file", errorMessage);
+
+        // If a thread is waiting, run it
         if(threadWaiting) {
             save(preloadedData, preloadedSaveFilename, "Saving a file...");
             threadWaiting = false;
         }
+
+        // Error shown to developers
+        System.err.println("\nSystem error: Open Thread Failed!\n");
+        e.getSource().getException().printStackTrace();
+    }
+
+    public void setPreloadedSaveFilename(String preloadedSaveFilename) {
+        this.preloadedSaveFilename = preloadedSaveFilename;
+    }
+
+    public void setPreloadedOpenFilename(String preloadedOpenFilename) {
+        this.preloadedOpenFilename = preloadedOpenFilename;
+    }
+
+    public void setPreloadedData(ArrayList<T> preloadedData) {
+        this.preloadedData = preloadedData;
     }
 
     public void setThreadRunning(boolean threadRunning) {

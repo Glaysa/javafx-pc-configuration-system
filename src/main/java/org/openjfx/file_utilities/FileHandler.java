@@ -7,14 +7,16 @@ public class FileHandler<T> {
     private ThreadHandlers<T> threadHandlers;
 
     @SuppressWarnings("unchecked")
-    public void save(ArrayList<T> toSave, String filename, String msg){
+    public void save(ArrayList<T> data, String filename, String msg){
         threadHandlers = ThreadHandlers.getInstance();
         if(threadHandlers.isThreadRunning()) {
             threadHandlers.setThreadWaiting(true);
+            threadHandlers.setPreloadedData(data);
+            threadHandlers.setPreloadedSaveFilename(filename);
             System.out.println("Save Thread is waiting...");
         } else {
             threadHandlers.setThreadRunning(true);
-            threadHandlers.runSaveThread(toSave, filename, msg);
+            threadHandlers.runSaveThread(data, filename, msg);
         }
     }
 
@@ -23,6 +25,7 @@ public class FileHandler<T> {
         threadHandlers = ThreadHandlers.getInstance();
         if(threadHandlers.isThreadRunning()) {
             threadHandlers.setThreadWaiting(true);
+            threadHandlers.setPreloadedOpenFilename(filename);
             System.out.println("Open Thread is waiting...");
         } else {
             threadHandlers.setThreadRunning(true);

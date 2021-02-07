@@ -10,7 +10,6 @@ import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.FileHandler;
 import org.openjfx.gui_utilities.Dialogs;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -31,7 +30,7 @@ public class ControllerAdmin implements Initializable {
         data.add("Apple");
         data.add("Ice Cream");
 
-        filehandler.open("test.txt", "Testing opening");
+        filehandler.open("test.tdxt", "Testing opening");
         filehandler.save(data, "test.txt", "Testing saving");
         ComponentsCollection.setTableView(tableView);
     }
@@ -49,7 +48,7 @@ public class ControllerAdmin implements Initializable {
 
             Dialogs.showSuccessDialog("Component Added Successfully!");
         } catch (IllegalArgumentException e) {
-            Dialogs.showWarningDialog(e.getMessage());
+            Dialogs.showWarningDialog(e.getMessage(),"");
         }
     }
 
