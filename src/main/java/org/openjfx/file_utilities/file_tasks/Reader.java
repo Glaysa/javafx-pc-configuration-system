@@ -1,6 +1,7 @@
-package org.openjfx.file_utilities;
+package org.openjfx.file_utilities.file_tasks;
 
 import javafx.concurrent.Task;
+import org.openjfx.file_utilities.FileReaders;
 import java.util.ArrayList;
 
 public class Reader<T> extends Task<ArrayList<T>> {
@@ -23,7 +24,7 @@ public class Reader<T> extends Task<ArrayList<T>> {
     @Override
     protected ArrayList<T> call() throws Exception {
         for(int i = 0; i < 100; i++){
-            Thread.sleep(50);
+            Thread.sleep(20);
             updateProgress(i, 100);
         }
         return runFileReader();

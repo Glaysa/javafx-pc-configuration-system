@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class FileHandler<T> {
 
-    private ThreadHandlers<T> threadHandlers;
+    private FileHandlerThreads<T> threadHandlers;
 
     @SuppressWarnings("unchecked")
     public void save(ArrayList<T> data, String filename, String msg){
-        threadHandlers = ThreadHandlers.getInstance();
+        threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
             threadHandlers.setThreadWaiting(true);
             threadHandlers.setPreloadedData(data);
@@ -22,7 +22,7 @@ public class FileHandler<T> {
 
     @SuppressWarnings("unchecked")
     public void open(String filename, String msg){
-        threadHandlers = ThreadHandlers.getInstance();
+        threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
             threadHandlers.setThreadWaiting(true);
             threadHandlers.setPreloadedOpenFilename(filename);

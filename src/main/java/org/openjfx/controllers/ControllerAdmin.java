@@ -22,7 +22,7 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextField price;
     @FXML private TextArea cDesc;
     @FXML private ComboBox<?> cType;
-    private final FileHandler<String> filehandler = new FileHandler<>();
+    private final FileHandler<String> fileHandler = new FileHandler<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,8 +30,8 @@ public class ControllerAdmin implements Initializable {
         data.add("Apple");
         data.add("Ice Cream");
 
-        filehandler.open("test.tdxt", "Testing opening");
-        filehandler.save(data, "test.txt", "Testing saving");
+        fileHandler.open("tests.txt", "Testing opening");
+        fileHandler.save(data, "test.txt", "Testing saving");
         ComponentsCollection.setTableView(tableView);
     }
 

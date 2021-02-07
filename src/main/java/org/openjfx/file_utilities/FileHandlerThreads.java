@@ -4,12 +4,14 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
 import org.openjfx.custom_exceptions.UnsupportedFileReader;
 import org.openjfx.custom_exceptions.UnsupportedFileWriter;
-import org.openjfx.file_utilities.io.IO_bin;
-import org.openjfx.file_utilities.io.IO_txt;
+import org.openjfx.file_utilities.file_io.IO_bin;
+import org.openjfx.file_utilities.file_io.IO_txt;
+import org.openjfx.file_utilities.file_tasks.Reader;
+import org.openjfx.file_utilities.file_tasks.Writer;
 import org.openjfx.gui_utilities.Dialogs;
 import java.util.ArrayList;
 
-public class ThreadHandlers<T> extends FileHandler<T> {
+public class FileHandlerThreads<T> extends FileHandler<T> {
 
     private final String databasePath = "src/main/java/database/";      // where files are saved and opened
     private final Writer<T> writer = new Writer<>();                    // task that runs on save thread
@@ -23,10 +25,10 @@ public class ThreadHandlers<T> extends FileHandler<T> {
 
     /** FileHandler class can only use a single instance of this class (Singleton Pattern Implemented) */
 
-    private static ThreadHandlers INSTANCE;
-    public ThreadHandlers() { }
-    public static ThreadHandlers getInstance() {
-        if(INSTANCE == null) INSTANCE = new ThreadHandlers<>();
+    private static FileHandlerThreads INSTANCE;
+    public FileHandlerThreads() { }
+    public static FileHandlerThreads getInstance() {
+        if(INSTANCE == null) INSTANCE = new FileHandlerThreads<>();
         return INSTANCE;
     }
 

@@ -1,4 +1,4 @@
-package org.openjfx.file_utilities.io;
+package org.openjfx.file_utilities.file_io;
 
 import org.openjfx.file_utilities.FileReaders;
 import org.openjfx.file_utilities.FileWriters;

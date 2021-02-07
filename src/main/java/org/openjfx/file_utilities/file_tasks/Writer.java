@@ -1,6 +1,7 @@
-package org.openjfx.file_utilities;
+package org.openjfx.file_utilities.file_tasks;
 
 import javafx.concurrent.Task;
+import org.openjfx.file_utilities.FileWriters;
 import java.util.ArrayList;
 
 public class Writer<T> extends Task<Void> {
@@ -28,7 +29,7 @@ public class Writer<T> extends Task<Void> {
     @Override
     protected Void call() throws Exception {
         for(int i = 0; i < 100; i++) {
-            Thread.sleep(50);
+            Thread.sleep(20);
             updateProgress(i, 100);
         }
         runFileWriter();
