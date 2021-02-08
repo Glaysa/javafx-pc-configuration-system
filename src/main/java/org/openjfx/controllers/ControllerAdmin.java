@@ -30,7 +30,7 @@ public class ControllerAdmin implements Initializable {
         data.add("Apple");
         data.add("Ice Cream");
 
-        fileHandler.open("tests.txt", "Testing opening");
+        fileHandler.open("test.txt", "Testing opening");
         fileHandler.save(data, "test.txt", "Testing saving");
         ComponentsCollection.setTableView(tableView);
     }

@@ -11,11 +11,10 @@ public class FileHandler<T> {
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
             threadHandlers.setThreadWaiting(true);
-            threadHandlers.setPreloadedData(data);
-            threadHandlers.setPreloadedSaveFilename(filename);
+            threadHandlers.setBackupData(data);
+            threadHandlers.setBackupSaveFile(filename);
             System.out.println("Save Thread is waiting...");
         } else {
-            threadHandlers.setThreadRunning(true);
             threadHandlers.runSaveThread(data, filename, msg);
         }
     }
@@ -25,10 +24,9 @@ public class FileHandler<T> {
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
             threadHandlers.setThreadWaiting(true);
-            threadHandlers.setPreloadedOpenFilename(filename);
+            threadHandlers.setBackupOpenFile(filename);
             System.out.println("Open Thread is waiting...");
         } else {
-            threadHandlers.setThreadRunning(true);
             threadHandlers.runOpenThread(filename, msg);
         }
     }

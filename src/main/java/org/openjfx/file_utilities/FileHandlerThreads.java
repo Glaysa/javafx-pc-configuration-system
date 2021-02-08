@@ -18,9 +18,9 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     private final Reader<T> reader = new Reader<>();                    // task that runs on open thread
     private boolean threadRunning = false;                              // tells if a thread is currently running
     private boolean threadWaiting = false;                              // tells if a thread is waiting to be run
-    private String preloadedOpenFilename;                               // used for backup
-    private String preloadedSaveFilename;                               // used for backup
-    private ArrayList<T> preloadedData;                                 // used for backup
+    private String backupOpenFile;                                      // used for backup
+    private String backupSaveFile;                                      // used for backup
+    private ArrayList<T> backupData;                                    // used for backup
     private Alert loadingAlert;                                         // Progress alert popup
 
     /** FileHandler class can only use a single instance of this class (Singleton Pattern Implemented) */
@@ -73,6 +73,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
             Thread thread = new Thread(writer, "Save Thread");
             thread.setDaemon(true);
             thread.start();
+            threadRunning = true;
 
         } catch (IllegalArgumentException e) {
             threadRunning = false;
@@ -93,6 +94,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
             Thread thread = new Thread(reader, "Open Thread");
             thread.setDaemon(true);
             thread.start();
+            threadRunning = true;
 
         } catch (IllegalArgumentException e) {
             threadRunning = false;
@@ -107,7 +109,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
         // If a thread is waiting, run it
         if(threadWaiting) {
-            open(preloadedOpenFilename, "Opening a file...");
+            open(backupOpenFile, "Opening a file...");
             threadWaiting = false;
         }
     }
@@ -120,7 +122,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
         // If a thread is waiting, run it
         if(threadWaiting) {
-            save(preloadedData, preloadedSaveFilename, "Saving a file...");
+            save(backupData, backupSaveFile, "Saving a file...");
             threadWaiting = false;
         }
     }
@@ -135,7 +137,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
         // If a thread is waiting, run it
         if(threadWaiting) {
-            open(preloadedOpenFilename, "Opening a file...");
+            open(backupOpenFile, "Opening a file...");
             threadWaiting = false;
         }
 
@@ -154,7 +156,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
         // If a thread is waiting, run it
         if(threadWaiting) {
-            save(preloadedData, preloadedSaveFilename, "Saving a file...");
+            save(backupData, backupSaveFile, "Saving a file...");
             threadWaiting = false;
         }
 
@@ -163,20 +165,16 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         e.getSource().getException().printStackTrace();
     }
 
-    public void setPreloadedSaveFilename(String preloadedSaveFilename) {
-        this.preloadedSaveFilename = preloadedSaveFilename;
+    public void setBackupSaveFile(String backupSaveFile) {
+        this.backupSaveFile = backupSaveFile;
     }
 
-    public void setPreloadedOpenFilename(String preloadedOpenFilename) {
-        this.preloadedOpenFilename = preloadedOpenFilename;
+    public void setBackupOpenFile(String backupOpenFile) {
+        this.backupOpenFile = backupOpenFile;
     }
 
-    public void setPreloadedData(ArrayList<T> preloadedData) {
-        this.preloadedData = preloadedData;
-    }
-
-    public void setThreadRunning(boolean threadRunning) {
-        this.threadRunning = threadRunning;
+    public void setBackupData(ArrayList<T> backupData) {
+        this.backupData = backupData;
     }
 
     public void setThreadWaiting(boolean threadWaiting) {
