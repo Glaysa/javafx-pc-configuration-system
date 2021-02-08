@@ -8,10 +8,10 @@ public class PCComponents {
     private int componentPrice;
 
     public PCComponents(String componentName, String componentDesc, String componentType, String componentPrice){
-            this.componentName = componentName;
-            this.componentDesc = componentDesc;
-            this.componentType = componentType;
-            this.componentPrice = Integer.parseInt(componentPrice);
+        this.componentName = componentName;
+        this.componentDesc = componentDesc;
+        this.componentType = componentType;
+        this.componentPrice = Integer.parseInt(componentPrice);
     }
 
     public String toString(){

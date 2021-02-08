@@ -11,7 +11,7 @@ public class FileHandler<T> {
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
             threadHandlers.setThreadWaiting(true);
-            threadHandlers.setBackupData(data);
+            threadHandlers.setBackupSaveData(data);
             threadHandlers.setBackupSaveFile(filename);
             System.out.println("Save Thread is waiting...");
         } else {
@@ -29,5 +29,9 @@ public class FileHandler<T> {
         } else {
             threadHandlers.runOpenThread(filename, msg);
         }
+    }
+
+    public ArrayList<T> getBackupOpenData(){
+        return threadHandlers.getBackupOpenData();
     }
 }

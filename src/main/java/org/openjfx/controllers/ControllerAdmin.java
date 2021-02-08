@@ -22,16 +22,20 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextField price;
     @FXML private TextArea cDesc;
     @FXML private ComboBox<?> cType;
-    private final FileHandler<String> fileHandler = new FileHandler<>();
+    private final FileHandler<PCComponents> ComponentsFileHandler = new FileHandler<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArrayList<String> data = new ArrayList<>();
-        data.add("Apple");
-        data.add("Ice Cream");
+        PCComponents c1 = new PCComponents("Comp1", "Comp1", "Comp1", "300");
+        PCComponents c2 = new PCComponents("Comp2", "Comp1", "Comp1", "400");
+        PCComponents c3 = new PCComponents("Comp3", "Comp1", "Comp1", "500");
 
-        fileHandler.open("test.txt", "Testing opening");
-        fileHandler.save(data, "test.txt", "Testing saving");
+        ArrayList<PCComponents> data = new ArrayList<>();
+        data.add(c1);
+        data.add(c2);
+        data.add(c3);
+
+        ComponentsFileHandler.open("test.txt", "Loading Components");
         ComponentsCollection.setTableView(tableView);
     }
 

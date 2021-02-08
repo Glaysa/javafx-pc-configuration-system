@@ -2,6 +2,7 @@ package org.openjfx.file_utilities.file_io;
 
 import org.openjfx.file_utilities.FileReaders;
 import org.openjfx.file_utilities.FileWriters;
+import org.openjfx.file_utilities.FileParser;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,7 +16,7 @@ public class IO_txt implements FileWriters, FileReaders {
         try {
             Formatter x = new Formatter(filepath);
             for(T line : data){
-                x.format("%s",line);
+                x.format("%s",line.toString());
             }
             x.close();
         } catch (Exception e) {
@@ -25,7 +26,6 @@ public class IO_txt implements FileWriters, FileReaders {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> ArrayList<T> read(String filepath) {
         ArrayList<T> data = new ArrayList<>();
         String lines;
@@ -33,7 +33,8 @@ public class IO_txt implements FileWriters, FileReaders {
             File file = new File(filepath);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             while((lines = bufferedReader.readLine()) != null) {
-                data.add((T)lines);
+                T obj = FileParser.setParser(lines);
+                data.add(obj);
             }
         } catch (Exception e) {
             System.err.println("\nSystem error: IO_txt.read()\n");

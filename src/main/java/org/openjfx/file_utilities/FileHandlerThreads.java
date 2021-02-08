@@ -4,12 +4,15 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
 import org.openjfx.custom_exceptions.UnsupportedFileReader;
 import org.openjfx.custom_exceptions.UnsupportedFileWriter;
+import org.openjfx.data_collection.ComponentsCollection;
+import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.file_io.IO_bin;
 import org.openjfx.file_utilities.file_io.IO_txt;
 import org.openjfx.file_utilities.file_tasks.Reader;
 import org.openjfx.file_utilities.file_tasks.Writer;
 import org.openjfx.gui_utilities.Dialogs;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class FileHandlerThreads<T> extends FileHandler<T> {
 
@@ -20,7 +23,8 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     private boolean threadWaiting = false;                              // tells if a thread is waiting to be run
     private String backupOpenFile;                                      // used for backup
     private String backupSaveFile;                                      // used for backup
-    private ArrayList<T> backupData;                                    // used for backup
+    private ArrayList<T> backupSaveData;                                // used for backup
+    private ArrayList<T> backupOpenData;                                // used for backup
     private Alert loadingAlert;                                         // Progress alert popup
 
     /** FileHandler class can only use a single instance of this class (Singleton Pattern Implemented) */
@@ -122,7 +126,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
         // If a thread is waiting, run it
         if(threadWaiting) {
-            save(backupData, backupSaveFile, "Saving a file...");
+            save(backupSaveData, backupSaveFile, "Saving a file...");
             threadWaiting = false;
         }
     }
@@ -156,7 +160,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
         // If a thread is waiting, run it
         if(threadWaiting) {
-            save(backupData, backupSaveFile, "Saving a file...");
+            save(backupSaveData, backupSaveFile, "Saving a file...");
             threadWaiting = false;
         }
 
@@ -173,8 +177,8 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         this.backupOpenFile = backupOpenFile;
     }
 
-    public void setBackupData(ArrayList<T> backupData) {
-        this.backupData = backupData;
+    public void setBackupSaveData(ArrayList<T> backupSaveData) {
+        this.backupSaveData = backupSaveData;
     }
 
     public void setThreadWaiting(boolean threadWaiting) {
@@ -183,5 +187,9 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
     public boolean isThreadRunning() {
         return threadRunning;
+    }
+
+    public ArrayList<T> getBackupOpenData(){
+        return backupOpenData;
     }
 }
