@@ -4,28 +4,27 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
 import org.openjfx.custom_exceptions.UnsupportedFileReader;
 import org.openjfx.custom_exceptions.UnsupportedFileWriter;
-import org.openjfx.data_collection.ComponentsCollection;
-import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.file_io.IO_bin;
 import org.openjfx.file_utilities.file_io.IO_txt;
 import org.openjfx.file_utilities.file_tasks.Reader;
 import org.openjfx.file_utilities.file_tasks.Writer;
 import org.openjfx.gui_utilities.Dialogs;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class FileHandlerThreads<T> extends FileHandler<T> {
 
     private final String databasePath = "src/main/java/database/";      // where files are saved and opened
-    private final Writer<T> writer = new Writer<>();                    // task that runs on save thread
-    private final Reader<T> reader = new Reader<>();                    // task that runs on open thread
+    private Writer<T> writer = new Writer<>();                          // task that runs on save thread
+    private Reader<T> reader = new Reader<>();                          // task that runs on open thread
     private boolean threadRunning = false;                              // tells if a thread is currently running
-    private boolean threadWaiting = false;                              // tells if a thread is waiting to be run
     private String backupOpenFile;                                      // used for backup
     private String backupSaveFile;                                      // used for backup
     private ArrayList<T> backupSaveData;                                // used for backup
     private ArrayList<T> backupOpenData;                                // used for backup
     private Alert loadingAlert;                                         // Progress alert popup
+    private final Queue<String> waitingThreads = new LinkedList<>();    // tells if a thread is waiting to be run
 
     /** FileHandler class can only use a single instance of this class (Singleton Pattern Implemented) */
 
@@ -69,7 +68,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
             assignWriters(filename);
             writer.setData(data);
             writer.setFilepath(databasePath + filename);
-            writer.setOnScheduled((e) -> System.out.println("Save Thread is now running..."));
+            writer.setOnScheduled((e) -> System.out.println("\nSave Thread is now running..."));
             writer.setOnSucceeded((e) -> saveSuccessful());
             writer.setOnRunning((e) -> loadingAlert.show());
             writer.setOnFailed(this::saveFailed);
@@ -82,6 +81,10 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         } catch (IllegalArgumentException e) {
             threadRunning = false;
             Dialogs.showWarningDialog(e.getMessage(),"");
+
+            // If prev thread did not run, remove it from the queue and run the next waiting thread
+            waitingThreads.poll();
+            runWaitingThreads();
         }
     }
 
@@ -90,7 +93,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
             loadingAlert = Dialogs.showLoadingDialog(reader, loadingMessage);
             assignReaders(filename);
             reader.setFilepath(databasePath + filename);
-            reader.setOnScheduled((e) -> System.out.println("Open Thread is now running..."));
+            reader.setOnScheduled((e) -> System.out.println("\nOpen Thread is now running..."));
             reader.setOnSucceeded((e) -> openSuccessful());
             reader.setOnRunning((e) -> loadingAlert.show());
             reader.setOnFailed(this::openFailed);
@@ -103,32 +106,25 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         } catch (IllegalArgumentException e) {
             threadRunning = false;
             Dialogs.showWarningDialog(e.getMessage(), "");
+
+            // If prev thread did not run, remove it from the queue and run the next waiting thread
+            waitingThreads.poll();
+            runWaitingThreads();
         }
     }
 
     private void saveSuccessful(){
         loadingAlert.close();
         threadRunning = false;
-        System.out.println("Save Thread Successful!");
-
-        // If a thread is waiting, run it
-        if(threadWaiting) {
-            open(backupOpenFile, "Opening a file...");
-            threadWaiting = false;
-        }
+        System.out.println("Save Thread Successful!\n");
+        runWaitingThreads();
     }
 
     private void openSuccessful(){
         loadingAlert.close();
         threadRunning = false;
-        System.out.println("Open Thread Successful!");
-        System.out.println(reader.getValue());
-
-        // If a thread is waiting, run it
-        if(threadWaiting) {
-            save(backupSaveData, backupSaveFile, "Saving a file...");
-            threadWaiting = false;
-        }
+        System.out.println("Open Thread Successful!\n");
+        runWaitingThreads();
     }
 
     private void saveFailed(WorkerStateEvent e){
@@ -139,11 +135,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         String errorMessage = e.getSource().getException().getMessage();
         Dialogs.showWarningDialog("System error - Failed to save file", errorMessage);
 
-        // If a thread is waiting, run it
-        if(threadWaiting) {
-            open(backupOpenFile, "Opening a file...");
-            threadWaiting = false;
-        }
+        runWaitingThreads();
 
         // Error shown to developers
         System.err.println("\nSystem error: Save Thread Failed!\n");
@@ -158,15 +150,24 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         String errorMessage = e.getSource().getException().getMessage();
         Dialogs.showWarningDialog("System error - Failed to open file", errorMessage);
 
-        // If a thread is waiting, run it
-        if(threadWaiting) {
-            save(backupSaveData, backupSaveFile, "Saving a file...");
-            threadWaiting = false;
-        }
+        runWaitingThreads();
 
         // Error shown to developers
         System.err.println("\nSystem error: Open Thread Failed!\n");
         e.getSource().getException().printStackTrace();
+    }
+
+    private void runWaitingThreads(){
+        for(int i = 0; i < waitingThreads.size(); i++){
+            if(waitingThreads.toArray()[i].equals(SAVE_THREAD)){
+                writer = new Writer<>();
+                save(backupSaveData, backupSaveFile, "Saving a file...");
+            } else {
+                reader = new Reader<>();
+                open(backupOpenFile, "Opening a file...");
+            }
+            waitingThreads.poll();
+        }
     }
 
     public void setBackupSaveFile(String backupSaveFile) {
@@ -181,8 +182,8 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         this.backupSaveData = backupSaveData;
     }
 
-    public void setThreadWaiting(boolean threadWaiting) {
-        this.threadWaiting = threadWaiting;
+    public void addToWaitingThreads(String threadWaiting) {
+        waitingThreads.add(threadWaiting);
     }
 
     public boolean isThreadRunning() {

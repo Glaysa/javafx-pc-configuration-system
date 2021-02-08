@@ -35,7 +35,11 @@ public class ControllerAdmin implements Initializable {
         data.add(c2);
         data.add(c3);
 
-        ComponentsFileHandler.open("test.txt", "Loading Components");
+        ComponentsFileHandler.open("initialComponents.txt", "Loading Components");
+        ComponentsFileHandler.open("initialComponents.txt", "Loading Components");
+        ComponentsFileHandler.save(data, "standardText.txt", "Loading Components");
+        ComponentsFileHandler.save(data, "standardText.txt", "Loading Components");
+
         ComponentsCollection.setTableView(tableView);
     }
 

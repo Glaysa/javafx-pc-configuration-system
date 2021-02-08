@@ -5,15 +5,16 @@ import java.util.ArrayList;
 public class FileHandler<T> {
 
     private FileHandlerThreads<T> threadHandlers;
+    protected final String SAVE_THREAD = "Save Thread";
+    protected final String OPEN_THREAD = "Open Thread";
 
     @SuppressWarnings("unchecked")
     public void save(ArrayList<T> data, String filename, String msg){
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            threadHandlers.setThreadWaiting(true);
+            threadHandlers.addToWaitingThreads(SAVE_THREAD);
             threadHandlers.setBackupSaveData(data);
             threadHandlers.setBackupSaveFile(filename);
-            System.out.println("Save Thread is waiting...");
         } else {
             threadHandlers.runSaveThread(data, filename, msg);
         }
@@ -23,9 +24,8 @@ public class FileHandler<T> {
     public void open(String filename, String msg){
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            threadHandlers.setThreadWaiting(true);
+            threadHandlers.addToWaitingThreads(OPEN_THREAD);
             threadHandlers.setBackupOpenFile(filename);
-            System.out.println("Open Thread is waiting...");
         } else {
             threadHandlers.runOpenThread(filename, msg);
         }

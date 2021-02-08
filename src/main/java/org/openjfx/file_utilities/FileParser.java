@@ -1,6 +1,5 @@
 package org.openjfx.file_utilities;
 
-import org.openjfx.custom_exceptions.UnsupportedFileParser;
 import org.openjfx.data_models.PCComponents;
 
 public class FileParser {
@@ -10,8 +9,13 @@ public class FileParser {
         switch (attributes.length) {
             case 4: return componentsParser(attributes);
             case 6: return configurationParser(attributes);
-            default: throw new UnsupportedFileParser("File Corrupted");
+            default: return standardParser(dataToParse);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T standardParser(String data){
+        return (T) data;
     }
 
     @SuppressWarnings("unchecked")
@@ -25,6 +29,7 @@ public class FileParser {
         return (T) c;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T configurationParser(String[] dataToParse){
         throw new UnsupportedOperationException("Not yet implemented");
     }
