@@ -124,13 +124,8 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     private void openSuccessful(){
         loadingAlert.close();
         threadRunning = false;
-
-        // Displays data to the tableview
         backupOpenData = reader.getValue();
-        for(T c : backupOpenData) {
-            ComponentsCollection.addToCollection((PCComponents) c);
-        }
-
+        processData(backupOpenData);
         System.out.println("Open Thread Successful!\n");
         runWaitingThreads();
     }
@@ -184,6 +179,20 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
                 System.out.println("No Available Threads");
             }
             waitingThreads.poll();
+        }
+    }
+
+    private void processData(ArrayList<T> data) {
+        T datum = data.get(0);
+        String[] attributesLength = datum.toString().split(";");
+
+        if(attributesLength.length == 4){
+            System.out.println("File data is an instance of PCComponents");
+            for(T d : data) {
+                ComponentsCollection.addToCollection((PCComponents) d);
+            }
+        } else {
+            System.err.println("File content must either contain pc components or pc configurations");
         }
     }
 
