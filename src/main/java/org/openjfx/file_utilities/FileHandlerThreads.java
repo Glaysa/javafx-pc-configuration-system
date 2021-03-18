@@ -10,6 +10,7 @@ import org.openjfx.file_utilities.file_tasks.Reader;
 import org.openjfx.file_utilities.file_tasks.Writer;
 import org.openjfx.gui_utilities.Dialogs;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -68,7 +69,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
             assignWriters(filename);
             writer.setData(data);
             writer.setFilepath(databasePath + filename);
-            writer.setOnScheduled((e) -> System.out.println("\nSave Thread is now running..."));
+            writer.setOnScheduled((e) -> System.out.println("Save Thread is now running..."));
             writer.setOnSucceeded((e) -> saveSuccessful());
             writer.setOnRunning((e) -> loadingAlert.show());
             writer.setOnFailed(this::saveFailed);
@@ -93,7 +94,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
             loadingAlert = Dialogs.showLoadingDialog(reader, loadingMessage);
             assignReaders(filename);
             reader.setFilepath(databasePath + filename);
-            reader.setOnScheduled((e) -> System.out.println("\nOpen Thread is now running..."));
+            reader.setOnScheduled((e) -> System.out.println("Open Thread is now running..."));
             reader.setOnSucceeded((e) -> openSuccessful());
             reader.setOnRunning((e) -> loadingAlert.show());
             reader.setOnFailed(this::openFailed);
@@ -157,14 +158,26 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         e.getSource().getException().printStackTrace();
     }
 
+    @SuppressWarnings("unchecked")
     private void runWaitingThreads(){
         for(int i = 0; i < waitingThreads.size(); i++){
-            if(waitingThreads.toArray()[i].equals(SAVE_THREAD)){
+
+            String[] fileInfos = waitingThreads.peek().split(":");
+            String fileThread = fileInfos[0];
+            String filename = fileInfos[1];
+            String[] fileData = fileInfos[2].split(";");
+            ArrayList<String> data = new ArrayList<>(Arrays.asList(fileData));
+
+            if(fileThread.equals(SAVE_THREAD)){
                 writer = new Writer<>();
-                save(backupSaveData, backupSaveFile, "Saving a file...");
-            } else {
+                save((ArrayList<T>) data, filename, "Saving a file...");
+            }
+            else if(fileThread.equals(OPEN_THREAD)){
                 reader = new Reader<>();
-                open(backupOpenFile, "Opening a file...");
+                open(filename, "Opening a file...");
+            }
+            else {
+                System.out.println("No Available Threads");
             }
             waitingThreads.poll();
         }

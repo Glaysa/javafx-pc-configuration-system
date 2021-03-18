@@ -12,9 +12,8 @@ public class FileHandler<T> {
     public void save(ArrayList<T> data, String filename, String msg){
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            threadHandlers.addToWaitingThreads(SAVE_THREAD);
-            threadHandlers.setBackupSaveData(data);
-            threadHandlers.setBackupSaveFile(filename);
+            String fileInfo = String.format("%s:%s:%s", SAVE_THREAD, filename, data);
+            threadHandlers.addToWaitingThreads(fileInfo);
         } else {
             threadHandlers.runSaveThread(data, filename, msg);
         }
@@ -24,8 +23,8 @@ public class FileHandler<T> {
     public void open(String filename, String msg){
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            threadHandlers.addToWaitingThreads(OPEN_THREAD);
-            threadHandlers.setBackupOpenFile(filename);
+            String fileInfo = String.format("%s:%s:%s", OPEN_THREAD, filename, null);
+            threadHandlers.addToWaitingThreads(fileInfo);
         } else {
             threadHandlers.runOpenThread(filename, msg);
         }
