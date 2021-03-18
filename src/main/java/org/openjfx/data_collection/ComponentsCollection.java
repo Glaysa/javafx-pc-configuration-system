@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import org.openjfx.data_models.PCComponents;
-
 import java.util.ArrayList;
 
 public class ComponentsCollection {

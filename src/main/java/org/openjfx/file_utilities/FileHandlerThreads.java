@@ -4,6 +4,8 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
 import org.openjfx.custom_exceptions.UnsupportedFileReader;
 import org.openjfx.custom_exceptions.UnsupportedFileWriter;
+import org.openjfx.data_collection.ComponentsCollection;
+import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.file_io.IO_bin;
 import org.openjfx.file_utilities.file_io.IO_txt;
 import org.openjfx.file_utilities.file_tasks.Reader;
@@ -122,6 +124,13 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     private void openSuccessful(){
         loadingAlert.close();
         threadRunning = false;
+
+        // Displays data to the tableview
+        backupOpenData = reader.getValue();
+        for(T c : backupOpenData) {
+            ComponentsCollection.addToCollection((PCComponents) c);
+        }
+
         System.out.println("Open Thread Successful!\n");
         runWaitingThreads();
     }
