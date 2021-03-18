@@ -12,7 +12,7 @@ public class FileHandler<T> {
     public void save(ArrayList<T> data, String filename, String msg){
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            String fileInfo = String.format("%s:%s:%s", SAVE_THREAD, filename, data);
+            FileInfo<T> fileInfo = new FileInfo<>(filename, data, SAVE_THREAD);
             threadHandlers.addToWaitingThreads(fileInfo);
         } else {
             threadHandlers.runSaveThread(data, filename, msg);
@@ -23,7 +23,7 @@ public class FileHandler<T> {
     public void open(String filename, String msg){
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            String fileInfo = String.format("%s:%s:%s", OPEN_THREAD, filename, null);
+            FileInfo<T> fileInfo = new FileInfo<>(filename, null, OPEN_THREAD);
             threadHandlers.addToWaitingThreads(fileInfo);
         } else {
             threadHandlers.runOpenThread(filename, msg);

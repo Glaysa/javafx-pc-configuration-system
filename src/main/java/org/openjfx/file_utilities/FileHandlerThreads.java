@@ -9,10 +9,8 @@ import org.openjfx.file_utilities.file_io.IO_txt;
 import org.openjfx.file_utilities.file_tasks.Reader;
 import org.openjfx.file_utilities.file_tasks.Writer;
 import org.openjfx.gui_utilities.Dialogs;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+
+import java.util.*;
 
 public class FileHandlerThreads<T> extends FileHandler<T> {
 
@@ -25,7 +23,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     private ArrayList<T> backupSaveData;                                // used for backup
     private ArrayList<T> backupOpenData;                                // used for backup
     private Alert loadingAlert;                                         // Progress alert popup
-    private final Queue<String> waitingThreads = new LinkedList<>();    // tells if a thread is waiting to be run
+    private final Queue<FileInfo<T>> waitingThreads = new ArrayDeque<>();    // tells if a thread is waiting to be run
 
     /** FileHandler class can only use a single instance of this class (Singleton Pattern Implemented) */
 
@@ -158,19 +156,16 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         e.getSource().getException().printStackTrace();
     }
 
-    @SuppressWarnings("unchecked")
     private void runWaitingThreads(){
         for(int i = 0; i < waitingThreads.size(); i++){
 
-            String[] fileInfos = waitingThreads.peek().split(":");
-            String fileThread = fileInfos[0];
-            String filename = fileInfos[1];
-            String[] fileData = fileInfos[2].split(";");
-            ArrayList<String> data = new ArrayList<>(Arrays.asList(fileData));
+            String fileThread = waitingThreads.element().getFileThread();
+            String filename = waitingThreads.element().getFilename();
+            ArrayList<T> fileData = waitingThreads.element().getFileData();
 
             if(fileThread.equals(SAVE_THREAD)){
                 writer = new Writer<>();
-                save((ArrayList<T>) data, filename, "Saving a file...");
+                save(fileData, filename, "Saving a file...");
             }
             else if(fileThread.equals(OPEN_THREAD)){
                 reader = new Reader<>();
@@ -195,7 +190,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         this.backupSaveData = backupSaveData;
     }
 
-    public void addToWaitingThreads(String threadWaiting) {
+    public void addToWaitingThreads(FileInfo<T> threadWaiting) {
         waitingThreads.add(threadWaiting);
     }
 
