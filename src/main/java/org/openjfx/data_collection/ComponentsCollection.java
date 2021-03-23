@@ -14,14 +14,12 @@ public class ComponentsCollection {
         obsList.add(toAdd);
     }
 
-    public static void addToCollection(ArrayList<PCComponents> toAdd){
-        for(PCComponents component : toAdd){
-            addToCollection(component);
-        }
-    }
-
     public static void setTableView(TableView<PCComponents> tableView){
         tableView.setItems(obsList);
+    }
+
+    public static void clearCollection(){
+        obsList.clear();
     }
 
     public static void setObsList(ArrayList<PCComponents> data) {

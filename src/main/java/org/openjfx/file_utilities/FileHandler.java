@@ -9,13 +9,13 @@ public class FileHandler<T> {
     protected final String OPEN_THREAD = "Open Thread";
 
     @SuppressWarnings("unchecked")
-    public void save(ArrayList<T> data, String filename, String msg){
+    public void save(ArrayList<T> dataToSave, String filename, String msg){
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            FileInfo<T> fileInfo = new FileInfo<>(filename, data, SAVE_THREAD);
+            FileInfo<T> fileInfo = new FileInfo<>(filename, dataToSave, SAVE_THREAD, msg);
             threadHandlers.addToWaitingThreads(fileInfo);
         } else {
-            threadHandlers.runSaveThread(data, filename, msg);
+            threadHandlers.runSaveThread(dataToSave, filename, msg);
         }
     }
 
@@ -23,14 +23,10 @@ public class FileHandler<T> {
     public void open(String filename, String msg){
         threadHandlers = FileHandlerThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            FileInfo<T> fileInfo = new FileInfo<>(filename, null, OPEN_THREAD);
+            FileInfo<T> fileInfo = new FileInfo<>(filename, null, OPEN_THREAD, msg);
             threadHandlers.addToWaitingThreads(fileInfo);
         } else {
             threadHandlers.runOpenThread(filename, msg);
         }
-    }
-
-    public ArrayList<T> getBackupOpenData(){
-        return threadHandlers.getBackupOpenData();
     }
 }

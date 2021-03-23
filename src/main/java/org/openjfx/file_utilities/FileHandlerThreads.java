@@ -2,8 +2,6 @@ package org.openjfx.file_utilities;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
-import org.openjfx.custom_exceptions.UnsupportedFileReader;
-import org.openjfx.custom_exceptions.UnsupportedFileWriter;
 import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.file_io.IO_bin;
@@ -12,6 +10,8 @@ import org.openjfx.file_utilities.file_tasks.Reader;
 import org.openjfx.file_utilities.file_tasks.Writer;
 import org.openjfx.gui_utilities.Dialogs;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class FileHandlerThreads<T> extends FileHandler<T> {
@@ -24,13 +24,13 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     private String backupSaveFile;                                      // used for backup
     private ArrayList<T> backupSaveData;                                // used for backup
     private ArrayList<T> backupOpenData;                                // used for backup
-    private Alert loadingAlert;                                         // Progress alert popup
+    private Alert loadingAlert;                                         // Progress alert popup dialog
     private final Queue<FileInfo<T>> waitingThreads = new ArrayDeque<>();    // tells if a thread is waiting to be run
 
-    /** FileHandler class can only use a single instance of this class (Singleton Pattern Implemented) */
+    /** FileHandler class can only use a single instance of FileHandlerThreads (Singleton Pattern Implemented) */
 
     private static FileHandlerThreads INSTANCE;
-    public FileHandlerThreads() { }
+    private FileHandlerThreads() { }
     public static FileHandlerThreads getInstance() {
         if(INSTANCE == null) INSTANCE = new FileHandlerThreads<>();
         return INSTANCE;
@@ -47,26 +47,36 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
     private void assignWriters(String filename){
         String fileExtension = filename.substring(filename.lastIndexOf("."));
-        switch (fileExtension) {
-            case ".txt": writer.setFileWriter(new IO_txt()); break;
-            case ".bin": writer.setFileWriter(new IO_bin()); break;
-            default: throw new UnsupportedFileWriter("File not supported: Please save only *.txt, *.bin");
+        try {
+            if(fileExtension.equals(".txt")) writer.setFileWriter(new IO_txt());
+            else if(fileExtension.equals(".bin")) writer.setFileWriter(new IO_bin());
+            else {Dialogs.showWarningDialog("Unsupported format", "Open only: *.txt, *.bin");}
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
     private void assignReaders(String filename){
         String fileExtension = filename.substring(filename.lastIndexOf("."));
-        switch (fileExtension) {
-            case ".txt": reader.setFileReader(new IO_txt()); break;
-            case ".bin": reader.setFileReader(new IO_bin()); break;
-            default: throw new UnsupportedFileReader("File not supported: Please open only *.txt, *.bin");
+        try {
+            if(fileExtension.equals(".txt")) reader.setFileReader(new IO_txt());
+            else if(fileExtension.equals(".bin")) reader.setFileReader(new IO_bin());
+            else {Dialogs.showWarningDialog("Unsupported format", "Open only: *.txt, *.bin");}
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
+    }
+
+    private void fileExists(String filename) throws FileNotFoundException {
+        File f = new File(databasePath + filename);
+        if(!f.exists()) throw new FileNotFoundException(filename + " does not exist.");
     }
 
     protected void runSaveThread(ArrayList<T> data, String filename, String loadingMessage){
         try {
             loadingAlert = Dialogs.showLoadingDialog(writer, loadingMessage);
             assignWriters(filename);
+
             writer.setData(data);
             writer.setFilepath(databasePath + filename);
             writer.setOnScheduled((e) -> System.out.println("Save Thread is now running..."));
@@ -74,16 +84,14 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
             writer.setOnRunning((e) -> loadingAlert.show());
             writer.setOnFailed(this::saveFailed);
 
-            Thread thread = new Thread(writer, "Save Thread");
+            Thread thread = new Thread(writer, SAVE_THREAD);
             thread.setDaemon(true);
             thread.start();
             threadRunning = true;
 
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             threadRunning = false;
             Dialogs.showWarningDialog(e.getMessage(),"");
-
-            // If prev thread did not run, remove it from the queue and run the next waiting thread
             waitingThreads.poll();
             runWaitingThreads();
         }
@@ -92,23 +100,23 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     protected void runOpenThread(String filename, String loadingMessage){
         try {
             loadingAlert = Dialogs.showLoadingDialog(reader, loadingMessage);
+            fileExists(filename);
             assignReaders(filename);
+
             reader.setFilepath(databasePath + filename);
             reader.setOnScheduled((e) -> System.out.println("Open Thread is now running..."));
             reader.setOnSucceeded((e) -> openSuccessful());
             reader.setOnRunning((e) -> loadingAlert.show());
             reader.setOnFailed(this::openFailed);
 
-            Thread thread = new Thread(reader, "Open Thread");
+            Thread thread = new Thread(reader, OPEN_THREAD);
             thread.setDaemon(true);
             thread.start();
             threadRunning = true;
 
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             threadRunning = false;
             Dialogs.showWarningDialog(e.getMessage(), "");
-
-            // If prev thread did not run, remove it from the queue and run the next waiting thread
             waitingThreads.poll();
             runWaitingThreads();
         }
@@ -124,8 +132,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     private void openSuccessful(){
         loadingAlert.close();
         threadRunning = false;
-        backupOpenData = reader.getValue();
-        processData(backupOpenData);
+        processData(reader.getValue());
         System.out.println("Open Thread Successful!\n");
         runWaitingThreads();
     }
@@ -138,11 +145,13 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         String errorMessage = e.getSource().getException().getMessage();
         Dialogs.showWarningDialog("System error - Failed to save file", errorMessage);
 
+        // Run the next waiting threads if there are any
         runWaitingThreads();
 
         // Error shown to developers
-        System.err.println("\nSystem error: Save Thread Failed!\n");
+        System.err.println("Save Thread Failed: An error occurred. Please try again.!");
         e.getSource().getException().printStackTrace();
+        System.out.println();
     }
 
     private void openFailed(WorkerStateEvent e){
@@ -153,11 +162,13 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         String errorMessage = e.getSource().getException().getMessage();
         Dialogs.showWarningDialog("System error - Failed to open file", errorMessage);
 
+        // Run the next waiting threads if there are any
         runWaitingThreads();
 
         // Error shown to developers
-        System.err.println("\nSystem error: Open Thread Failed!\n");
+        System.err.println("Open Thread Failed: The default system data will be opened instead.");
         e.getSource().getException().printStackTrace();
+        System.out.println();
     }
 
     private void runWaitingThreads(){
@@ -166,14 +177,15 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
             String fileThread = waitingThreads.element().getFileThread();
             String filename = waitingThreads.element().getFilename();
             ArrayList<T> fileData = waitingThreads.element().getFileData();
+            String fileMsg = waitingThreads.element().getFileMsg();
 
             if(fileThread.equals(SAVE_THREAD)){
                 writer = new Writer<>();
-                save(fileData, filename, "Saving a file...");
+                save(fileData, filename, fileMsg);
             }
             else if(fileThread.equals(OPEN_THREAD)){
                 reader = new Reader<>();
-                open(filename, "Opening a file...");
+                open(filename, fileMsg);
             }
             else {
                 System.out.println("No Available Threads");
@@ -187,25 +199,20 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         String[] attributesLength = datum.toString().split(";");
 
         if(attributesLength.length == 4){
+            if(!data.isEmpty()) ComponentsCollection.clearCollection();
             System.out.println("File data is an instance of PCComponents");
-            for(T d : data) {
-                ComponentsCollection.addToCollection((PCComponents) d);
-            }
+            for(T d : data) ComponentsCollection.addToCollection((PCComponents) d);
         } else {
-            System.err.println("File content must either contain pc components or pc configurations");
+            System.err.println("File is corrupted: Data not loaded");
+            Dialogs.showWarningDialog(
+                    "File is corrupted!",
+                    "File data must either contain pc components or pc configurations.");
+
+            if(data.isEmpty()) {
+                reader = new Reader<>();
+                open("initialComponents.txt","Loading default data...");
+            }
         }
-    }
-
-    public void setBackupSaveFile(String backupSaveFile) {
-        this.backupSaveFile = backupSaveFile;
-    }
-
-    public void setBackupOpenFile(String backupOpenFile) {
-        this.backupOpenFile = backupOpenFile;
-    }
-
-    public void setBackupSaveData(ArrayList<T> backupSaveData) {
-        this.backupSaveData = backupSaveData;
     }
 
     public void addToWaitingThreads(FileInfo<T> threadWaiting) {
@@ -214,9 +221,5 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
 
     public boolean isThreadRunning() {
         return threadRunning;
-    }
-
-    public ArrayList<T> getBackupOpenData(){
-        return backupOpenData;
     }
 }

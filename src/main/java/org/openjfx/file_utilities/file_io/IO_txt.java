@@ -37,8 +37,7 @@ public class IO_txt implements FileWriters, FileReaders {
                 data.add(obj);
             }
         } catch (Exception e) {
-            System.err.println("\nSystem error: IO_txt.read()\n");
-            e.printStackTrace();
+            System.err.println("\nSystem error at: IO_txt.read()");
             throw new IllegalArgumentException(e.getMessage());
         }
         return data;

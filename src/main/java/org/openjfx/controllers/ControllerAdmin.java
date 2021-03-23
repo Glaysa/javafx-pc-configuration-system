@@ -11,6 +11,7 @@ import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.FileHandler;
 import org.openjfx.gui_utilities.Dialogs;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ControllerAdmin implements Initializable {
@@ -25,7 +26,12 @@ public class ControllerAdmin implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        componentsFileHandler.open("initialComponents.txt", "Loading components...");
+        PCComponents c = new PCComponents("g","f","2","123");
+        ArrayList<PCComponents> cc = new ArrayList<>();
+        cc.add(c);
+        componentsFileHandler.open("initialComponents.txt", "Loading system data...");
+        componentsFileHandler.open("test.txt", "Loading dummy data...");
+        componentsFileHandler.save(cc, "test2.bin", "Saving test2.bin...");
         ComponentsCollection.setTableView(tableView);
     }
 
