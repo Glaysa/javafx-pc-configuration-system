@@ -1,19 +1,19 @@
-package org.openjfx.file_utilities;
+package org.openjfx.file_utilities.FileHandlers;
 
 import java.util.ArrayList;
 
-public class FileHandler<T> {
+public class FileActions<T> {
 
-    private FileHandlerThreads<T> threadHandlers;
+    private FileThreads<T> threadHandlers;
     protected final String SAVE_THREAD = "Save Thread";
     protected final String OPEN_THREAD = "Open Thread";
 
     @SuppressWarnings("unchecked")
     public void save(ArrayList<T> dataToSave, String filename, String msg){
-        threadHandlers = FileHandlerThreads.getInstance();
+        threadHandlers = FileThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            FileInfo<T> fileInfo = new FileInfo<>(filename, dataToSave, SAVE_THREAD, msg);
-            threadHandlers.addToWaitingThreads(fileInfo);
+            ThreadInfo<T> threadInfo = new ThreadInfo<>(filename, dataToSave, SAVE_THREAD, msg);
+            threadHandlers.addToWaitingThreads(threadInfo);
         } else {
             threadHandlers.runSaveThread(dataToSave, filename, msg);
         }
@@ -21,10 +21,10 @@ public class FileHandler<T> {
 
     @SuppressWarnings("unchecked")
     public void open(String filename, String msg){
-        threadHandlers = FileHandlerThreads.getInstance();
+        threadHandlers = FileThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            FileInfo<T> fileInfo = new FileInfo<>(filename, null, OPEN_THREAD, msg);
-            threadHandlers.addToWaitingThreads(fileInfo);
+            ThreadInfo<T> threadInfo = new ThreadInfo<>(filename, null, OPEN_THREAD, msg);
+            threadHandlers.addToWaitingThreads(threadInfo);
         } else {
             threadHandlers.runOpenThread(filename, msg);
         }

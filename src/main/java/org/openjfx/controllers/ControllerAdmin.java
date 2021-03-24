@@ -8,7 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
-import org.openjfx.file_utilities.FileHandler;
+import org.openjfx.file_utilities.FileHandlers.FileActions;
 import org.openjfx.gui_utilities.Dialogs;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,11 +21,11 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextField price;
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
-    private final FileHandler<PCComponents> componentsFileHandler = new FileHandler<>();
+    private final FileActions<PCComponents> componentsFileActions = new FileActions<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        componentsFileHandler.open("initialComponents.txt", "Loading system data...");
+        componentsFileActions.open("initialComponents.txt", "Loading system data...");
         ComponentsCollection.setTableView(tableView);
         ComponentsCollection.fillCombobox_TYPE(typeOptions);
         ComponentsCollection.listOnChanged(typeOptions);

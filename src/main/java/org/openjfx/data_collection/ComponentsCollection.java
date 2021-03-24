@@ -13,34 +13,36 @@ public class ComponentsCollection {
     private static ObservableList<PCComponents> obsList = FXCollections.observableArrayList();
     private static ObservableList<String> obsList_TYPES;
 
+    /** Adds new items to observable list of components */
     public static void addToCollection(PCComponents toAdd){
         obsList.add(toAdd);
     }
 
+    /** Sets the items of the tableview */
     public static void setTableView(TableView<PCComponents> tableView){
         tableView.setItems(obsList);
     }
 
+    /** Clear the observable list of components */
     public static void clearCollection(){
         obsList.clear();
     }
 
-    // This fills the combobox of component types with the defined and new values of component types
+    /** This fills the combobox of component types with the defined and new values found in the component observable list */
     public static void fillCombobox_TYPE(ComboBox<String> typeOptions){
         String[] definedTypes = {"RAM","Keyboards","Processors","Graphic Cards", "Mouse"};
-        ObservableList<String> types = FXCollections.observableArrayList(definedTypes);
+        obsList_TYPES = FXCollections.observableArrayList(definedTypes);
         for(PCComponents c : obsList){
-            if(!types.contains(c.getComponentType())){
-                types.add(c.getComponentType());
+            if(!obsList_TYPES.contains(c.getComponentType())){
+                obsList_TYPES.add(c.getComponentType());
             }
         }
         typeOptions.setEditable(true);
         typeOptions.setPromptText("Choose/Enter Component Type");
-        typeOptions.setItems(types);
-        obsList_TYPES = types;
+        typeOptions.setItems(obsList_TYPES);
     }
 
-    // Updates the combobox of component types whenever there is a change on the observable list of components
+    /** Updates the combobox of component types whenever there is a change on the observable list of components */
     public static void listOnChanged(ComboBox<String> typeOptions){
         obsList.addListener(new ListChangeListener<PCComponents>() {
             @Override

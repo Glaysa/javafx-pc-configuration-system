@@ -1,4 +1,4 @@
-package org.openjfx.file_utilities;
+package org.openjfx.file_utilities.FileHandlers;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class FileHandlerThreads<T> extends FileHandler<T> {
+class FileThreads<T> extends FileActions<T> {
 
     private final String databasePath = "src/main/java/database/";      // where files are saved and opened
     private Writer<T> writer = new Writer<>();                          // task that runs on save thread
@@ -24,14 +24,14 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
     private ArrayList<T> backupSaveData;                                // used for backup
     private ArrayList<T> backupOpenData;                                // used for backup
     private Alert loadingAlert;                                         // Progress alert popup dialog
-    private final Queue<FileInfo<T>> waitingThreads = new ArrayDeque<>();    // tells if a thread is waiting to be run
+    private final Queue<ThreadInfo<T>> waitingThreads = new ArrayDeque<>();    // tells if a thread is waiting to be run
 
-    /** FileHandler class can only use a single instance of FileHandlerThreads (Singleton Pattern Implemented) */
+    /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
-    private static FileHandlerThreads INSTANCE;
-    private FileHandlerThreads() { }
-    public static FileHandlerThreads getInstance() {
-        if(INSTANCE == null) INSTANCE = new FileHandlerThreads<>();
+    private static FileThreads INSTANCE;
+    private FileThreads() { }
+    public static FileThreads getInstance() {
+        if(INSTANCE == null) INSTANCE = new FileThreads<>();
         return INSTANCE;
     }
 
@@ -148,7 +148,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         runWaitingThreads();
 
         // Error shown to developers
-        System.err.println("Save Thread Failed: An error occurred. Please try again.!");
+        System.err.println("Save Thread Failed: An error occurred!");
         e.getSource().getException().printStackTrace();
         System.out.println();
     }
@@ -193,6 +193,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         }
     }
 
+    /** Opening a file returns data, these data are processed here */
     private void processData(ArrayList<T> data) {
         T datum = data.get(0);
         String[] attributesLength = datum.toString().split(";");
@@ -214,7 +215,7 @@ public class FileHandlerThreads<T> extends FileHandler<T> {
         }
     }
 
-    public void addToWaitingThreads(FileInfo<T> threadWaiting) {
+    public void addToWaitingThreads(ThreadInfo<T> threadWaiting) {
         waitingThreads.add(threadWaiting);
     }
 
