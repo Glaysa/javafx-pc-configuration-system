@@ -9,7 +9,6 @@ import org.openjfx.file_utilities.file_io.IO_txt;
 import org.openjfx.file_utilities.file_tasks.Reader;
 import org.openjfx.file_utilities.file_tasks.Writer;
 import org.openjfx.gui_utilities.Dialogs;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;

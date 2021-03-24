@@ -11,7 +11,6 @@ import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.FileHandler;
 import org.openjfx.gui_utilities.Dialogs;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ControllerAdmin implements Initializable {
@@ -21,18 +20,15 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextField cName;
     @FXML private TextField price;
     @FXML private TextArea cDesc;
-    @FXML private ComboBox<?> cType;
+    @FXML private ComboBox<String> typeOptions;
     private final FileHandler<PCComponents> componentsFileHandler = new FileHandler<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        PCComponents c = new PCComponents("g","f","2","123");
-        ArrayList<PCComponents> cc = new ArrayList<>();
-        cc.add(c);
         componentsFileHandler.open("initialComponents.txt", "Loading system data...");
-        componentsFileHandler.open("test.txt", "Loading dummy data...");
-        componentsFileHandler.save(cc, "test2.bin", "Saving test2.bin...");
         ComponentsCollection.setTableView(tableView);
+        ComponentsCollection.fillCombobox_TYPE(typeOptions);
+        ComponentsCollection.listOnChanged(typeOptions);
     }
 
     @FXML
@@ -40,9 +36,10 @@ public class ControllerAdmin implements Initializable {
         String componentName = cName.getText();
         String componentDesc = cDesc.getText();
         String componentPrice = price.getText();
+        String componentType = typeOptions.getValue();
 
         try {
-            PCComponents c = new PCComponents(componentName,componentDesc,"type",componentPrice);
+            PCComponents c = new PCComponents(componentName,componentDesc,componentType,componentPrice);
             ComponentsCollection.addToCollection(c);
             resetFields();
 

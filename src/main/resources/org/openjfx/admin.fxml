@@ -84,7 +84,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <ComboBox fx:id="cType" editable="true" layoutX="75.0" layoutY="474.0" prefWidth="150.0" promptText="Select" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" />
+            <ComboBox fx:id="typeOptions" editable="true" layoutX="75.0" layoutY="474.0" prefWidth="150.0" promptText="Select" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" />
             <Button layoutX="74.0" layoutY="511.0" mnemonicParsing="false" onAction="#addComponent" text="Add Component" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
                <font>
                   <Font size="14.0" />
