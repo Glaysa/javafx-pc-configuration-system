@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import org.openjfx.data_models.PCComponents;
 import java.util.ArrayList;
 
@@ -42,12 +44,14 @@ public class ComponentsCollection {
         typeOptions.setItems(obsList_TYPES);
     }
 
-    /** Updates the combobox of component types whenever there is a change on the observable list of components */
-    public static void listOnChanged(ComboBox<String> typeOptions){
+    /** Updates the combobox of component types whenever there is a change on the observable list of components
+     *  including the combobox in the editable tableview */
+    public static void fillCombobox_TYPE_listOnChanged(ComboBox<String> typeOptions, TableColumn<PCComponents, String> typeColumn){
         obsList.addListener(new ListChangeListener<PCComponents>() {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
                 fillCombobox_TYPE(typeOptions);
+                typeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(obsList_TYPES));
             }
         });
     }
@@ -58,5 +62,9 @@ public class ComponentsCollection {
 
     public static ObservableList<PCComponents> getObsList() {
         return obsList;
+    }
+
+    public static ObservableList<String> getObsList_TYPES(){
+        return obsList_TYPES;
     }
 }

@@ -33,11 +33,10 @@ public class ControllerAdmin implements Initializable {
         componentsFileActions.open("initialComponents.txt", "Loading system data...");
         ComponentsCollection.setTableView(tableView);
         ComponentsCollection.fillCombobox_TYPE(typeOptions);
-        ComponentsCollection.listOnChanged(typeOptions);
+        ComponentsCollection.fillCombobox_TYPE_listOnChanged(typeOptions, typeColumn);
 
         numberColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToInteger()));
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        typeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         specsColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         priceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToDouble()));
     }
