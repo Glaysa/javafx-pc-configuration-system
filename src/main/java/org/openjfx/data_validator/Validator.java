@@ -17,6 +17,18 @@ public class Validator {
         return toValidate;
     }
 
+    public static void validate_componentNumber(String txtComponentNumber){
+        try {
+            componentNumber = Integer.parseInt(txtComponentNumber);
+            if(componentNumber < 0) {
+                throw new NumberFormatException("Component number must be greater than 0");
+            }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid component number"); }
+    }
+
     public static void validate_componentName(String componentName) {
 
         if(componentName.isEmpty()){
@@ -40,16 +52,6 @@ public class Validator {
         Validator.componentSpecs = replaceComma(newComponentSpecs);
     }
 
-    public static void validate_componentNumber(String txtComponentNumber){
-        try {
-            componentNumber = Integer.parseInt(txtComponentNumber);
-            if(componentNumber < 0){ throw new NumberFormatException("Component number must be greater than 0"); }
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid component number"); }
-    }
-
     public static void validate_componentPrice(String txtComponentPrice){
         try {
             if(txtComponentPrice.contains(",")){
@@ -69,9 +71,9 @@ public class Validator {
         }
     }
 
+    public static int getComponentNumber(){ return componentNumber; }
     public static String getComponentName(){ return componentName; }
     public static String getComponentType(){ return componentType; }
     public static String getComponentSpecs(){ return componentSpecs; }
     public static double getComponentPrice(){ return componentPrice; }
-    public static int getComponentNumber(){ return componentNumber; }
 }

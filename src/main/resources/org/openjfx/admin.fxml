@@ -20,34 +20,34 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke;" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableView" layoutX="58.0" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="88.0">
+            <TableView fx:id="tableView" editable="true" layoutX="58.0" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="88.0">
               <columns>
 
-                 <TableColumn maxWidth="100.0" minWidth="75.0" prefWidth="100.0" text="Number">
+                 <TableColumn fx:id="numberColumn" maxWidth="100.0" minWidth="75.0" prefWidth="100.0" text="Number" onEditCommit="#numberOnEdit">
                     <cellValueFactory>
                        <PropertyValueFactory property="componentNumber" />
                     </cellValueFactory>
                  </TableColumn>
 
-                 <TableColumn maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Name">
+                 <TableColumn fx:id="nameColumn" maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Name" onEditCommit="#nameOnEdit">
                     <cellValueFactory>
                        <PropertyValueFactory property="componentName" />
                     </cellValueFactory>
                  </TableColumn>
 
-                 <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Type">
+                 <TableColumn fx:id="typeColumn" maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Type" onEditCommit="#typeOnEdit">
                     <cellValueFactory>
                        <PropertyValueFactory property="componentType" />
                     </cellValueFactory>
                  </TableColumn>
 
-                 <TableColumn minWidth="200.0" prefWidth="300.0" text="Specifications">
+                 <TableColumn fx:id="specsColumn" minWidth="200.0" prefWidth="300.0" text="Specifications" onEditCommit="#specsOnEdit">
                     <cellValueFactory>
                        <PropertyValueFactory property="componentSpecs" />
                     </cellValueFactory>
                  </TableColumn>
 
-                 <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Price">
+                 <TableColumn fx:id="priceColumn" maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Price" onEditCommit="#priceOnEdit">
                     <cellValueFactory>
                        <PropertyValueFactory property="componentPrice" />
                     </cellValueFactory>
