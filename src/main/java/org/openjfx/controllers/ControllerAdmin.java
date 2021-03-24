@@ -17,6 +17,7 @@ public class ControllerAdmin implements Initializable {
 
     @FXML private TableView<PCComponents> tableView;
     @FXML private TextField searchInput;
+    @FXML private TextField cNumber;
     @FXML private TextField cName;
     @FXML private TextField price;
     @FXML private TextArea cDesc;
@@ -33,13 +34,14 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void addComponent() {
+        String componentNumber = cNumber.getText();
         String componentName = cName.getText();
-        String componentDesc = cDesc.getText();
+        String componentSpecs = cDesc.getText();
         String componentPrice = price.getText();
         String componentType = typeOptions.getValue();
 
         try {
-            PCComponents c = new PCComponents(componentName,componentDesc,componentType,componentPrice);
+            PCComponents c = new PCComponents(componentNumber,componentName,componentType,componentSpecs,componentPrice);
             ComponentsCollection.addToCollection(c);
             resetFields();
 

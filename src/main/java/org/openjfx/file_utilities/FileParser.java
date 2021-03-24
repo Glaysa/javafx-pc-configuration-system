@@ -7,7 +7,7 @@ public class FileParser {
     public static <T> T setParser(String dataToParse){
         String[] attributes = dataToParse.split(";");
         switch (attributes.length) {
-            case 4: return componentsParser(attributes);
+            case 5: return componentsParser(attributes);
             case 6: return configurationParser(attributes);
             default: return standardParser(dataToParse);
         }
@@ -24,8 +24,9 @@ public class FileParser {
         String a2 = attributes[1];
         String a3 = attributes[2];
         String a4 = attributes[3];
+        String a5 = attributes[4];
 
-        PCComponents c = new PCComponents(a1, a2, a3, a4);
+        PCComponents c = new PCComponents(a1, a2, a3, a4, a5);
         return (T) c;
     }
 

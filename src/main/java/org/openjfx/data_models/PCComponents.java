@@ -1,52 +1,75 @@
 package org.openjfx.data_models;
 
+import org.openjfx.data_validator.Validator;
+
 public class PCComponents {
 
+    private int componentNumber;
     private String componentName;
-    private String componentDesc;
     private String componentType;
-    private int componentPrice;
+    private String componentSpecs;
+    private double componentPrice;
 
-    public PCComponents(String componentName, String componentDesc, String componentType, String componentPrice){
-        this.componentName = componentName;
-        this.componentDesc = componentDesc;
-        this.componentType = componentType;
-        this.componentPrice = Integer.parseInt(componentPrice);
+    public PCComponents(String componentNumber, String componentName, String componentType, String componentSpecs, String componentPrice){
+        Validator.validate_componentNumber(componentNumber);
+        Validator.validate_componentName(componentName);
+        Validator.validate_componentSpecs(componentSpecs);
+        Validator.validate_componentType(componentType);
+        Validator.validate_componentPrice(componentPrice);
+
+        this.componentNumber = Validator.getComponentNumber();
+        this.componentName = Validator.getComponentName();
+        this.componentType = Validator.getComponentType();
+        this.componentSpecs = Validator.getComponentSpecs();
+        this.componentPrice = Validator.getComponentPrice();
     }
 
     public String toString(){
-        return String.format("%s;%s;%s;%s\n", componentName, componentDesc, componentType, componentPrice);
+        return String.format("%s;%s;%s;%s;%s\n", componentNumber, componentName, componentType, componentSpecs, componentPrice);
+    }
+
+    public void setComponentNumber(String componentNumber) {
+        Validator.validate_componentNumber(componentNumber);
+        this.componentNumber = Validator.getComponentNumber();
     }
 
     public void setComponentName(String componentName) {
-        this.componentName = componentName;
-    }
-
-    public void setComponentDesc(String componentDesc) {
-        this.componentDesc = componentDesc;
+        Validator.validate_componentName(componentName);
+        this.componentName = Validator.getComponentName();
     }
 
     public void setComponentType(String componentType) {
-        this.componentType = componentType;
+        Validator.validate_componentType(componentType);
+        this.componentType = Validator.getComponentType();
     }
 
-    public void setComponentPrice(int componentPrice) {
-        this.componentPrice = componentPrice;
+    public void setComponentSpecs(String componentSpecs) {
+        Validator.validate_componentSpecs(componentSpecs);
+        this.componentSpecs = Validator.getComponentSpecs();
+    }
+
+    public void setComponentPrice(String componentPrice) {
+        Validator.validate_componentPrice(componentPrice);
+        this.componentPrice = Validator.getComponentPrice();
+    }
+
+    public int getComponentNumber() {
+        return componentNumber;
     }
 
     public String getComponentName() {
         return componentName;
     }
 
-    public String getComponentDesc() {
-        return componentDesc;
-    }
-
     public String getComponentType() {
         return componentType;
     }
 
-    public int getComponentPrice() {
+    public String getComponentSpecs() {
+        return componentSpecs;
+    }
+
+    public double getComponentPrice() {
         return componentPrice;
     }
 }

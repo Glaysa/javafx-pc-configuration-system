@@ -11,17 +11,23 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerAdmin">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerAdmin">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke;" BorderPane.alignment="CENTER">
          <children>
             <TableView fx:id="tableView" layoutX="58.0" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="88.0">
               <columns>
+
+                 <TableColumn maxWidth="100.0" minWidth="75.0" prefWidth="100.0" text="Number">
+                    <cellValueFactory>
+                       <PropertyValueFactory property="componentNumber" />
+                    </cellValueFactory>
+                 </TableColumn>
 
                  <TableColumn maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Name">
                     <cellValueFactory>
@@ -29,15 +35,15 @@
                     </cellValueFactory>
                  </TableColumn>
 
-                 <TableColumn minWidth="200.0" prefWidth="300.0" text="Description" >
-                    <cellValueFactory>
-                       <PropertyValueFactory property="componentDesc" />
-                    </cellValueFactory>
-                 </TableColumn>
-
                  <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Type">
                     <cellValueFactory>
                        <PropertyValueFactory property="componentType" />
+                    </cellValueFactory>
+                 </TableColumn>
+
+                 <TableColumn minWidth="200.0" prefWidth="300.0" text="Specifications">
+                    <cellValueFactory>
+                       <PropertyValueFactory property="componentSpecs" />
                     </cellValueFactory>
                  </TableColumn>
 
@@ -69,23 +75,28 @@
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="cName" layoutX="126.0" layoutY="129.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="120.0">
+            <TextField fx:id="cNumber" layoutX="75.0" layoutY="129.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="130.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextArea fx:id="cDesc" layoutX="76.0" layoutY="180.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="180.0">
+            <TextField fx:id="cName" layoutX="75.0" layoutY="189.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="189.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextArea fx:id="cDesc" layoutX="75.0" layoutY="249.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="249.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextArea>
-            <TextField fx:id="price" layoutX="75.0" layoutY="410.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
+            <TextField fx:id="price" layoutX="75.0" layoutY="479.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <ComboBox fx:id="typeOptions" editable="true" layoutX="75.0" layoutY="474.0" prefWidth="150.0" promptText="Select" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" />
-            <Button layoutX="74.0" layoutY="511.0" mnemonicParsing="false" onAction="#addComponent" text="Add Component" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
+            <ComboBox fx:id="typeOptions" editable="true" layoutX="75.0" layoutY="543.0" prefWidth="150.0" promptText="Select" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" />
+            <Button layoutX="75.0" layoutY="580.0" mnemonicParsing="false" onAction="#addComponent" text="Add Component" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -95,22 +106,27 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="96.0" text="Comopnent Name:">
+            <Label layoutX="77.0" layoutY="104.0" text="Comopnent Nubmer:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="156.0" text="Description:">
+            <Label layoutX="77.0" layoutY="165.0" text="Comopnent Name:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="387.0" text="Price:">
+            <Label layoutX="77.0" layoutY="225.0" text="Description:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="79.0" layoutY="449.0" text="Type:">
+            <Label layoutX="77.0" layoutY="456.0" text="Price:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="79.0" layoutY="518.0" text="Type:">
                <font>
                   <Font size="14.0" />
                </font>

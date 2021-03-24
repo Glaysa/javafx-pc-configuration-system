@@ -198,7 +198,7 @@ class FileThreads<T> extends FileActions<T> {
         T datum = data.get(0);
         String[] attributesLength = datum.toString().split(";");
 
-        if(attributesLength.length == 4){
+        if(attributesLength.length == 5){
             if(!data.isEmpty()) ComponentsCollection.clearCollection();
             System.out.println("File data is an instance of PCComponents");
             for(T d : data) ComponentsCollection.addToCollection((PCComponents) d);
