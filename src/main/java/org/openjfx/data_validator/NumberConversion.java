@@ -4,9 +4,7 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import org.openjfx.gui_utilities.Dialogs;
 
-/** Used to conver a value to either an Integer or Double
- *  Used in the tableview to convert component number and price
- *  when directly updated in the tableview */
+/** This class is responsible for validating the price and number column in the tableview. */
 
 public class NumberConversion {
 

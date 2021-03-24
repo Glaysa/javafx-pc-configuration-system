@@ -7,6 +7,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
+/** This class is responsible for opening dialogs of success, warning, confirmation and loading operations. */
+
 public class Dialogs {
 
     public static void showSuccessDialog(String dialogMessage){

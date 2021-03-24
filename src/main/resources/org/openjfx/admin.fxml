@@ -106,17 +106,17 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="104.0" text="Comopnent Nubmer:">
+            <Label layoutX="77.0" layoutY="104.0" text="Component Number:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="165.0" text="Comopnent Name:">
+            <Label layoutX="77.0" layoutY="165.0" text="Component Name:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="225.0" text="Description:">
+            <Label layoutX="77.0" layoutY="225.0" text="Specifications:">
                <font>
                   <Font size="14.0" />
                </font>

@@ -2,6 +2,8 @@ package org.openjfx.data_validator;
 
 import java.util.regex.Pattern;
 
+/** This class is responsible for validating components added on the tableview. */
+
 public class Validator {
 
     private static int componentNumber;

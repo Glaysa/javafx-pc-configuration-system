@@ -23,12 +23,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <CheckBox fx:id="administrator" layoutX="152.0" layoutY="260.0" mnemonicParsing="false" text="Administrator" AnchorPane.leftAnchor="150.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </CheckBox>
-            <Button layoutX="150.0" layoutY="298.0" mnemonicParsing="false" onAction="#login" text="Login" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
+            <Button layoutX="150.0" layoutY="260.0" mnemonicParsing="false" onAction="#login" text="Login" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
                <font>
                   <Font size="14.0" />
                </font>

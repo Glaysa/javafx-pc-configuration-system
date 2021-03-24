@@ -2,6 +2,8 @@ package org.openjfx.file_utilities.FileHandlers;
 
 import java.util.ArrayList;
 
+/** This class is responsible for calling the open and save threads. They are often called in the controllers. */
+
 public class FileActions<T> {
 
     private FileThreads<T> threadHandlers;

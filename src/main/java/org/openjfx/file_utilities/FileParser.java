@@ -2,6 +2,8 @@ package org.openjfx.file_utilities;
 
 import org.openjfx.data_models.PCComponents;
 
+/** This class is responsible for parsing data. */
+
 public class FileParser {
 
     public static <T> T setParser(String dataToParse){
@@ -30,7 +32,6 @@ public class FileParser {
         return (T) c;
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T configurationParser(String[] dataToParse){
         throw new UnsupportedOperationException("Not yet implemented");
     }

@@ -4,6 +4,8 @@ import javafx.concurrent.Task;
 import org.openjfx.file_utilities.FileReaders;
 import java.util.ArrayList;
 
+/** This class is responsible for executing the correct file readers found in file_io directory. */
+
 public class Reader<T> extends Task<ArrayList<T>> {
 
     private FileReaders fileReaders;

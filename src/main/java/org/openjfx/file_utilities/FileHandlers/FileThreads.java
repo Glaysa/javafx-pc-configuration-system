@@ -13,16 +13,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/** Thread Operations:
+ * - coded in a way where save thread and open thread does not run at the same time because they both have
+ *   to show their progress dialog one at a time.
+ * - with the help of booleans threadRunning and threadWaiting, we can tell which thread is running and waiting.
+ * - when a thread is waiting, it will run after the previous thread is finished.
+ * - thread.join() cannot be called because it freezes the UI. It's going to wait for the main thread to finish
+ *   doing it's task, but the main thread is only finished doing it's task when we quit the program, thus
+ *   thread.join() will wait until we close the program and causes the UI to freeze. */
+
 class FileThreads<T> extends FileActions<T> {
 
     private final String databasePath = "src/main/java/database/";      // where files are saved and opened
     private Writer<T> writer = new Writer<>();                          // task that runs on save thread
     private Reader<T> reader = new Reader<>();                          // task that runs on open thread
     private boolean threadRunning = false;                              // tells if a thread is currently running
-    private String backupOpenFile;                                      // used for backup
-    private String backupSaveFile;                                      // used for backup
-    private ArrayList<T> backupSaveData;                                // used for backup
-    private ArrayList<T> backupOpenData;                                // used for backup
     private Alert loadingAlert;                                         // Progress alert popup dialog
     private final Queue<ThreadInfo<T>> waitingThreads = new ArrayDeque<>();    // tells if a thread is waiting to be run
 
@@ -35,14 +40,8 @@ class FileThreads<T> extends FileActions<T> {
         return INSTANCE;
     }
 
-    /** Thread Operations:
-     * - coded in a way where save thread and open thread does not run at the same time because they both have
-     *   to show their progress alert one at a time.
-     * - with the help of booleans threadRunning and threadWaiting, we can tell which thread is running and waiting.
-     * - when a thread is waiting, it will run after the first thread is finished.
-     * - thread.join() cannot be called because it freezes the UI. It's going to wait for the main thread to finish
-     *   doing it's task, but the main thread is only finished doing it's task when we quit the program, thus
-     *   thread.join() will wait until we close the program and causes the UI to freeze. */
+    /** The following methods are responsible for assigning the correct file readers and writers depending on the file
+        extension. */
 
     private void assignWriters(String filename){
         String fileExtension = filename.substring(filename.lastIndexOf("."));
@@ -66,10 +65,14 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
+    /** Checks if the given filename exists in the applications 'database'. */
+
     private void fileExists(String filename) throws FileNotFoundException {
         File f = new File(databasePath + filename);
         if(!f.exists()) throw new FileNotFoundException(filename + " does not exist.");
     }
+
+    /** This method is responsible for running the Writer task on a thread. */
 
     protected void runSaveThread(ArrayList<T> data, String filename, String loadingMessage){
         try {
@@ -96,6 +99,8 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
+    /** This method is responsible for running the Reader task on a thread. */
+
     protected void runOpenThread(String filename, String loadingMessage){
         try {
             loadingAlert = Dialogs.showLoadingDialog(reader, loadingMessage);
@@ -121,12 +126,16 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
+    /** When save thread is a success, it runs all waiting threads. */
+
     private void saveSuccessful(){
         loadingAlert.close();
         threadRunning = false;
         System.out.println("Save Thread Successful!\n");
         runWaitingThreads();
     }
+
+    /** When open thread is a success, it processes the data and runs all waiting threads. */
 
     private void openSuccessful(){
         loadingAlert.close();
@@ -135,6 +144,8 @@ class FileThreads<T> extends FileActions<T> {
         System.out.println("Open Thread Successful!\n");
         runWaitingThreads();
     }
+
+    /** When save thread fails, this method shows error messages to user and developers and runs all waiting threads */
 
     private void saveFailed(WorkerStateEvent e){
         loadingAlert.close();
@@ -153,6 +164,8 @@ class FileThreads<T> extends FileActions<T> {
         System.out.println();
     }
 
+    /** When open thread fails, this method shows error messages to user and developers and runs all waiting threads */
+
     private void openFailed(WorkerStateEvent e){
         loadingAlert.close();
         threadRunning = false;
@@ -169,6 +182,8 @@ class FileThreads<T> extends FileActions<T> {
         e.getSource().getException().printStackTrace();
         System.out.println();
     }
+
+    /** This method runs all threads in the waiting threads Queue. */
 
     private void runWaitingThreads(){
         for(int i = 0; i < waitingThreads.size(); i++){
@@ -193,7 +208,8 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
-    /** Opening a file returns data, these data are processed here */
+    /** Opening a file returns data, the data is processed here. */
+
     private void processData(ArrayList<T> data) {
         T datum = data.get(0);
         String[] attributesLength = datum.toString().split(";");
@@ -215,9 +231,13 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
+    /** Adds a thread to the waiting threads queue. */
+
     public void addToWaitingThreads(ThreadInfo<T> threadWaiting) {
         waitingThreads.add(threadWaiting);
     }
+
+    /** Tells if a thread is running. */
 
     public boolean isThreadRunning() {
         return threadRunning;

@@ -2,10 +2,9 @@ package org.openjfx.file_utilities.FileHandlers;
 
 import java.util.ArrayList;
 
-/** This class is used to save waiting threads in a queue. With this, we can access all info about the thread that is
+/** This class is used as a model for waiting threads added in a queue. With this, we can access all info about the thread that is
     waiting and run the correct operations. The threads can either be a save thread operation or open thread operation.
     Save thread and Open thread cannot run at the same time because they have to show their progress dialog one at a time.
-    If 10 open thread are called, they will run after one another, thread.join is not used because it freezes the UI.
  */
 
 public class ThreadInfo<T> {

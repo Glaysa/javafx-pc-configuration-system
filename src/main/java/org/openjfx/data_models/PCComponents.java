@@ -2,6 +2,8 @@ package org.openjfx.data_models;
 
 import org.openjfx.data_validator.Validator;
 
+/** Model of Pc components. */
+
 public class PCComponents {
 
     private int componentNumber;

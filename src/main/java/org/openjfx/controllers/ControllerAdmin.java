@@ -26,20 +26,27 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextField price;
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
-    private final FileActions<PCComponents> componentsFileActions = new FileActions<>();
+    private final FileActions<PCComponents> file = new FileActions<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        componentsFileActions.open("initialComponents.txt", "Loading system data...");
+        // Opens a file containing the default lists of components.
+        file.open("initialComponents.txt", "Loading system data...");
+        // Initializes the tableview.
         ComponentsCollection.setTableView(tableView);
+        // Fills the component type combobox with values.
         ComponentsCollection.fillCombobox_TYPE(typeOptions);
+        // Whenever there is a new component type, they are added to the component type combobox
         ComponentsCollection.fillCombobox_TYPE_listOnChanged(typeOptions, typeColumn);
 
+        // Initializes all tableview columns to be editable.
         numberColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToInteger()));
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         specsColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         priceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToDouble()));
     }
+
+    /** Adds a new component to the tableview. */
 
     @FXML
     void addComponent() {
@@ -60,10 +67,7 @@ public class ControllerAdmin implements Initializable {
         }
     }
 
-    @FXML
-    void search() {
-        throw new UnsupportedOperationException("Method not yet implemented");
-    }
+    /** Resets all input fields after successful addition of components and refreshes the tableview. */
 
     void resetFields() {
         cName.setText("");
@@ -71,6 +75,8 @@ public class ControllerAdmin implements Initializable {
         price.setText("");
         tableView.refresh();
     }
+
+    /** The following methods are used to validate component data that is directly edited on the tableview. */
 
     @FXML
     void numberOnEdit(TableColumn.CellEditEvent<PCComponents, Integer> event) {
@@ -129,5 +135,12 @@ public class ControllerAdmin implements Initializable {
         } catch (NullPointerException ignored) {
             tableView.refresh();
         }
+    }
+
+    /** search() - searches through the tableview with the given search word. */
+
+    @FXML
+    void search() {
+        throw new UnsupportedOperationException("Method not yet implemented");
     }
 }

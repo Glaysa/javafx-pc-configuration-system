@@ -12,59 +12,64 @@ import java.util.ArrayList;
 
 public class ComponentsCollection {
 
-    private static ObservableList<PCComponents> obsList = FXCollections.observableArrayList();
-    private static ObservableList<String> obsList_TYPES;
+    private static ObservableList<PCComponents> componentObsList = FXCollections.observableArrayList();
+    private static ObservableList<String> componentTypeObsList;
 
-    /** Adds new items to observable list of components */
+    /** Adds new components to the observable list componentObsList */
+
     public static void addToCollection(PCComponents toAdd){
-        obsList.add(toAdd);
+        componentObsList.add(toAdd);
     }
 
-    /** Sets the items of the tableview */
+    /** Sets the items of the tableview to componentObsList */
+
     public static void setTableView(TableView<PCComponents> tableView){
-        tableView.setItems(obsList);
+        tableView.setItems(componentObsList);
     }
 
-    /** Clear the observable list of components */
+    /** Clears the componentObsList */
+
     public static void clearCollection(){
-        obsList.clear();
+        componentObsList.clear();
     }
 
-    /** This fills the combobox of component types with the defined and new values found in the component observable list */
+    /** This fills the combobox of component types with the defined types and new types found in the componentObsList */
+
     public static void fillCombobox_TYPE(ComboBox<String> typeOptions){
         String[] definedTypes = {"RAM","Keyboards","Processors","Graphic Cards", "Mouse"};
-        obsList_TYPES = FXCollections.observableArrayList(definedTypes);
-        for(PCComponents c : obsList){
-            if(!obsList_TYPES.contains(c.getComponentType())){
-                obsList_TYPES.add(c.getComponentType());
+        componentTypeObsList = FXCollections.observableArrayList(definedTypes);
+        for(PCComponents c : componentObsList){
+            if(!componentTypeObsList.contains(c.getComponentType())){
+                componentTypeObsList.add(c.getComponentType());
             }
         }
         typeOptions.setEditable(true);
         typeOptions.setPromptText("Choose/Enter Component Type");
-        typeOptions.setItems(obsList_TYPES);
+        typeOptions.setItems(componentTypeObsList);
     }
 
-    /** Updates the combobox of component types whenever there is a change on the observable list of components
-     *  including the combobox in the editable tableview */
+    /** Updates the combobox of component types whenever there is a change in componentsObsList
+        including the combobox of typeColumn in the editable tableview */
+
     public static void fillCombobox_TYPE_listOnChanged(ComboBox<String> typeOptions, TableColumn<PCComponents, String> typeColumn){
-        obsList.addListener(new ListChangeListener<PCComponents>() {
+        componentObsList.addListener(new ListChangeListener<PCComponents>() {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
                 fillCombobox_TYPE(typeOptions);
-                typeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(obsList_TYPES));
+                typeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(componentTypeObsList));
             }
         });
     }
 
-    public static void setObsList(ArrayList<PCComponents> data) {
-        ComponentsCollection.obsList = FXCollections.observableArrayList(data);
+    public static void setComponentObsList(ArrayList<PCComponents> data) {
+        ComponentsCollection.componentObsList = FXCollections.observableArrayList(data);
     }
 
-    public static ObservableList<PCComponents> getObsList() {
-        return obsList;
+    public static ObservableList<PCComponents> getComponentObsList() {
+        return componentObsList;
     }
 
-    public static ObservableList<String> getObsList_TYPES(){
-        return obsList_TYPES;
+    public static ObservableList<String> getComponentTypeObsList(){
+        return componentTypeObsList;
     }
 }
