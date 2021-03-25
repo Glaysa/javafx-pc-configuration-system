@@ -3,7 +3,6 @@ package org.openjfx.controllers;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -20,13 +19,15 @@ public class ControllerLogin implements Initializable {
 
     @FXML private TextField password;
     @FXML private TextField username;
-    @FXML private CheckBox administrator;
+
+    /** Initializes the the key event on loginOnEnterKey(). */
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initializes the key event listener, user can login by pressing enter keyboard or clicking login button.
         loginOnEnterKey();
     }
+
+    /** Method that directs user to either the admin view or customer view. */
 
     @FXML
     void login() throws IOException {
@@ -41,6 +42,8 @@ public class ControllerLogin implements Initializable {
             Dialogs.showWarningDialog("Wrong password/username combination","");
         }
     }
+
+    /** Method that runs login() when ENTER key is pressed. */
 
     void loginOnEnterKey(){
         password.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {

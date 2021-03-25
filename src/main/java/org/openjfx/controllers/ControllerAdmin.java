@@ -3,12 +3,11 @@ package org.openjfx.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
-import org.openjfx.data_validator.NumberConversion;
 import org.openjfx.file_utilities.FileHandlers.FileActions;
 import org.openjfx.gui_utilities.Dialogs;
+import org.openjfx.gui_utilities.OpenPopup;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,12 +37,8 @@ public class ControllerAdmin implements Initializable {
         ComponentsCollection.fillCombobox_TYPE(typeOptions);
         // Whenever there is a new component type, they are added to the component type combobox
         ComponentsCollection.fillCombobox_TYPE_listOnChanged(typeOptions, typeColumn);
-
-        // Initializes all tableview columns to be editable.
-        numberColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToInteger()));
-        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        specsColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        priceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToDouble()));
+        // Initializes detection of double click on row of tableview
+        initDetectionOfDoubleClickOnTableRow();
     }
 
     /** Adds a new component to the tableview. */
@@ -74,6 +69,22 @@ public class ControllerAdmin implements Initializable {
         cDesc.setText("");
         price.setText("");
         tableView.refresh();
+    }
+
+    /** Detects a double click on row of tableview and opens a new window for component editing.*/
+
+    public void initDetectionOfDoubleClickOnTableRow(){
+        tableView.setRowFactory(tv -> {
+            TableRow<PCComponents> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if(event.getClickCount() == 2) {
+                    if(row.getItem() != null) {
+                        OpenPopup.editComponent(row.getItem());
+                    }
+                }
+            });
+            return row;
+        });
     }
 
     /** The following methods are used to validate component data that is directly edited on the tableview. */
