@@ -22,14 +22,14 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextArea fx:id="componentSpecs" layoutX="178.0" layoutY="190.0" prefHeight="200.0" prefWidth="445.0" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="190.0" />
+      <TextArea fx:id="componentSpecs" layoutX="178.0" layoutY="190.0" prefHeight="200.0" prefWidth="445.0" wrapText="true" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="190.0" />
       <ComboBox fx:id="typeOptions" editable="true" layoutX="178.0" layoutY="430.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="424.0" AnchorPane.topAnchor="430.0" />
       <TextField fx:id="componentPrice" layoutX="424.0" layoutY="430.0" prefWidth="200.0" AnchorPane.leftAnchor="422.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="430.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button layoutX="178.0" layoutY="478.0" mnemonicParsing="false" onAction="#updateComponent" prefHeight="30.0" prefWidth="445.0" text="Updated Component" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="180.0">
+      <Button fx:id="updatedComponentBtn" layoutX="178.0" layoutY="478.0" mnemonicParsing="false" onAction="#updateComponent" prefHeight="30.0" prefWidth="445.0" text="Updated Component" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="180.0">
          <font>
             <Font size="14.0" />
          </font>

@@ -14,11 +14,6 @@ import java.util.ResourceBundle;
 public class ControllerAdmin implements Initializable {
 
     @FXML private TableView<PCComponents> tableView;
-    @FXML private TableColumn<PCComponents, Integer> numberColumn;
-    @FXML private TableColumn<PCComponents, String> nameColumn;
-    @FXML private TableColumn<PCComponents, String> typeColumn;
-    @FXML private TableColumn<PCComponents, String> specsColumn;
-    @FXML private TableColumn<PCComponents, Double> priceColumn;
     @FXML private TextField searchInput;
     @FXML private TextField cNumber;
     @FXML private TextField cName;
@@ -26,6 +21,7 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
     private final FileActions<PCComponents> file = new FileActions<>();
+    private PCComponents updatedComponent;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,16 +31,16 @@ public class ControllerAdmin implements Initializable {
         ComponentsCollection.setTableView(tableView);
         // Fills the component type combobox with values.
         ComponentsCollection.fillCombobox_TYPE(typeOptions);
-        // Whenever there is a new component type, they are added to the component type combobox
-        ComponentsCollection.fillCombobox_TYPE_listOnChanged(typeOptions, typeColumn);
-        // Initializes detection of double click on row of tableview
-        initDetectionOfDoubleClickOnTableRow();
+        // (listener) Whenever there is a new component type, they are added to the component type combobox
+        ComponentsCollection.fillCombobox_TYPE_listOnChanged(typeOptions);
+        // (listener) Initializes detection of double click on row of tableview
+        editComponentOnDoubleClick();
     }
 
-    /** Adds a new component to the tableview. */
+    /** Creates a new component to add on the tableview. */
 
     @FXML
-    void addComponent() {
+    void createComponent() {
         String componentNumber = cNumber.getText();
         String componentName = cName.getText();
         String componentSpecs = cDesc.getText();
@@ -62,7 +58,7 @@ public class ControllerAdmin implements Initializable {
         }
     }
 
-    /** Resets all input fields after successful addition of components and refreshes the tableview. */
+    /** Resets all input fields after successful creation of components and refreshes the tableview. */
 
     void resetFields() {
         cName.setText("");
@@ -71,81 +67,23 @@ public class ControllerAdmin implements Initializable {
         tableView.refresh();
     }
 
-    /** Detects a double click on row of tableview and opens a new window for component editing.*/
+    /** Detects a double click on a row in the tableview and opens a new window for component editing.*/
 
-    public void initDetectionOfDoubleClickOnTableRow(){
+    public void editComponentOnDoubleClick(){
         tableView.setRowFactory(tv -> {
             TableRow<PCComponents> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if(event.getClickCount() == 2) {
                     if(row.getItem() != null) {
-                        OpenPopup.editComponent(row.getItem());
+                        // Opens a popup window for component editing and returns a new updated component
+                        updatedComponent = OpenPopup.editComponent(row.getItem(), tableView);
+                        // The component on tableview will be updated
+                        row.setItem(updatedComponent);
                     }
                 }
             });
             return row;
         });
-    }
-
-    /** The following methods are used to validate component data that is directly edited on the tableview. */
-
-    @FXML
-    void numberOnEdit(TableColumn.CellEditEvent<PCComponents, Integer> event) {
-        try {
-            event.getRowValue().setComponentNumber(Integer.toString(event.getNewValue()));
-            tableView.refresh();
-        } catch (IllegalArgumentException e) {
-            Dialogs.showWarningDialog(e.getMessage(),"");
-            tableView.refresh();
-        } catch (NullPointerException ignored) {
-            tableView.refresh();
-        }
-    }
-
-    @FXML
-    void nameOnEdit(TableColumn.CellEditEvent<PCComponents, String> event) {
-        try {
-            event.getRowValue().setComponentName(event.getNewValue());
-            tableView.refresh();
-        } catch (IllegalArgumentException e) {
-            Dialogs.showWarningDialog(e.getMessage(),"");
-            tableView.refresh();
-        }
-    }
-
-    @FXML
-    void typeOnEdit(TableColumn.CellEditEvent<PCComponents, String> event) {
-        try {
-            event.getRowValue().setComponentType(event.getNewValue());
-            tableView.refresh();
-        } catch (IllegalArgumentException e) {
-            Dialogs.showWarningDialog(e.getMessage(),"");
-            tableView.refresh();
-        }
-    }
-
-    @FXML
-    void specsOnEdit(TableColumn.CellEditEvent<PCComponents, String> event) {
-        try {
-            event.getRowValue().setComponentSpecs(event.getNewValue());
-            tableView.refresh();
-        } catch (IllegalArgumentException e) {
-            Dialogs.showWarningDialog(e.getMessage(),"");
-            tableView.refresh();
-        }
-    }
-
-    @FXML
-    void priceOnEdit(TableColumn.CellEditEvent<PCComponents, Double> event) {
-        try {
-            event.getRowValue().setComponentPrice(Double.toString(event.getNewValue()));
-            tableView.refresh();
-        } catch (IllegalArgumentException e) {
-            Dialogs.showWarningDialog(e.getMessage(),"");
-            tableView.refresh();
-        } catch (NullPointerException ignored) {
-            tableView.refresh();
-        }
     }
 
     /** search() - searches through the tableview with the given search word. */
