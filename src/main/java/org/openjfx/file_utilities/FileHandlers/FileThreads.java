@@ -30,6 +30,7 @@ class FileThreads<T> extends FileActions<T> {
     private boolean threadRunning = false;                              // tells if a thread is currently running
     private Alert loadingAlert;                                         // Progress alert popup dialog
     private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();   // tells if a thread is waiting to be run
+    private String currentOpenedFile;
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
@@ -106,6 +107,7 @@ class FileThreads<T> extends FileActions<T> {
             loadingAlert = AlertDialog.showLoadingDialog(reader, loadingMessage);
             fileExists(filename);
             assignReaders(filename);
+            currentOpenedFile = filename;
 
             reader.setFilepath(databasePath + filename);
             reader.setOnScheduled((e) -> System.out.println("Open Thread is now running..."));
@@ -211,19 +213,27 @@ class FileThreads<T> extends FileActions<T> {
     /** Opening a file returns data, that data is processed here. */
 
     private void processData(ArrayList<T> data) {
+
+        // Checks which object instance is the data
         T datum = data.get(0);
         String[] attributesLength = datum.toString().split(";");
 
         if(attributesLength.length == 5){
-            if(!data.isEmpty()) ComponentsCollection.clearCollection();
-            System.out.println("File data is an instance of PCComponents");
-            for(T d : data) ComponentsCollection.addToCollection((PCComponents) d);
-        } else {
-            System.err.println("File is corrupted: Data not loaded");
-            AlertDialog.showWarningDialog(
-                    "File is corrupted!",
-                    "File data must either contain pc components or pc configurations.");
 
+            // Clears the tableview first before loading mew data
+            if(!data.isEmpty()) ComponentsCollection.clearCollection();
+            // Load the new data to tableview
+            for(T d : data) ComponentsCollection.addToCollection((PCComponents) d);
+            // When opening a new file, it is by default not modified
+            ComponentsCollection.setModified(false);
+
+        } else {
+
+            // Show a warning alert that the file is corrupted
+            System.err.println("File is corrupted: Data not loaded");
+            AlertDialog.showWarningDialog("File is corrupted!", "File data must either contain pc components or pc configurations.");
+
+            // When the file that is opened is corrupted, load the initial component list
             if(data.isEmpty()) {
                 reader = new Reader<>();
                 open("initialComponents.txt","Loading default data...");
@@ -241,5 +251,9 @@ class FileThreads<T> extends FileActions<T> {
 
     public boolean isThreadRunning() {
         return threadRunning;
+    }
+
+    protected String getCurrentOpenedFile(){
+        return currentOpenedFile;
     }
 }

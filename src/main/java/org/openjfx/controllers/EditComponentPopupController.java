@@ -31,8 +31,8 @@ public class EditComponentPopupController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Fills the component type combobox with values.
         ComponentsCollection.fillCombobox_TYPE(typeOptions);
-        // Whenever there is a new component type, they are added to the component type combobox
-        ComponentsCollection.fillCombobox_TYPE_listOnChanged(typeOptions);
+        // (listener) check methods to see its functions
+        ComponentsCollection.collectionOnChange(typeOptions);
     }
 
     /** Updates the component */

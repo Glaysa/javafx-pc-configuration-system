@@ -7,12 +7,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import org.openjfx.data_models.PCComponents;
 
+import java.util.ArrayList;
+
 /** This class is responsible of all methods related to the components tableview */
 
 public class ComponentsCollection {
 
     private static ObservableList<PCComponents> componentObsList = FXCollections.observableArrayList();
     private static ObservableList<String> componentTypeObsList;
+    private static boolean modified = false;
 
     /** Adds new components to the observable list componentObsList */
 
@@ -49,24 +52,34 @@ public class ComponentsCollection {
 
     /** Updates the combobox of component types whenever there is a change in componentsObsList */
 
-    public static void fillCombobox_TYPE_listOnChanged(ComboBox<String> typeOptions){
+    public static void collectionOnChange(ComboBox<String> typeOptions){
         componentObsList.addListener(new ListChangeListener<PCComponents>() {
 
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
                 // Whenever there is a change on component list, update the combobox of component types
                 fillCombobox_TYPE(typeOptions);
+                // Keeps track of the obs list if its modified or not
+                modified = true;
             }
         });
     }
 
     /** The following methods are get methods */
 
-    public static ObservableList<PCComponents> getComponentObsList() {
-        return componentObsList;
+    public static ArrayList<PCComponents> getComponentObsList() {
+        return new ArrayList<>(componentObsList);
     }
 
     public static ObservableList<String> getComponentTypeObsList(){
         return componentTypeObsList;
+    }
+
+    public static boolean isModified() {
+        return modified;
+    }
+
+    public static void setModified(boolean modified) {
+        ComponentsCollection.modified = modified;
     }
 }
