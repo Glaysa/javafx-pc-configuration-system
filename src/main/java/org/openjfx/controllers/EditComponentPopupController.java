@@ -6,25 +6,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
-import org.openjfx.gui_utilities.Dialogs;
+import org.openjfx.gui_utilities.AlertDialog;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/** This controller is used for the popup window of components when are being edited. */
+/** This controller is used for the popup window of components when being edited. */
 
-public class PopupControllerEditComponents implements Initializable {
+public class EditComponentPopupController implements Initializable {
 
+    @FXML private AnchorPane parentPane;
     @FXML private Button updatedComponentBtn;
     @FXML private TextField componentNumber;
     @FXML private TextField componentName;
     @FXML private TextArea componentSpecs;
     @FXML private ComboBox<String> typeOptions;
     @FXML private TextField componentPrice;
-    private PCComponents componentToEdit;
     private PCComponents updatedComponent;
-    private boolean updated = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,17 +46,22 @@ public class PopupControllerEditComponents implements Initializable {
             String specsStr = componentSpecs.getText();
             String priceStr = componentPrice.getText();
             updatedComponent = new PCComponents(numberStr, nameStr, typeStr, specsStr, priceStr);
-
         } catch (Exception e) {
-            Dialogs.showWarningDialog(e.getMessage(),"");
+            AlertDialog.showWarningDialog(e.getMessage(),"");
         }
-        updated = true;
+    }
+
+    /** Closes the popup window */
+
+    @FXML
+    private void cancelEditComponent(){
+        Stage stage = (Stage) parentPane.getScene().getWindow();
+        stage.close();
     }
 
     /** Displays the data of component to be edited */
 
     public void setComponentToEdit(PCComponents componentToEdit) {
-        this.componentToEdit = componentToEdit;
         this.componentNumber.setText(Integer.toString(componentToEdit.getComponentNumber()));
         this.componentName.setText(componentToEdit.getComponentName());
         this.typeOptions.setValue(componentToEdit.getComponentType());
@@ -73,9 +79,5 @@ public class PopupControllerEditComponents implements Initializable {
 
     public Button getUpdatedComponentBtn(){
         return updatedComponentBtn;
-    }
-
-    public boolean isUpdated() {
-        return updated;
     }
 }

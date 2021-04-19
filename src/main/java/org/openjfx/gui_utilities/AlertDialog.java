@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 /** This class is responsible for opening dialogs of success, warning, confirmation and loading operations. */
 
-public class Dialogs {
+public class AlertDialog {
 
     public static void showSuccessDialog(String dialogMessage){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

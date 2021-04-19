@@ -8,7 +8,7 @@ import org.openjfx.file_utilities.file_io.IO_bin;
 import org.openjfx.file_utilities.file_io.IO_txt;
 import org.openjfx.file_utilities.file_tasks.Reader;
 import org.openjfx.file_utilities.file_tasks.Writer;
-import org.openjfx.gui_utilities.Dialogs;
+import org.openjfx.gui_utilities.AlertDialog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -29,7 +29,7 @@ class FileThreads<T> extends FileActions<T> {
     private Reader<T> reader = new Reader<>();                          // task that runs on open thread
     private boolean threadRunning = false;                              // tells if a thread is currently running
     private Alert loadingAlert;                                         // Progress alert popup dialog
-    private final Queue<ThreadInfo<T>> waitingThreads = new ArrayDeque<>();    // tells if a thread is waiting to be run
+    private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();   // tells if a thread is waiting to be run
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
@@ -48,7 +48,7 @@ class FileThreads<T> extends FileActions<T> {
         try {
             if(fileExtension.equals(".txt")) writer.setFileWriter(new IO_txt());
             else if(fileExtension.equals(".bin")) writer.setFileWriter(new IO_bin());
-            else {Dialogs.showWarningDialog("Unsupported format", "Open only: *.txt, *.bin");}
+            else { AlertDialog.showWarningDialog("Unsupported format", "Open only: *.txt, *.bin");}
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -59,7 +59,7 @@ class FileThreads<T> extends FileActions<T> {
         try {
             if(fileExtension.equals(".txt")) reader.setFileReader(new IO_txt());
             else if(fileExtension.equals(".bin")) reader.setFileReader(new IO_bin());
-            else {Dialogs.showWarningDialog("Unsupported format", "Open only: *.txt, *.bin");}
+            else { AlertDialog.showWarningDialog("Unsupported format", "Open only: *.txt, *.bin");}
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -76,7 +76,7 @@ class FileThreads<T> extends FileActions<T> {
 
     protected void runSaveThread(ArrayList<T> data, String filename, String loadingMessage){
         try {
-            loadingAlert = Dialogs.showLoadingDialog(writer, loadingMessage);
+            loadingAlert = AlertDialog.showLoadingDialog(writer, loadingMessage);
             assignWriters(filename);
 
             writer.setData(data);
@@ -93,7 +93,7 @@ class FileThreads<T> extends FileActions<T> {
 
         } catch (Exception e) {
             threadRunning = false;
-            Dialogs.showWarningDialog(e.getMessage(),"");
+            AlertDialog.showWarningDialog(e.getMessage(),"");
             waitingThreads.poll();
             runWaitingThreads();
         }
@@ -103,7 +103,7 @@ class FileThreads<T> extends FileActions<T> {
 
     protected void runOpenThread(String filename, String loadingMessage){
         try {
-            loadingAlert = Dialogs.showLoadingDialog(reader, loadingMessage);
+            loadingAlert = AlertDialog.showLoadingDialog(reader, loadingMessage);
             fileExists(filename);
             assignReaders(filename);
 
@@ -120,7 +120,7 @@ class FileThreads<T> extends FileActions<T> {
 
         } catch (Exception e) {
             threadRunning = false;
-            Dialogs.showWarningDialog(e.getMessage(), "");
+            AlertDialog.showWarningDialog(e.getMessage(), "");
             waitingThreads.poll();
             runWaitingThreads();
         }
@@ -153,7 +153,7 @@ class FileThreads<T> extends FileActions<T> {
 
         // Error shown to the user
         String errorMessage = e.getSource().getException().getMessage();
-        Dialogs.showWarningDialog("System error - Failed to save file", errorMessage);
+        AlertDialog.showWarningDialog("System error - Failed to save file", errorMessage);
 
         // Run the next waiting threads if there are any
         runWaitingThreads();
@@ -172,7 +172,7 @@ class FileThreads<T> extends FileActions<T> {
 
         // Error shown to the user
         String errorMessage = e.getSource().getException().getMessage();
-        Dialogs.showWarningDialog("System error - Failed to open file", errorMessage);
+        AlertDialog.showWarningDialog("System error - Failed to open file", errorMessage);
 
         // Run the next waiting threads if there are any
         runWaitingThreads();
@@ -208,7 +208,7 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
-    /** Opening a file returns data, the data is processed here. */
+    /** Opening a file returns data, that data is processed here. */
 
     private void processData(ArrayList<T> data) {
         T datum = data.get(0);
@@ -220,7 +220,7 @@ class FileThreads<T> extends FileActions<T> {
             for(T d : data) ComponentsCollection.addToCollection((PCComponents) d);
         } else {
             System.err.println("File is corrupted: Data not loaded");
-            Dialogs.showWarningDialog(
+            AlertDialog.showWarningDialog(
                     "File is corrupted!",
                     "File data must either contain pc components or pc configurations.");
 
@@ -233,7 +233,7 @@ class FileThreads<T> extends FileActions<T> {
 
     /** Adds a thread to the waiting threads queue. */
 
-    public void addToWaitingThreads(ThreadInfo<T> threadWaiting) {
+    public void addToWaitingThreads(FileThreadInfo<T> threadWaiting) {
         waitingThreads.add(threadWaiting);
     }
 

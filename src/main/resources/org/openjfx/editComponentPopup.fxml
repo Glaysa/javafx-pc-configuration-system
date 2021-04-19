@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.PopupControllerEditComponents">
+<AnchorPane fx:id="parentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.EditComponentPopupController">
    <children>
       <TextField fx:id="componentNumber" layoutX="178.0" layoutY="124.0" prefWidth="200.0" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="424.0" AnchorPane.topAnchor="124.0">
          <font>
@@ -30,6 +29,11 @@
          </font>
       </TextField>
       <Button fx:id="updatedComponentBtn" layoutX="178.0" layoutY="478.0" mnemonicParsing="false" onAction="#updateComponent" prefHeight="30.0" prefWidth="445.0" text="Updated Component" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="180.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="178.0" layoutY="517.0" mnemonicParsing="false" onAction="#cancelEditComponent" prefHeight="30.0" prefWidth="442.0" text="Cancel">
          <font>
             <Font size="14.0" />
          </font>

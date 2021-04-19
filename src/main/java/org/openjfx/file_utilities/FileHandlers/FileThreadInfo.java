@@ -7,14 +7,14 @@ import java.util.ArrayList;
     Save thread and Open thread cannot run at the same time because they have to show their progress dialog one at a time.
  */
 
-public class ThreadInfo<T> {
+public class FileThreadInfo<T> {
 
     private final String fileThread;
     private final String filename;
     private final ArrayList<T> fileData;
     private final String fileMsg;
 
-    public ThreadInfo(String filename, ArrayList<T> fileData, String fileThread, String fileMsg){
+    public FileThreadInfo(String filename, ArrayList<T> fileData, String fileThread, String fileMsg){
         this.fileThread = fileThread;
         this.filename = filename;
         this.fileData = fileData;

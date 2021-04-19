@@ -6,8 +6,8 @@ import javafx.scene.control.*;
 import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.FileHandlers.FileActions;
-import org.openjfx.gui_utilities.Dialogs;
-import org.openjfx.gui_utilities.OpenPopup;
+import org.openjfx.gui_utilities.AlertDialog;
+import org.openjfx.gui_utilities.OpenEditComponentPopup;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,7 +25,7 @@ public class ControllerAdmin implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Opens a file containing the default lists of components.
+        // Opens a file containing the default list of components.
         file.open("initialComponents.txt", "Loading system data...");
         // Initializes the tableview.
         ComponentsCollection.setTableView(tableView);
@@ -41,20 +41,20 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void createComponent() {
-        String componentNumber = cNumber.getText();
-        String componentName = cName.getText();
-        String componentSpecs = cDesc.getText();
-        String componentPrice = price.getText();
-        String componentType = typeOptions.getValue();
+        String strNumber = cNumber.getText();
+        String strName = cName.getText();
+        String strType = typeOptions.getValue();
+        String strSpecs = cDesc.getText();
+        String strPrice = price.getText();
 
         try {
-            PCComponents c = new PCComponents(componentNumber, componentName, componentType, componentSpecs, componentPrice);
+            PCComponents c = new PCComponents(strNumber, strName, strType, strSpecs, strPrice);
             ComponentsCollection.addToCollection(c);
             resetFields();
 
-            Dialogs.showSuccessDialog("Component Added Successfully!");
+            AlertDialog.showSuccessDialog("Component Added Successfully!");
         } catch (IllegalArgumentException e) {
-            Dialogs.showWarningDialog(e.getMessage(), "");
+            AlertDialog.showWarningDialog(e.getMessage(), "");
         }
     }
 
@@ -77,10 +77,10 @@ public class ControllerAdmin implements Initializable {
                     if(row.getItem() != null) {
                         // Index of the component to edit
                         int index = row.getIndex();
-                        // Get the component to edit
+                        // Component to edit
                         PCComponents componentToUpdate = row.getItem();
                         // Opens a popup window for component editing
-                        OpenPopup.editComponent(componentToUpdate, tableView, index);
+                        OpenEditComponentPopup.editComponent(componentToUpdate, tableView, index);
                     }
                 }
             });

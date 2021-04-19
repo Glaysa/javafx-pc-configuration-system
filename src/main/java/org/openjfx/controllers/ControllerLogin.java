@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.openjfx.App;
-import org.openjfx.gui_utilities.Dialogs;
+import org.openjfx.gui_utilities.AlertDialog;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,7 +39,7 @@ public class ControllerLogin implements Initializable {
         } else if (!usernameInput.equals("admin") && passwordInput.equals("1234")) {
             App.setRoot("customer");
         } else {
-            Dialogs.showWarningDialog("Wrong password/username combination","");
+            AlertDialog.showWarningDialog("Wrong password/username combination","");
         }
     }
 
