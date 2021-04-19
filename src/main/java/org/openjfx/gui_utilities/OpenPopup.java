@@ -14,7 +14,7 @@ public class OpenPopup {
 
     /** This method is responsible for opening a popup for editing the components in the tableview when double clicked */
 
-    public static PCComponents editComponent(PCComponents componentToEdit, TableView<PCComponents> tableview){
+    public static void editComponent(PCComponents componentToEdit, TableView<PCComponents> tableview, int index) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("editComponentsPopup.fxml"));
             Parent root = fxmlLoader.load();
@@ -28,25 +28,21 @@ public class OpenPopup {
             controller.getUpdatedComponentBtn().setOnMouseClicked(event -> {
                 // Whenever update button is clicked, call the updateComponent() method
                 controller.updateComponent();
-                // Refresh the tableview to see the changes
-                tableview.refresh();
+                // Updated the changes to the tableview
+                tableview.getItems().set(index, controller.getUpdatedComponent());
                 // Close the popup window
                 stage.close();
             });
 
+            // Opens the popup window
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.setResizable(false);
             stage.setTitle("Edit Components");
             stage.show();
 
-            // Return the new updated component
-            return controller.getUpdatedComponent();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return null;
     }
 }

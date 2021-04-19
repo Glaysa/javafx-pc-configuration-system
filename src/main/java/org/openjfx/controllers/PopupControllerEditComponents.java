@@ -23,6 +23,8 @@ public class PopupControllerEditComponents implements Initializable {
     @FXML private ComboBox<String> typeOptions;
     @FXML private TextField componentPrice;
     private PCComponents componentToEdit;
+    private PCComponents updatedComponent;
+    private boolean updated = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -37,14 +39,17 @@ public class PopupControllerEditComponents implements Initializable {
     @FXML
     public void updateComponent(){
         try {
-            componentToEdit.setComponentNumber(componentNumber.getText());
-            componentToEdit.setComponentName(componentName.getText());
-            componentToEdit.setComponentType(typeOptions.getValue());
-            componentToEdit.setComponentSpecs(componentSpecs.getText());
-            componentToEdit.setComponentPrice(componentPrice.getText());
+            String numberStr = componentNumber.getText();
+            String nameStr = componentName.getText();
+            String typeStr = typeOptions.getValue();
+            String specsStr = componentSpecs.getText();
+            String priceStr = componentPrice.getText();
+            updatedComponent = new PCComponents(numberStr, nameStr, typeStr, specsStr, priceStr);
+
         } catch (Exception e) {
             Dialogs.showWarningDialog(e.getMessage(),"");
         }
+        updated = true;
     }
 
     /** Displays the data of component to be edited */
@@ -61,12 +66,16 @@ public class PopupControllerEditComponents implements Initializable {
     /** Gets the new updated component */
 
     public PCComponents getUpdatedComponent(){
-        return componentToEdit;
+        return updatedComponent;
     }
 
     /** Gets the update button */
 
     public Button getUpdatedComponentBtn(){
         return updatedComponentBtn;
+    }
+
+    public boolean isUpdated() {
+        return updated;
     }
 }

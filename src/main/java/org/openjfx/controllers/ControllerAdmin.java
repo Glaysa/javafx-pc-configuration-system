@@ -75,10 +75,12 @@ public class ControllerAdmin implements Initializable {
             row.setOnMouseClicked(event -> {
                 if(event.getClickCount() == 2) {
                     if(row.getItem() != null) {
-                        // Opens a popup window for component editing and returns a new updated component
-                        updatedComponent = OpenPopup.editComponent(row.getItem(), tableView);
-                        // The component on tableview will be updated
-                        row.setItem(updatedComponent);
+                        // Index of the component to edit
+                        int index = row.getIndex();
+                        // Get the component to edit
+                        PCComponents componentToUpdate = row.getItem();
+                        // Opens a popup window for component editing
+                        OpenPopup.editComponent(componentToUpdate, tableView, index);
                     }
                 }
             });

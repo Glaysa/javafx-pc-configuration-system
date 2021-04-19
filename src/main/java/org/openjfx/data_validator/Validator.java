@@ -1,6 +1,8 @@
 package org.openjfx.data_validator;
 
 import org.openjfx.custom_exceptions.InvalidNumberException;
+import org.openjfx.data_collection.ComponentsCollection;
+import org.openjfx.data_models.PCComponents;
 
 /** This class is responsible for validating components added on the tableview. */
 
@@ -25,6 +27,11 @@ public class Validator {
             if(componentNumber <= 0) {
                 throw new InvalidNumberException("Component number must be greater than 0");
             }
+            for(PCComponents c : ComponentsCollection.getComponentObsList()){
+                if(c.getComponentNumber() == componentNumber){
+                    throw new InvalidNumberException("Component number is already in use");
+                }
+            }
         } catch (InvalidNumberException e) {
             throw new IllegalArgumentException(e.getMessage());
         } catch (IllegalArgumentException e) {
@@ -34,6 +41,11 @@ public class Validator {
     public static void validate_componentName(String componentName) {
 
         Validator.componentName = removeDelimeter(componentName);
+        for(PCComponents c : ComponentsCollection.getComponentObsList()){
+            if(c.getComponentName().equals(componentName)){
+                throw new IllegalArgumentException("Component name is already in use");
+            }
+        }
         if(componentName.isEmpty()){
             throw new IllegalArgumentException("Component name cannot be empty");
         } else if(componentName.length() < 3) {
