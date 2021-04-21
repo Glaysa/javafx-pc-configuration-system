@@ -15,7 +15,6 @@ public class ControllerAdmin implements Initializable {
 
     @FXML private TableView<PCComponents> tableView;
     @FXML private TextField searchInput;
-    @FXML private TextField cNumber;
     @FXML private TextField cName;
     @FXML private TextField price;
     @FXML private TextArea cDesc;
@@ -30,14 +29,13 @@ public class ControllerAdmin implements Initializable {
         ComponentsCollection.setTableView(tableView);
         // Fills the component type combobox with values.
         ComponentsCollection.fillCombobox_TYPE(typeOptions);
-        // (listener) check method to see its functions
+        // (listener) Initializes detection of a change on the component collection
         ComponentsCollection.collectionOnChange(typeOptions);
         // (listener) Initializes detection of double click on row of tableview
         editComponentOnDoubleClick();
     }
 
     /** Creates a new component to add on the tableview. */
-
     @FXML
     void createComponent() {
         int strNumber = PCComponents.createUniqueId();
@@ -56,8 +54,8 @@ public class ControllerAdmin implements Initializable {
         }
     }
 
-    /** Resets all input fields after successful creation of components and refreshes the tableview. */
-
+    /** Resets all input fields after successful creation
+     * of components and refreshes the tableview. */
     void resetFields() {
         cName.setText("");
         cDesc.setText("");
@@ -65,8 +63,8 @@ public class ControllerAdmin implements Initializable {
         tableView.refresh();
     }
 
-    /** Detects a double click on a row in the tableview and opens a new window for component editing.*/
-
+    /** Detects a double click on a row in the tableview
+     * and opens a new window for component editing.*/
     public void editComponentOnDoubleClick(){
         tableView.setRowFactory(tv -> {
             TableRow<PCComponents> row = new TableRow<>();
@@ -87,7 +85,6 @@ public class ControllerAdmin implements Initializable {
     }
 
     /** search() - searches through the tableview with the given search word. */
-
     @FXML
     void search() {
         throw new UnsupportedOperationException("Method not yet implemented");

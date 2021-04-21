@@ -238,11 +238,11 @@ class FileThreads<T> extends FileActions<T> {
     }
 
     /** Tells if a thread is running. */
-
     public boolean isThreadRunning() {
         return threadRunning;
     }
 
+    /** Used to keep the current opened file for unsaved changes. */
     protected String getCurrentOpenedFile(){
         return currentOpenedFile;
     }
