@@ -1,5 +1,6 @@
 package org.openjfx.data_models;
 
+import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_validator.Validator;
 
 /** Model of Pc components. */
@@ -12,14 +13,13 @@ public class PCComponents {
     private String componentSpecs;
     private double componentPrice;
 
-    public PCComponents(String componentNumber, String componentName, String componentType, String componentSpecs, String componentPrice){
-        Validator.validate_componentNumber(componentNumber);
-        Validator.validate_componentName(componentName);
-        Validator.validate_componentSpecs(componentSpecs);
-        Validator.validate_componentType(componentType);
-        Validator.validate_componentPrice(componentPrice);
+    public PCComponents(int componentNumber, String componentName, String componentType, String componentSpecs, String componentPrice){
+        Validator.validateComponentName(componentName);
+        Validator.validateComponentSpecs(componentSpecs);
+        Validator.validateComponentType(componentType);
+        Validator.validateComponentPrice(componentPrice);
 
-        this.componentNumber = Validator.getComponentNumber();
+        this.componentNumber = componentNumber;
         this.componentName = Validator.getComponentName();
         this.componentType = Validator.getComponentType();
         this.componentSpecs = Validator.getComponentSpecs();
@@ -30,28 +30,33 @@ public class PCComponents {
         return String.format("%s;%s;%s;%s;%s\n", componentNumber, componentName, componentType, componentSpecs, componentPrice);
     }
 
+    public static int createUniqueId(){
+        int prevId = ComponentsCollection.getComponentObsList().size();
+        return prevId + 1;
+    }
+
     public void setComponentNumber(String componentNumber) {
-        Validator.validate_componentNumber(componentNumber);
+        Validator.validateComponentNumber(componentNumber);
         this.componentNumber = Validator.getComponentNumber();
     }
 
     public void setComponentName(String componentName) {
-        Validator.validate_componentName(componentName);
+        Validator.validateComponentName(componentName);
         this.componentName = Validator.getComponentName();
     }
 
     public void setComponentType(String componentType) {
-        Validator.validate_componentType(componentType);
+        Validator.validateComponentType(componentType);
         this.componentType = Validator.getComponentType();
     }
 
     public void setComponentSpecs(String componentSpecs) {
-        Validator.validate_componentSpecs(componentSpecs);
+        Validator.validateComponentSpecs(componentSpecs);
         this.componentSpecs = Validator.getComponentSpecs();
     }
 
     public void setComponentPrice(String componentPrice) {
-        Validator.validate_componentPrice(componentPrice);
+        Validator.validateComponentPrice(componentPrice);
         this.componentPrice = Validator.getComponentPrice();
     }
 

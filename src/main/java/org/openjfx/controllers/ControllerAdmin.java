@@ -40,7 +40,7 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void createComponent() {
-        String strNumber = cNumber.getText();
+        int strNumber = PCComponents.createUniqueId();
         String strName = cName.getText();
         String strType = typeOptions.getValue();
         String strSpecs = cDesc.getText();
@@ -50,7 +50,6 @@ public class ControllerAdmin implements Initializable {
             PCComponents c = new PCComponents(strNumber, strName, strType, strSpecs, strPrice);
             ComponentsCollection.addToCollection(c);
             resetFields();
-
             AlertDialog.showSuccessDialog("Component Added Successfully!");
         } catch (IllegalArgumentException e) {
             AlertDialog.showWarningDialog(e.getMessage(), "");

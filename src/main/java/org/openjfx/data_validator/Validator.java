@@ -21,7 +21,7 @@ public class Validator {
         return toValidate;
     }
 
-    public static void validate_componentNumber(String txtComponentNumber){
+    public static void validateComponentNumber(String txtComponentNumber){
         try {
             componentNumber = Integer.parseInt(txtComponentNumber);
             if(componentNumber <= 0) {
@@ -38,14 +38,9 @@ public class Validator {
             throw new IllegalArgumentException("Invalid component number"); }
     }
 
-    public static void validate_componentName(String componentName) {
+    public static void validateComponentName(String componentName) {
 
         Validator.componentName = removeDelimeter(componentName);
-        for(PCComponents c : ComponentsCollection.getComponentObsList()){
-            if(c.getComponentName().equals(componentName)){
-                throw new IllegalArgumentException("Component name is already in use");
-            }
-        }
         if(componentName.isEmpty()){
             throw new IllegalArgumentException("Component name cannot be empty");
         } else if(componentName.length() < 3) {
@@ -54,7 +49,7 @@ public class Validator {
         Validator.componentName = Character.toString(componentName.charAt(0)).toUpperCase()+componentName.substring(1);
     }
 
-    public static void validate_componentType(String componentType) {
+    public static void validateComponentType(String componentType) {
 
         Validator.componentType = removeDelimeter(componentType);
         if(componentType.isEmpty()){
@@ -65,7 +60,7 @@ public class Validator {
         Validator.componentType = Character.toString(componentType.charAt(0)).toUpperCase()+componentType.substring(1);
     }
 
-    public static void validate_componentSpecs(String componentSpecs) {
+    public static void validateComponentSpecs(String componentSpecs) {
 
         Validator.componentSpecs = removeDelimeter(componentSpecs);
         if(componentSpecs.isEmpty()){
@@ -76,7 +71,7 @@ public class Validator {
         Validator.componentSpecs = Character.toString(componentSpecs.charAt(0)).toUpperCase()+componentSpecs.substring(1);
     }
 
-    public static void validate_componentPrice(String txtComponentPrice){
+    public static void validateComponentPrice(String txtComponentPrice){
         try {
             if(txtComponentPrice.contains(",")){
                 txtComponentPrice = txtComponentPrice.replace(',','.');

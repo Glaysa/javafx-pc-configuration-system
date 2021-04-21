@@ -22,7 +22,7 @@ public class FileParser {
 
     @SuppressWarnings("unchecked")
     public static <T> T componentsParser(String[] attributes){
-        String a1 = attributes[0];
+        int a1 = Integer.parseInt(attributes[0]);
         String a2 = attributes[1];
         String a3 = attributes[2];
         String a4 = attributes[3];

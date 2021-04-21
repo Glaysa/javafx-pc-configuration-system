@@ -75,28 +75,23 @@
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="cNumber" layoutX="75.0" layoutY="129.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="130.0">
+            <TextField fx:id="cName" layoutX="75.0" layoutY="130.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="130.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="cName" layoutX="75.0" layoutY="189.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="189.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <TextArea fx:id="cDesc" layoutX="75.0" layoutY="249.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="249.0">
+            <TextArea fx:id="cDesc" layoutX="75.0" layoutY="190.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="190.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextArea>
-            <TextField fx:id="price" layoutX="75.0" layoutY="479.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
+            <TextField fx:id="price" layoutX="75.0" layoutY="413.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <ComboBox fx:id="typeOptions" editable="true" layoutX="75.0" layoutY="543.0" prefWidth="150.0" promptText="Select" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" />
-            <Button layoutX="75.0" layoutY="580.0" mnemonicParsing="false" onAction="#createComponent" text="Add Component" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
+            <ComboBox fx:id="typeOptions" editable="true" layoutX="75.0" layoutY="477.0" prefWidth="150.0" promptText="Select" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" />
+            <Button layoutX="75.0" layoutY="514.0" mnemonicParsing="false" onAction="#createComponent" text="Add Component" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -106,27 +101,22 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="104.0" text="Component Number:">
+            <Label layoutX="77.0" layoutY="106.0" text="Component Name:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="165.0" text="Component Name:">
+            <Label layoutX="77.0" layoutY="166.0" text="Specifications:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="225.0" text="Specifications:">
+            <Label layoutX="77.0" layoutY="390.0" text="Price:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="77.0" layoutY="456.0" text="Price:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="79.0" layoutY="518.0" text="Type:">
+            <Label layoutX="79.0" layoutY="452.0" text="Type:">
                <font>
                   <Font size="14.0" />
                </font>

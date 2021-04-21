@@ -33,6 +33,8 @@ public class EditComponentPopupController implements Initializable {
         ComponentsCollection.fillCombobox_TYPE(typeOptions);
         // (listener) check methods to see its functions
         ComponentsCollection.collectionOnChange(typeOptions);
+        // Component Number cannot be edited
+        componentNumber.setDisable(true);
     }
 
     /** Updates the component */
@@ -40,7 +42,7 @@ public class EditComponentPopupController implements Initializable {
     @FXML
     public void updateComponent(){
         try {
-            String numberStr = componentNumber.getText();
+            int numberStr = Integer.parseInt(componentNumber.getText());
             String nameStr = componentName.getText();
             String typeStr = typeOptions.getValue();
             String specsStr = componentSpecs.getText();
@@ -52,7 +54,6 @@ public class EditComponentPopupController implements Initializable {
     }
 
     /** Closes the popup window */
-
     @FXML
     private void cancelEditComponent(){
         Stage stage = (Stage) parentPane.getScene().getWindow();
@@ -60,7 +61,6 @@ public class EditComponentPopupController implements Initializable {
     }
 
     /** Displays the data of component to be edited */
-
     public void setComponentToEdit(PCComponents componentToEdit) {
         this.componentNumber.setText(Integer.toString(componentToEdit.getComponentNumber()));
         this.componentName.setText(componentToEdit.getComponentName());
@@ -70,13 +70,11 @@ public class EditComponentPopupController implements Initializable {
     }
 
     /** Gets the new updated component */
-
     public PCComponents getUpdatedComponent(){
         return updatedComponent;
     }
 
     /** Gets the update button */
-
     public Button getUpdatedComponentBtn(){
         return updatedComponentBtn;
     }
