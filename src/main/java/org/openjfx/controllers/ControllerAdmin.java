@@ -89,4 +89,20 @@ public class ControllerAdmin implements Initializable {
     void search() {
         throw new UnsupportedOperationException("Method not yet implemented");
     }
+
+    @FXML
+    void openFile(){
+        file.open(null, "Opening file...");
+    }
+
+    @FXML
+    void saveFile(){
+        file.save(null, null, "Saving file...");
+    }
+
+    @FXML
+    void saveChanges(){
+        file.saveChanges(ComponentsCollection.getComponentObsList(), "Saving Changes...");
+        ComponentsCollection.setModified(false);
+    }
 }

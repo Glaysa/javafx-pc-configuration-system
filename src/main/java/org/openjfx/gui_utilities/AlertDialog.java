@@ -2,7 +2,6 @@ package org.openjfx.gui_utilities;
 
 import javafx.concurrent.Task;
 import javafx.event.Event;
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -49,7 +48,7 @@ public class AlertDialog {
         p.setPrefWidth(300);
         p.setPrefHeight(15);
         Label label = new Label("Thread running...");
-        label.setStyle("-fx-padding: 10px 0 0 0; -fx-font-size: 14px; -fx-text-fill: dodgerblue");
+        label.setStyle("-fx-padding: 10px 0 0 0; -fx-font-size: 14px; -fx-text-fill: blue");
 
         // Parent
         VBox box = new VBox();
