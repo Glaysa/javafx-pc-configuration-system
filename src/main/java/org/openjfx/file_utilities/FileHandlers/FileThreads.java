@@ -30,7 +30,7 @@ class FileThreads<T> extends FileActions<T> {
     private boolean threadRunning = false;                              // tells if a thread is currently running
     private Alert loadingAlert;                                         // Progress alert popup dialog
     private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();   // tells if a thread is waiting to be run
-    private String currentOpenedFile;
+    private String currentOpenedFile;                                   // used for saving changes
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
@@ -67,13 +67,13 @@ class FileThreads<T> extends FileActions<T> {
     }
 
     /** Checks if the given filename exists in the applications 'database'. */
-
     private void fileExists(String filename) throws FileNotFoundException {
         File f = new File(databasePath + filename);
         if(!f.exists()) throw new FileNotFoundException(filename + " does not exist.");
     }
 
-    /** This method is responsible for running the Writer task on a thread. */
+    /** These methods are responsible for running the Writer and Reader tasks on a thread
+     * and are also responsible for showing their progress dialog. */
 
     protected void runSaveThread(ArrayList<T> data, String filename, String loadingMessage){
         try {
@@ -99,8 +99,6 @@ class FileThreads<T> extends FileActions<T> {
             runWaitingThreads();
         }
     }
-
-    /** This method is responsible for running the Reader task on a thread. */
 
     protected void runOpenThread(String filename, String loadingMessage){
         try {
@@ -128,7 +126,8 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
-    /** When save thread is a success, it runs all waiting threads. */
+    /** When save or open thread is a success, they run all waiting threads
+     * and open thread processes the data it opened.*/
 
     private void saveSuccessful(){
         loadingAlert.close();
@@ -136,8 +135,6 @@ class FileThreads<T> extends FileActions<T> {
         System.out.println("Save Thread Successful!\n");
         runWaitingThreads();
     }
-
-    /** When open thread is a success, it processes the data and runs all waiting threads. */
 
     private void openSuccessful(){
         loadingAlert.close();
@@ -147,7 +144,8 @@ class FileThreads<T> extends FileActions<T> {
         runWaitingThreads();
     }
 
-    /** When save thread fails, this method shows error messages to user and developers and runs all waiting threads */
+    /** When save or open thread fails, this method shows error messages
+     * to user and developers and runs all waiting threads */
 
     private void saveFailed(WorkerStateEvent e){
         loadingAlert.close();
@@ -156,17 +154,13 @@ class FileThreads<T> extends FileActions<T> {
         // Error shown to the user
         String errorMessage = e.getSource().getException().getMessage();
         AlertDialog.showWarningDialog("System error - Failed to save file", errorMessage);
-
         // Run the next waiting threads if there are any
         runWaitingThreads();
-
         // Error shown to developers
         System.err.println("Save Thread Failed: An error occurred!");
         e.getSource().getException().printStackTrace();
         System.out.println();
     }
-
-    /** When open thread fails, this method shows error messages to user and developers and runs all waiting threads */
 
     private void openFailed(WorkerStateEvent e){
         loadingAlert.close();
@@ -175,10 +169,8 @@ class FileThreads<T> extends FileActions<T> {
         // Error shown to the user
         String errorMessage = e.getSource().getException().getMessage();
         AlertDialog.showWarningDialog("System error - Failed to open file", errorMessage);
-
         // Run the next waiting threads if there are any
         runWaitingThreads();
-
         // Error shown to developers
         System.err.println("Open Thread Failed: The default system data will be opened instead.");
         e.getSource().getException().printStackTrace();
@@ -186,7 +178,6 @@ class FileThreads<T> extends FileActions<T> {
     }
 
     /** This method runs all threads in the waiting threads Queue. */
-
     private void runWaitingThreads(){
         for(int i = 0; i < waitingThreads.size(); i++){
 
@@ -211,7 +202,6 @@ class FileThreads<T> extends FileActions<T> {
     }
 
     /** Opening a file returns data, that data is processed here. */
-
     private void processData(ArrayList<T> data) {
 
         // Checks which object instance is the data
@@ -231,9 +221,10 @@ class FileThreads<T> extends FileActions<T> {
 
             // Show a warning alert that the file is corrupted
             System.err.println("File is corrupted: Data not loaded");
-            AlertDialog.showWarningDialog("File is corrupted!", "File data must either contain pc components or pc configurations.");
+            AlertDialog.showWarningDialog("File is corrupted!",
+             "File data must either contain pc components or pc configurations.");
 
-            // When the file that is opened is corrupted, load the initial component list
+            // When the file that is opened is corrupted, load the default component list
             if(data.isEmpty()) {
                 reader = new Reader<>();
                 open("initialComponents.txt","Loading default data...");
@@ -242,7 +233,6 @@ class FileThreads<T> extends FileActions<T> {
     }
 
     /** Adds a thread to the waiting threads queue. */
-
     public void addToWaitingThreads(FileThreadInfo<T> threadWaiting) {
         waitingThreads.add(threadWaiting);
     }

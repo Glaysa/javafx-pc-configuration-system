@@ -1,9 +1,5 @@
 package org.openjfx.file_utilities.FileHandlers;
 
-import javafx.collections.ObservableList;
-import org.openjfx.data_collection.ComponentsCollection;
-import org.openjfx.data_models.PCComponents;
-
 import java.util.ArrayList;
 
 /** This class is responsible for calling the open and save threads. They are often called in the controllers. */

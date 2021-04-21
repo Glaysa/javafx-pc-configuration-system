@@ -21,7 +21,6 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
     private final FileActions<PCComponents> file = new FileActions<>();
-    private PCComponents updatedComponent;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

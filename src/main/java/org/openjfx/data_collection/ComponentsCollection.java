@@ -18,25 +18,21 @@ public class ComponentsCollection {
     private static boolean modified = false;
 
     /** Adds new components to the observable list componentObsList */
-
     public static void addToCollection(PCComponents toAdd){
         componentObsList.add(toAdd);
     }
 
     /** Sets the items of the tableview to componentObsList */
-
     public static void setTableView(TableView<PCComponents> tableView){
         tableView.setItems(componentObsList);
     }
 
     /** Clears the componentObsList */
-
     public static void clearCollection(){
         componentObsList.clear();
     }
 
     /** This fills the combobox of component types with the defined types and new types found in the componentObsList */
-
     public static void fillCombobox_TYPE(ComboBox<String> typeOptions){
         String[] definedTypes = {"RAM","Keyboards","Processors","Graphic Cards", "Mouse"};
         componentTypeObsList = FXCollections.observableArrayList(definedTypes);
@@ -51,10 +47,8 @@ public class ComponentsCollection {
     }
 
     /** Updates the combobox of component types whenever there is a change in componentsObsList */
-
     public static void collectionOnChange(ComboBox<String> typeOptions){
         componentObsList.addListener(new ListChangeListener<PCComponents>() {
-
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
                 // Whenever there is a change on component list, update the combobox of component types
@@ -65,7 +59,7 @@ public class ComponentsCollection {
         });
     }
 
-    /** The following methods are get methods */
+    /** Get/Set methods */
 
     public static ArrayList<PCComponents> getComponentObsList() {
         return new ArrayList<>(componentObsList);
