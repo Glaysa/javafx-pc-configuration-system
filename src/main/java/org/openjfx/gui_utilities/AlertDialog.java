@@ -2,9 +2,12 @@ package org.openjfx.gui_utilities;
 
 import javafx.concurrent.Task;
 import javafx.event.Event;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /** This class is responsible for opening dialogs of success, warning, confirmation and loading operations. */
@@ -40,17 +43,27 @@ public class AlertDialog {
     }
 
     public synchronized static <V> Alert showLoadingDialog(Task<V> task, String dialogMessage){
+        // Children
         ProgressBar p = new ProgressBar();
         p.progressProperty().bind(task.progressProperty());
+        p.setPrefWidth(300);
+        p.setPrefHeight(15);
+        Label label = new Label("Thread running...");
+        label.setStyle("-fx-padding: 10px 0 0 0; -fx-font-size: 14px; -fx-text-fill: dodgerblue");
 
+        // Parent
+        VBox box = new VBox();
+        box.getChildren().addAll(p, label);
+
+        // Alert Dialog
         ButtonType ok = new ButtonType("Ok");
         Alert alert = new Alert(Alert.AlertType.NONE);
         alert.setHeaderText(dialogMessage);
         alert.getButtonTypes().setAll(ok);
         alert.setTitle("Loading");
-        alert.getDialogPane().setContent(p);
+        alert.getDialogPane().setContent(box);
         alert.getDialogPane().setPrefWidth(300);
-        alert.getDialogPane().setPrefHeight(120);
+        alert.getDialogPane().setPrefHeight(175);
         alert.getDialogPane().lookupButton(ok).setDisable(true);
 
         Stage s = (Stage) alert.getDialogPane().getScene().getWindow();
