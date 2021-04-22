@@ -1,7 +1,7 @@
-package org.openjfx.data_models;
+package org.openjfx.dataModels;
 
-import org.openjfx.data_collection.ComponentsCollection;
-import org.openjfx.data_validator.Validator;
+import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataValidator.Validator;
 
 /** Model of Pc components. */
 

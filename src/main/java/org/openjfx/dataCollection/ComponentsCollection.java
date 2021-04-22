@@ -1,4 +1,4 @@
-package org.openjfx.data_collection;
+package org.openjfx.dataCollection;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -6,8 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
-import org.openjfx.data_models.PCComponents;
-
+import org.openjfx.dataModels.PCComponents;
 import java.util.ArrayList;
 
 /** This class is responsible of all methods related to the components tableview */

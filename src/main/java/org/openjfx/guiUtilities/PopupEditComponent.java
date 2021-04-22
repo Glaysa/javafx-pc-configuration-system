@@ -1,4 +1,4 @@
-package org.openjfx.gui_utilities;
+package org.openjfx.guiUtilities;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +8,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.openjfx.App;
 import org.openjfx.controllers.PopupEditComponentController;
-import org.openjfx.data_models.PCComponents;
+import org.openjfx.dataModels.PCComponents;
 
 public class PopupEditComponent {
 
@@ -16,7 +16,7 @@ public class PopupEditComponent {
 
     public static void editComponent(PCComponents componentToEdit, TableView<PCComponents> tableview, int index) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("editComponentPopup.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("popupEditComponent.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 

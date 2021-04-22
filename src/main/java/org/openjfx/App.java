@@ -5,10 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.openjfx.data_collection.ComponentsCollection;
-import org.openjfx.data_models.PCComponents;
-import org.openjfx.file_utilities.FileHandlers.FileActions;
-import org.openjfx.gui_utilities.AlertDialog;
+import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataModels.PCComponents;
+import org.openjfx.fileUtilities.FileHandlers.FileActions;
+import org.openjfx.guiUtilities.AlertDialog;
 import java.io.IOException;
 
 /** JAVAFX Application */

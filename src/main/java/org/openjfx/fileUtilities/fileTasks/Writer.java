@@ -1,8 +1,7 @@
-package org.openjfx.file_utilities.file_tasks;
+package org.openjfx.fileUtilities.fileTasks;
 
 import javafx.concurrent.Task;
-import org.openjfx.file_utilities.FileWriters;
-
+import org.openjfx.fileUtilities.FileWriters;
 import java.io.File;
 import java.util.ArrayList;
 

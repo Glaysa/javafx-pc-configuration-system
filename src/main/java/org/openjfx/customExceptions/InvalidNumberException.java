@@ -1,4 +1,4 @@
-package org.openjfx.custom_exceptions;
+package org.openjfx.customExceptions;
 
 public class InvalidNumberException extends IllegalArgumentException {
     public InvalidNumberException(String msg){

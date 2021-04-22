@@ -1,4 +1,4 @@
-package org.openjfx.file_utilities.FileHandlers;
+package org.openjfx.fileUtilities.FileHandlers;
 
 import java.io.File;
 import java.util.ArrayList;

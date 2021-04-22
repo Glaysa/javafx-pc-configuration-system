@@ -1,8 +1,8 @@
-package org.openjfx.file_utilities.file_io;
+package org.openjfx.fileUtilities.fileIO;
 
-import org.openjfx.file_utilities.FileReaders;
-import org.openjfx.file_utilities.FileWriters;
-import org.openjfx.file_utilities.FileParser;
+import org.openjfx.fileUtilities.FileReaders;
+import org.openjfx.fileUtilities.FileWriters;
+import org.openjfx.fileUtilities.FileParser;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

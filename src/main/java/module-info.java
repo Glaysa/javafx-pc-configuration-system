@@ -4,7 +4,7 @@ module org.openjfx {
 
     opens org.openjfx to javafx.fxml;
     opens org.openjfx.controllers to javafx.fxml;
-    opens org.openjfx.data_models to javafx.base;
+    opens org.openjfx.dataModels to javafx.base;
 
     exports org.openjfx;
 }

@@ -1,4 +1,4 @@
-package org.openjfx.gui_utilities;
+package org.openjfx.guiUtilities;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Control;

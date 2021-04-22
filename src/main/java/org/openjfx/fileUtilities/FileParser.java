@@ -1,6 +1,6 @@
-package org.openjfx.file_utilities;
+package org.openjfx.fileUtilities;
 
-import org.openjfx.data_models.PCComponents;
+import org.openjfx.dataModels.PCComponents;
 
 /** This class is responsible for parsing data. */
 

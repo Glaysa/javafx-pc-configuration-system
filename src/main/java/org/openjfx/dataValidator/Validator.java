@@ -1,8 +1,8 @@
-package org.openjfx.data_validator;
+package org.openjfx.dataValidator;
 
-import org.openjfx.custom_exceptions.InvalidNumberException;
-import org.openjfx.data_collection.ComponentsCollection;
-import org.openjfx.data_models.PCComponents;
+import org.openjfx.customExceptions.InvalidNumberException;
+import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataModels.PCComponents;
 
 /** This class is responsible for validating components added on the tableview. */
 

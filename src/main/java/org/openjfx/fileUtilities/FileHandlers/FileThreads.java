@@ -1,14 +1,14 @@
-package org.openjfx.file_utilities.FileHandlers;
+package org.openjfx.fileUtilities.FileHandlers;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
-import org.openjfx.data_collection.ComponentsCollection;
-import org.openjfx.data_models.PCComponents;
-import org.openjfx.file_utilities.file_io.IO_bin;
-import org.openjfx.file_utilities.file_io.IO_txt;
-import org.openjfx.file_utilities.file_tasks.Reader;
-import org.openjfx.file_utilities.file_tasks.Writer;
-import org.openjfx.gui_utilities.AlertDialog;
+import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataModels.PCComponents;
+import org.openjfx.fileUtilities.fileIO.IO_bin;
+import org.openjfx.fileUtilities.fileIO.IO_txt;
+import org.openjfx.fileUtilities.fileTasks.Reader;
+import org.openjfx.fileUtilities.fileTasks.Writer;
+import org.openjfx.guiUtilities.AlertDialog;
 import java.io.File;
 import java.util.*;
 
