@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import org.openjfx.data_models.PCComponents;
 
@@ -24,12 +25,18 @@ public class ComponentsCollection {
 
     /** Sets the items of the tableview to componentObsList */
     public static void setTableView(TableView<PCComponents> tableView){
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setItems(componentObsList);
     }
 
     /** Clears the componentObsList */
     public static void clearCollection(){
         componentObsList.clear();
+    }
+
+    /** Removes all selected values from the collection */
+    public static void removeAllSelected(ObservableList<PCComponents> toRemove){
+        componentObsList.removeAll(toRemove);
     }
 
     /** This fills the combobox of component types with the defined types and new types found in the componentObsList */

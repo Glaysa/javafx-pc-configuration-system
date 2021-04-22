@@ -1,5 +1,6 @@
 package org.openjfx.controllers;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -22,7 +23,8 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextField price;
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
-    private final FileActions<PCComponents> file = new FileActions<>();
+    @FXML private Label filenameLabel;
+    private final FileActions<PCComponents> file = FileActions.getInstance();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
 
     @Override
@@ -56,6 +58,13 @@ public class ControllerAdmin implements Initializable {
         } catch (IllegalArgumentException e) {
             AlertDialog.showWarningDialog(e.getMessage(), "");
         }
+    }
+
+    @FXML
+    void deleteComponent(){
+        ObservableList<PCComponents> toDelete = tableView.getSelectionModel().getSelectedItems();
+        String response = AlertDialog.showConfirmDialog("This cannot be undone! Are you sure?");
+        if(response.equals("Yes")) ComponentsCollection.removeAllSelected(toDelete);
     }
 
     /** Resets all input fields after successful creation

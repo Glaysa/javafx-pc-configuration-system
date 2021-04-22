@@ -29,7 +29,7 @@ class FileThreads<T> extends FileActions<T> {
     private boolean threadRunning = false;                              // tells if a thread is currently running
     private Alert loadingAlert;                                         // Progress alert popup dialog
     private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();   // tells if a thread is waiting to be run
-    private File currentOpenedFile, lastOpenedFile;                                   // used for saving changes
+    private File lastOpenedFile;                                   // used for saving changes
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
@@ -128,7 +128,6 @@ class FileThreads<T> extends FileActions<T> {
 
         } catch (Exception e) {
             threadRunning = false;
-            // System.out.println(currentOpenedFile);
             AlertDialog.showWarningDialog(e.getMessage(), "Please try again!");
             waitingThreads.poll();
             runWaitingThreads();

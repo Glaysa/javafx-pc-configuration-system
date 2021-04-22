@@ -1,7 +1,5 @@
 package org.openjfx.file_utilities.FileHandlers;
 
-import org.openjfx.data_collection.ComponentsCollection;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -12,6 +10,13 @@ public class FileActions<T> {
     private FileThreads<T> threadHandlers;
     protected final String SAVE_THREAD = "Save Thread";
     protected final String OPEN_THREAD = "Open Thread";
+
+    private static FileActions INSTANCE;
+    public FileActions() {}
+    public static FileActions getInstance() {
+        if(INSTANCE == null) INSTANCE = new FileActions();
+        return INSTANCE;
+    }
 
     @SuppressWarnings("unchecked")
     public void save(ArrayList<T> dataToSave, File file, String msg){
