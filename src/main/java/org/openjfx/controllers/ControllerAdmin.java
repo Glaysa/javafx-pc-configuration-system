@@ -9,7 +9,7 @@ import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.FileHandlers.FileActions;
 import org.openjfx.gui_utilities.AlertDialog;
-import org.openjfx.gui_utilities.OpenEditComponentPopup;
+import org.openjfx.gui_utilities.PopupEditComponent;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -80,7 +80,7 @@ public class ControllerAdmin implements Initializable {
                         // Component to edit
                         PCComponents componentToUpdate = row.getItem();
                         // Opens a popup window for component editing
-                        OpenEditComponentPopup.editComponent(componentToUpdate, tableView, index);
+                        PopupEditComponent.editComponent(componentToUpdate, tableView, index);
                     }
                 }
             });
