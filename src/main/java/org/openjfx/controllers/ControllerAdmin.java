@@ -3,11 +3,14 @@ package org.openjfx.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.openjfx.data_collection.ComponentsCollection;
 import org.openjfx.data_models.PCComponents;
 import org.openjfx.file_utilities.FileHandlers.FileActions;
 import org.openjfx.gui_utilities.AlertDialog;
 import org.openjfx.gui_utilities.OpenEditComponentPopup;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,11 +23,12 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
     private final FileActions<PCComponents> file = new FileActions<>();
+    private final File defaultData = new File("src/main/java/database/initialComponents.txt");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Opens a file containing the default list of components.
-        file.open("initialComponents.txt", "Loading system data...");
+        file.open(defaultData, "Loading system data...");
         // Initializes the tableview.
         ComponentsCollection.setTableView(tableView);
         // Fills the component type combobox with values.
@@ -92,17 +96,41 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void openFile(){
-        file.open(null, "Opening file...");
+        FileChooser fileChooser = getFileChooser();
+        File fileToOpen = fileChooser.showOpenDialog(new Stage());
+        if(fileToOpen == null) {
+            AlertDialog.showWarningDialog("No file was chosen","");
+        } else {
+            file.open(fileToOpen, "Opening file...");
+        }
     }
 
     @FXML
     void saveFile(){
-        file.save(null, null, "Saving file...");
+        FileChooser fileChooser = getFileChooser();
+        File fileToSave = fileChooser.showSaveDialog(new Stage());
+        if(fileToSave == null) {
+            AlertDialog.showWarningDialog("No file was chosen","");
+        } else {
+            file.save(ComponentsCollection.getComponentObsList(), fileToSave, "Saving file...");
+        }
     }
 
     @FXML
     void saveChanges(){
-        file.saveChanges(ComponentsCollection.getComponentObsList(), "Saving Changes...");
+        file.saveChanges(ComponentsCollection.getComponentObsList());
         ComponentsCollection.setModified(false);
+    }
+
+    private FileChooser getFileChooser(){
+        File initialDir = new File("C:\\Users\\Glaysa\\IdeaProjects\\javafx-maven-pc-configuration-system\\src\\main\\java\\database");
+        FileChooser.ExtensionFilter f1 = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+        FileChooser.ExtensionFilter f2 = new FileChooser.ExtensionFilter("Binary Files", "*.bin");
+        FileChooser.ExtensionFilter f3 = new FileChooser.ExtensionFilter("Jobj Files", "*.obj");
+        FileChooser.ExtensionFilter f4 = new FileChooser.ExtensionFilter("All Files", "*.*");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(initialDir);
+        fileChooser.getExtensionFilters().addAll(f1, f2, f3, f4);
+        return fileChooser;
     }
 }

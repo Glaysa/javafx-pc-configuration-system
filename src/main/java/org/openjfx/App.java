@@ -39,7 +39,7 @@ public class App extends Application {
             String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
             if(response.equals("Yes")) {
                 FileActions<PCComponents> fileActions = new FileActions<>();
-                fileActions.saveChanges(ComponentsCollection.getComponentObsList(), "Saving changes...");
+                fileActions.saveChanges(ComponentsCollection.getComponentObsList());
             }
             stage.close();
         }

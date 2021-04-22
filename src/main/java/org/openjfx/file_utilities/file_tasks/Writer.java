@@ -2,6 +2,8 @@ package org.openjfx.file_utilities.file_tasks;
 
 import javafx.concurrent.Task;
 import org.openjfx.file_utilities.FileWriters;
+
+import java.io.File;
 import java.util.ArrayList;
 
 /** This class is responsible for executing the correct file writers found in file_io directory. */
@@ -9,19 +11,19 @@ import java.util.ArrayList;
 public class Writer<T> extends Task<Void> {
 
     private FileWriters fileWriters;
-    private String filepath;
+    private File file;
     private ArrayList<T> data;
 
     protected void runFileWriter(){
-        fileWriters.write(data, filepath);
+        fileWriters.write(data, file);
     }
 
     public void setFileWriter(FileWriters fileWriters) {
         this.fileWriters = fileWriters;
     }
 
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
+    public void setFilepath(File file) {
+        this.file = file;
     }
 
     public void setData(ArrayList<T> data) {

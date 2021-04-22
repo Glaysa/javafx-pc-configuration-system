@@ -1,5 +1,5 @@
 1;Comp1;Comp1;Specs1;300.0
 2;Comp2;Comp2;Specs2;400.0
 3;Comp3;Comp3;Specs3;500.0
-4;Changedthis;Comp4;Specs4;999.0
-5;Changed;Comp5;Specs5;200.0
+4;Cloned2;Comp4;Specs4;999.0
+5;Cloned1;Comp5;Specs5;200.0

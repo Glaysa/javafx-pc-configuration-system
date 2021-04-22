@@ -2,6 +2,7 @@ package org.openjfx.file_utilities.file_tasks;
 
 import javafx.concurrent.Task;
 import org.openjfx.file_utilities.FileReaders;
+import java.io.File;
 import java.util.ArrayList;
 
 /** This class is responsible for executing the correct file readers found in file_io directory. */
@@ -9,18 +10,18 @@ import java.util.ArrayList;
 public class Reader<T> extends Task<ArrayList<T>> {
 
     private FileReaders fileReaders;
-    private String filepath;
+    private File file;
 
     private ArrayList<T> runFileReader(){
-        return fileReaders.read(filepath);
+        return fileReaders.read(file);
     }
 
     public void setFileReader(FileReaders fileReaders) {
         this.fileReaders = fileReaders;
     }
 
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
+    public void setFilepath(File file) {
+        this.file = file;
     }
 
     @Override

@@ -10,7 +10,6 @@ import org.openjfx.file_utilities.file_tasks.Reader;
 import org.openjfx.file_utilities.file_tasks.Writer;
 import org.openjfx.gui_utilities.AlertDialog;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /** Thread Operations:
@@ -24,13 +23,13 @@ import java.util.*;
 
 class FileThreads<T> extends FileActions<T> {
 
-    private final String databasePath = "src/main/java/database/";      // where files are saved and opened
+    private final File defaultFile = new File("src/main/java/database/initialComponents.txt");
     private Writer<T> writer = new Writer<>();                          // task that runs on save thread
     private Reader<T> reader = new Reader<>();                          // task that runs on open thread
     private boolean threadRunning = false;                              // tells if a thread is currently running
     private Alert loadingAlert;                                         // Progress alert popup dialog
     private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();   // tells if a thread is waiting to be run
-    private String currentOpenedFile;                                   // used for saving changes
+    private File currentOpenedFile, lastOpenedFile;                                   // used for saving changes
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
@@ -44,44 +43,55 @@ class FileThreads<T> extends FileActions<T> {
     /** The following methods are responsible for assigning the correct file readers and writers depending on the file
         extension. */
 
-    private void assignWriters(String filename){
+    private void assignWriters(File file){
+        String filename = file.getName();
         String fileExtension = filename.substring(filename.lastIndexOf("."));
         try {
-            if(fileExtension.equals(".txt")) writer.setFileWriter(new IO_txt());
-            else if(fileExtension.equals(".bin")) writer.setFileWriter(new IO_bin());
-            else { AlertDialog.showWarningDialog("Unsupported format", "Open only: *.txt, *.bin");}
+            if(fileExtension.equals(".txt")) {
+                writer.setFileWriter(new IO_txt());
+            }
+            else if(fileExtension.equals(".bin")) {
+                writer.setFileWriter(new IO_bin());
+            }
+            else {
+                throw new IllegalArgumentException("Invalid File.\nSave only *.txt, *.bin");
+            }
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
-    private void assignReaders(String filename){
+    private void assignReaders(File file){
+        String filename = file.getName();
         String fileExtension = filename.substring(filename.lastIndexOf("."));
         try {
-            if(fileExtension.equals(".txt")) reader.setFileReader(new IO_txt());
-            else if(fileExtension.equals(".bin")) reader.setFileReader(new IO_bin());
-            else { AlertDialog.showWarningDialog("Unsupported format", "Open only: *.txt, *.bin");}
+            if(fileExtension.equals(".txt")) {
+                reader.setFileReader(new IO_txt());
+                lastOpenedFile = file;
+            }
+            else if(fileExtension.equals(".bin")) {
+                reader.setFileReader(new IO_bin());
+                lastOpenedFile = file;
+            }
+            else {
+                // currentOpenedFile = lastOpenedFile;
+                throw new IllegalArgumentException("Invalid File.\nOpen only *.txt, *.bin");
+            }
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-    }
-
-    /** Checks if the given filename exists in the applications 'database'. */
-    private void fileExists(String filename) throws FileNotFoundException {
-        File f = new File(databasePath + filename);
-        if(!f.exists()) throw new FileNotFoundException(filename + " does not exist.");
     }
 
     /** These methods are responsible for running the Writer and Reader tasks on a thread
      * and are also responsible for showing their progress dialog. */
 
-    protected void runSaveThread(ArrayList<T> data, String filename, String loadingMessage){
+    protected void runSaveThread(ArrayList<T> data, File file, String loadingMessage){
         try {
             loadingAlert = AlertDialog.showLoadingDialog(writer, loadingMessage);
-            assignWriters(filename);
+            assignWriters(file);
 
             writer.setData(data);
-            writer.setFilepath(databasePath + filename);
+            writer.setFilepath(file);
             writer.setOnScheduled((e) -> System.out.println("Save Thread is now running..."));
             writer.setOnSucceeded((e) -> saveSuccessful());
             writer.setOnRunning((e) -> loadingAlert.show());
@@ -100,14 +110,12 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
-    protected void runOpenThread(String filename, String loadingMessage){
+    protected void runOpenThread(File file, String loadingMessage){
         try {
             loadingAlert = AlertDialog.showLoadingDialog(reader, loadingMessage);
-            fileExists(filename);
-            assignReaders(filename);
-            currentOpenedFile = filename;
+            assignReaders(file);
 
-            reader.setFilepath(databasePath + filename);
+            reader.setFilepath(file);
             reader.setOnScheduled((e) -> System.out.println("Open Thread is now running..."));
             reader.setOnSucceeded((e) -> openSuccessful());
             reader.setOnRunning((e) -> loadingAlert.show());
@@ -120,7 +128,8 @@ class FileThreads<T> extends FileActions<T> {
 
         } catch (Exception e) {
             threadRunning = false;
-            AlertDialog.showWarningDialog(e.getMessage(), "");
+            // System.out.println(currentOpenedFile);
+            AlertDialog.showWarningDialog(e.getMessage(), "Please try again!");
             waitingThreads.poll();
             runWaitingThreads();
         }
@@ -133,6 +142,7 @@ class FileThreads<T> extends FileActions<T> {
         loadingAlert.close();
         threadRunning = false;
         System.out.println("Save Thread Successful!\n");
+        writer = new Writer<>();
         runWaitingThreads();
     }
 
@@ -141,6 +151,7 @@ class FileThreads<T> extends FileActions<T> {
         threadRunning = false;
         processData(reader.getValue());
         System.out.println("Open Thread Successful!\n");
+        reader = new Reader<>();
         runWaitingThreads();
     }
 
@@ -148,6 +159,7 @@ class FileThreads<T> extends FileActions<T> {
      * to user and developers and runs all waiting threads */
 
     private void saveFailed(WorkerStateEvent e){
+        writer = new Writer<>();
         loadingAlert.close();
         threadRunning = false;
 
@@ -163,6 +175,7 @@ class FileThreads<T> extends FileActions<T> {
     }
 
     private void openFailed(WorkerStateEvent e){
+        reader = new Reader<>();
         loadingAlert.close();
         threadRunning = false;
 
@@ -182,17 +195,17 @@ class FileThreads<T> extends FileActions<T> {
         for(int i = 0; i < waitingThreads.size(); i++){
 
             String fileThread = waitingThreads.element().getFileThread();
-            String filename = waitingThreads.element().getFilename();
+            File file = waitingThreads.element().getFilename();
             ArrayList<T> fileData = waitingThreads.element().getFileData();
-            String fileMsg = waitingThreads.element().getFileMsg();
+            String message = waitingThreads.element().getFileMsg();
 
             if(fileThread.equals(SAVE_THREAD)){
                 writer = new Writer<>();
-                save(fileData, filename, fileMsg);
+                save(fileData, file, message);
             }
             else if(fileThread.equals(OPEN_THREAD)){
                 reader = new Reader<>();
-                open(filename, fileMsg);
+                open(file, message);
             }
             else {
                 System.out.println("No Available Threads");
@@ -227,7 +240,7 @@ class FileThreads<T> extends FileActions<T> {
             // When the file that is opened is corrupted, load the default component list
             if(data.isEmpty()) {
                 reader = new Reader<>();
-                open("initialComponents.txt","Loading default data...");
+                open(defaultFile,"Loading default data...");
             }
         }
     }
@@ -243,7 +256,7 @@ class FileThreads<T> extends FileActions<T> {
     }
 
     /** Used to keep the current opened file for unsaved changes. */
-    protected String getCurrentOpenedFile(){
-        return currentOpenedFile;
+    protected File getCurrentOpenedFile(){
+        return lastOpenedFile;
     }
 }

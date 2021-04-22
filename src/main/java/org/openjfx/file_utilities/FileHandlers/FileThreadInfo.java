@@ -1,5 +1,6 @@
 package org.openjfx.file_utilities.FileHandlers;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /** This class is used as a model for waiting threads added in a queue. With this, we can access all info about the thread that is
@@ -10,13 +11,13 @@ import java.util.ArrayList;
 public class FileThreadInfo<T> {
 
     private final String fileThread;
-    private final String filename;
+    private final File file;
     private final ArrayList<T> fileData;
     private final String fileMsg;
 
-    public FileThreadInfo(String filename, ArrayList<T> fileData, String fileThread, String fileMsg){
+    public FileThreadInfo(File file, ArrayList<T> fileData, String fileThread, String fileMsg){
         this.fileThread = fileThread;
-        this.filename = filename;
+        this.file = file;
         this.fileData = fileData;
         this.fileMsg = fileMsg;
     }
@@ -25,8 +26,8 @@ public class FileThreadInfo<T> {
         return fileThread;
     }
 
-    public String getFilename(){
-        return filename;
+    public File getFilename(){
+        return file;
     }
 
     public ArrayList<T> getFileData(){

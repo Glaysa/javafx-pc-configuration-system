@@ -1,5 +1,8 @@
 package org.openjfx.file_utilities.FileHandlers;
 
+import org.openjfx.data_collection.ComponentsCollection;
+
+import java.io.File;
 import java.util.ArrayList;
 
 /** This class is responsible for calling the open and save threads. They are often called in the controllers. */
@@ -11,36 +14,29 @@ public class FileActions<T> {
     protected final String OPEN_THREAD = "Open Thread";
 
     @SuppressWarnings("unchecked")
-    public void save(ArrayList<T> dataToSave, String filename, String msg){
+    public void save(ArrayList<T> dataToSave, File file, String msg){
         threadHandlers = FileThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            FileThreadInfo<T> fileThreadInfo = new FileThreadInfo<>(filename, dataToSave, SAVE_THREAD, msg);
+            FileThreadInfo<T> fileThreadInfo = new FileThreadInfo<>(file, dataToSave, SAVE_THREAD, msg);
             threadHandlers.addToWaitingThreads(fileThreadInfo);
         } else {
-            threadHandlers.runSaveThread(dataToSave, filename, msg);
+            threadHandlers.runSaveThread(dataToSave, file, msg);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public void open(String filename, String msg){
+    public void open(File file, String msg){
         threadHandlers = FileThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            FileThreadInfo<T> fileThreadInfo = new FileThreadInfo<>(filename, null, OPEN_THREAD, msg);
+            FileThreadInfo<T> fileThreadInfo = new FileThreadInfo<>(file, null, OPEN_THREAD, msg);
             threadHandlers.addToWaitingThreads(fileThreadInfo);
         } else {
-            threadHandlers.runOpenThread(filename, msg);
+            threadHandlers.runOpenThread(file, msg);
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public void saveChanges(ArrayList<T> dataToSave, String msg){
-        threadHandlers = FileThreads.getInstance();
-        String currentOpenedFile = threadHandlers.getCurrentOpenedFile();
-        if(threadHandlers.isThreadRunning()) {
-            FileThreadInfo<T> fileThreadInfo = new FileThreadInfo<>(currentOpenedFile, dataToSave, SAVE_THREAD, msg);
-            threadHandlers.addToWaitingThreads(fileThreadInfo);
-        } else {
-            threadHandlers.runSaveThread(dataToSave, currentOpenedFile, msg);
-        }
+    public void saveChanges(ArrayList<T> dataToSave){
+        File currentOpenedFile = threadHandlers.getCurrentOpenedFile();
+        save(dataToSave, currentOpenedFile, "Saving changes...");
     }
 }
