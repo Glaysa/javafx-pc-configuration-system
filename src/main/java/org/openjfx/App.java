@@ -34,12 +34,11 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    @SuppressWarnings("unchecked")
     private static void stageClose(Stage stage){
         if(ComponentsCollection.isModified()) {
             String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
             if(response.equals("Yes")) {
-                FileActions<PCComponents> fileActions = FileActions.getInstance();
+                FileActions<PCComponents> fileActions = new FileActions<>();
                 fileActions.saveChanges(ComponentsCollection.getComponentObsList());
             }
             stage.close();

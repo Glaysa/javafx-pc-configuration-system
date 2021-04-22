@@ -24,11 +24,8 @@ import java.util.*;
 class FileThreads<T> extends FileActions<T> {
 
     private final File defaultFile = new File("src/main/java/database/initialComponents.txt");
-    private Writer<T> writer = new Writer<>();                          // task that runs on save thread
-    private Reader<T> reader = new Reader<>();                          // task that runs on open thread
     private boolean threadRunning = false;                              // tells if a thread is currently running
     private Alert loadingAlert;                                         // Progress alert popup dialog
-    private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();   // tells if a thread is waiting to be run
     private File lastOpenedFile;                                   // used for saving changes
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */

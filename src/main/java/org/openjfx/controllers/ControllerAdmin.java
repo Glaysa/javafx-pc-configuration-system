@@ -24,7 +24,7 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
     @FXML private Label filenameLabel;
-    private final FileActions<PCComponents> file = FileActions.getInstance();
+    private final FileActions<PCComponents> file = new FileActions<>();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
 
     @Override
