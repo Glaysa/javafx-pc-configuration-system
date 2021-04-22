@@ -24,9 +24,12 @@ import java.util.*;
 class FileThreads<T> extends FileActions<T> {
 
     private final File defaultFile = new File("src/main/java/database/initialComponents.txt");
-    private boolean threadRunning = false;                              // tells if a thread is currently running
-    private Alert loadingAlert;                                         // Progress alert popup dialog
-    private File lastOpenedFile;                                   // used for saving changes
+    private boolean threadRunning = false;
+    private Alert loadingAlert;
+    private File lastOpenedFile;
+    private Writer<T> writer = new Writer<>();
+    private Reader<T> reader = new Reader<>();
+    private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
@@ -71,7 +74,6 @@ class FileThreads<T> extends FileActions<T> {
                 lastOpenedFile = file;
             }
             else {
-                // currentOpenedFile = lastOpenedFile;
                 throw new IllegalArgumentException("Invalid File.\nOpen only *.txt, *.bin");
             }
         } catch (Exception e) {
@@ -101,7 +103,7 @@ class FileThreads<T> extends FileActions<T> {
 
         } catch (Exception e) {
             threadRunning = false;
-            AlertDialog.showWarningDialog(e.getMessage(),"");
+            AlertDialog.showWarningDialog(e.getMessage(),"Please try again!");
             waitingThreads.poll();
             runWaitingThreads();
         }
