@@ -50,11 +50,9 @@ class FileThreads<T> extends FileActions<T> {
         try {
             if(fileExtension.equals(".txt")) {
                 writer.setFileWriter(new IO_txt());
-            }
-            else if(fileExtension.equals(".bin")) {
+            } else if(fileExtension.equals(".bin")) {
                 writer.setFileWriter(new IO_bin());
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException("Invalid File.\nSave only *.txt, *.bin");
             }
         } catch (Exception e) {
@@ -69,12 +67,10 @@ class FileThreads<T> extends FileActions<T> {
             if(fileExtension.equals(".txt")) {
                 reader.setFileReader(new IO_txt());
                 lastOpenedFile = file;
-            }
-            else if(fileExtension.equals(".bin")) {
+            } else if(fileExtension.equals(".bin")) {
                 reader.setFileReader(new IO_bin());
                 lastOpenedFile = file;
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException("Invalid File.\nOpen only *.txt, *.bin");
             }
         } catch (Exception e) {
@@ -150,7 +146,6 @@ class FileThreads<T> extends FileActions<T> {
         threadRunning = false;
         processData(reader.getValue());
         System.out.println("Open Thread Successful!\n");
-        reader = new Reader<>();
         runWaitingThreads();
     }
 
@@ -201,12 +196,10 @@ class FileThreads<T> extends FileActions<T> {
             if(fileThread.equals(SAVE_THREAD)){
                 writer = new Writer<>();
                 save(fileData, file, message);
-            }
-            else if(fileThread.equals(OPEN_THREAD)){
+            } else if(fileThread.equals(OPEN_THREAD)){
                 reader = new Reader<>();
                 open(file, message);
-            }
-            else {
+            } else {
                 System.out.println("No Available Threads");
             }
             waitingThreads.poll();
@@ -215,15 +208,18 @@ class FileThreads<T> extends FileActions<T> {
 
     /** Opening a file returns data, that data is processed here. */
     private void processData(ArrayList<T> data) {
-        for(T datum : data) {
-            Object p = FileParser.convertToObject(datum.toString());
-            if(p instanceof PCComponents) {
-                ComponentsCollection.addToCollection(((PCComponents) p));
+        reader = new Reader<>();
+        Object object = FileParser.convertToObject(data.get(0).toString());
+        if(object instanceof PCComponents) {
+            for(T datum : data){
+                Object p = FileParser.convertToObject(datum.toString());
+                ComponentsCollection.clearCollection();
+                ComponentsCollection.addToCollection((PCComponents) p);
                 ComponentsCollection.setModified(false);
-            } else {
-                AlertDialog.showWarningDialog("File is corrupted","Please open another file.");
-                break;
             }
+        } else {
+            AlertDialog.showWarningDialog("File is corrupted","Please open another file.");
+            open(defaultFile, "Loading system data...");
         }
     }
 
