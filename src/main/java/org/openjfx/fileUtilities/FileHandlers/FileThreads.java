@@ -2,7 +2,6 @@ package org.openjfx.fileUtilities.FileHandlers;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
-import org.openjfx.controllers.ControllerAdmin;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.fileUtilities.FileParser;
@@ -11,6 +10,7 @@ import org.openjfx.fileUtilities.fileIO.IO_txt;
 import org.openjfx.fileUtilities.fileTasks.Reader;
 import org.openjfx.fileUtilities.fileTasks.Writer;
 import org.openjfx.guiUtilities.AlertDialog;
+import org.openjfx.guiUtilities.Indicators;
 import java.io.File;
 import java.util.*;
 
@@ -138,7 +138,7 @@ class FileThreads<T> extends FileActions<T> {
         loadingAlert.close();
         threadRunning = false;
         System.out.println("Save Thread Successful!\n");
-        ControllerAdmin.fileStatusStatic.setText("Saved");
+        Indicators.showFileStatus(false);
         writer = new Writer<>();
         runWaitingThreads();
     }
@@ -223,8 +223,8 @@ class FileThreads<T> extends FileActions<T> {
         } else {
             AlertDialog.showWarningDialog("File is corrupted", "Please open another file.");
         }
-        ControllerAdmin.filenameLabelStatic.setText(lastOpenedFile.getName());
-        ControllerAdmin.fileStatusStatic.setText("Saved");
+        Indicators.showFilename(lastOpenedFile.getName());
+        Indicators.showFileStatus(false);
     }
 
     /** Adds a thread to the waiting threads queue. */
