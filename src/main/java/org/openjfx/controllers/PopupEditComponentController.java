@@ -83,7 +83,7 @@ public class PopupEditComponentController implements Initializable, Callable<Voi
 
     /** Displays the data of component to be edited */
     public void setComponentToEdit(PCComponents componentToEdit) {
-        this.componentNumber.setText(Integer.toString(componentToEdit.getComponentNumber()));
+        this.componentNumber.setText(Integer.toString(componentToEdit.getPCComponentID()));
         this.componentName.setText(componentToEdit.getComponentName());
         this.typeOptions.setValue(componentToEdit.getComponentType());
         this.componentSpecs.setText(componentToEdit.getComponentSpecs());

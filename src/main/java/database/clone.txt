@@ -1,4 +1,2 @@
-1;Comp1;Comp1;Specs1;300.0
-2;Comp2;Comp2;Specs2;400.0
-3;Comp3;Comp3;Specs3;500.0
-4;Cloned2;Comp4;Specs4;999.0
+{"componentNumber":1,"componentName":"Test1","componentType":"RAM","componentSpecs":"Test","componentPrice":100.0}
+{"componentNumber":2,"componentName":"Test2","componentType":"Keyboards","componentSpecs":"Test","componentPrice":200.0}

@@ -8,7 +8,7 @@ import org.openjfx.dataModels.PCComponents;
 
 public class Validator {
 
-    private static int componentNumber;
+    private static int PCComponentID;
     private static String componentName;
     private static String componentType;
     private static String componentSpecs;
@@ -23,12 +23,12 @@ public class Validator {
 
     public static void validateComponentNumber(String txtComponentNumber){
         try {
-            componentNumber = Integer.parseInt(txtComponentNumber);
-            if(componentNumber <= 0) {
+            PCComponentID = Integer.parseInt(txtComponentNumber);
+            if(PCComponentID <= 0) {
                 throw new InvalidNumberException("Component number must be greater than 0");
             }
             for(PCComponents c : ComponentsCollection.getComponentObsList()){
-                if(c.getComponentNumber() == componentNumber){
+                if(c.getPCComponentID() == PCComponentID){
                     throw new InvalidNumberException("Component number is already in use");
                 }
             }
@@ -87,7 +87,7 @@ public class Validator {
         }
     }
 
-    public static int getComponentNumber(){ return componentNumber; }
+    public static int getPCComponentID(){ return PCComponentID; }
     public static String getComponentName(){ return componentName; }
     public static String getComponentType(){ return componentType; }
     public static String getComponentSpecs(){ return componentSpecs; }

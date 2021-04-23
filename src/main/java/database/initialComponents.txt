@@ -1,3 +1,1 @@
-1;Comp1;Comp1;Specs1;300.0
-2;Comp2;Comp2;Specs2;400.0
-3;Comp3;Mouse;Comp3;300.0
+{"PCComponentID":1,"componentName":"Test","componentType":"RAM","componentSpecs":"Test","componentPrice":100.0}

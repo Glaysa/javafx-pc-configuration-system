@@ -25,7 +25,7 @@
 
                  <TableColumn fx:id="numberColumn" maxWidth="100.0" minWidth="75.0" prefWidth="100.0" text="Number">
                     <cellValueFactory>
-                       <PropertyValueFactory property="componentNumber" />
+                       <PropertyValueFactory property="PCComponentID" />
                     </cellValueFactory>
                  </TableColumn>
 

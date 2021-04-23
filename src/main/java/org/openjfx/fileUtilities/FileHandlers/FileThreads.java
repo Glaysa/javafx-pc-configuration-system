@@ -4,6 +4,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.fileUtilities.FileParser;
 import org.openjfx.fileUtilities.fileIO.IO_bin;
 import org.openjfx.fileUtilities.fileIO.IO_txt;
 import org.openjfx.fileUtilities.fileTasks.Reader;
@@ -214,31 +215,14 @@ class FileThreads<T> extends FileActions<T> {
 
     /** Opening a file returns data, that data is processed here. */
     private void processData(ArrayList<T> data) {
-
-        // Checks which object instance is the data
-        T datum = data.get(0);
-        String[] attributesLength = datum.toString().split(";");
-
-        if(attributesLength.length == 5){
-
-            // Clears the tableview first before loading mew data
-            if(!data.isEmpty()) ComponentsCollection.clearCollection();
-            // Load the new data to tableview
-            for(T d : data) ComponentsCollection.addToCollection((PCComponents) d);
-            // When opening a new file, it is by default not modified
-            ComponentsCollection.setModified(false);
-
-        } else {
-
-            // Show a warning alert that the file is corrupted
-            System.err.println("File is corrupted: Data not loaded");
-            AlertDialog.showWarningDialog("File is corrupted!",
-             "File data must either contain pc components or pc configurations.");
-
-            // When the file that is opened is corrupted, load the default component list
-            if(data.isEmpty()) {
-                reader = new Reader<>();
-                open(defaultFile,"Loading default data...");
+        for(T datum : data) {
+            Object p = FileParser.convertToObject(datum.toString());
+            if(p instanceof PCComponents) {
+                ComponentsCollection.addToCollection(((PCComponents) p));
+                ComponentsCollection.setModified(false);
+            } else {
+                AlertDialog.showWarningDialog("File is corrupted","Please open another file.");
+                break;
             }
         }
     }
