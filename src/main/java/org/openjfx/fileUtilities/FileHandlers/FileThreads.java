@@ -51,7 +51,7 @@ class FileThreads<T> extends FileActions<T> {
         try {
             if(fileExtension.equals(".txt")) {
                 writer.setFileWriter(new IO_txt());
-            } else if(fileExtension.equals(".bin")) {
+            } else if(fileExtension.equals(".bin") || fileExtension.equals(".obj")) {
                 writer.setFileWriter(new IO_bin());
             } else {
                 throw new IllegalArgumentException("Invalid File.\nSave only *.txt, *.bin");
@@ -68,7 +68,7 @@ class FileThreads<T> extends FileActions<T> {
             if(fileExtension.equals(".txt")) {
                 reader.setFileReader(new IO_txt());
                 currentOpenedFile = file;
-            } else if(fileExtension.equals(".bin")) {
+            } else if(fileExtension.equals(".bin") || fileExtension.equals(".obj")) {
                 reader.setFileReader(new IO_bin());
                 currentOpenedFile = file;
             } else {
