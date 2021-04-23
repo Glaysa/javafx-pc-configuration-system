@@ -27,7 +27,7 @@ class FileThreads<T> extends FileActions<T> {
     private final File defaultFile = new File("src/main/java/database/initialComponents.txt");
     private boolean threadRunning = false;
     private Alert loadingAlert;
-    private File lastOpenedFile;
+    private File lastOpenedFile, currentOpenedFile;
     private Writer<T> writer = new Writer<>();
     private Reader<T> reader = new Reader<>();
     private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();
@@ -66,10 +66,10 @@ class FileThreads<T> extends FileActions<T> {
         try {
             if(fileExtension.equals(".txt")) {
                 reader.setFileReader(new IO_txt());
-                lastOpenedFile = file;
+                currentOpenedFile = file;
             } else if(fileExtension.equals(".bin")) {
                 reader.setFileReader(new IO_bin());
-                lastOpenedFile = file;
+                currentOpenedFile = file;
             } else {
                 throw new IllegalArgumentException("Invalid File.\nOpen only *.txt, *.bin");
             }
@@ -211,16 +211,17 @@ class FileThreads<T> extends FileActions<T> {
         reader = new Reader<>();
         Object object = FileParser.convertToObject(data.get(0).toString());
         if(object instanceof PCComponents) {
+            ComponentsCollection.clearCollection();
             for(T datum : data){
                 Object p = FileParser.convertToObject(datum.toString());
-                ComponentsCollection.clearCollection();
                 ComponentsCollection.addToCollection((PCComponents) p);
                 ComponentsCollection.setModified(false);
+                lastOpenedFile = currentOpenedFile;
             }
         } else {
-            AlertDialog.showWarningDialog("File is corrupted","Please open another file.");
-            open(defaultFile, "Loading system data...");
+            AlertDialog.showWarningDialog("File is corrupted", "Please open another file.");
         }
+        System.out.println(lastOpenedFile);
     }
 
     /** Adds a thread to the waiting threads queue. */
