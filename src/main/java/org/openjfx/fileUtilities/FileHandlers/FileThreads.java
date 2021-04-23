@@ -138,6 +138,7 @@ class FileThreads<T> extends FileActions<T> {
         loadingAlert.close();
         threadRunning = false;
         System.out.println("Save Thread Successful!\n");
+        ControllerAdmin.fileStatusStatic.setText("Saved");
         writer = new Writer<>();
         runWaitingThreads();
     }
@@ -223,6 +224,7 @@ class FileThreads<T> extends FileActions<T> {
             AlertDialog.showWarningDialog("File is corrupted", "Please open another file.");
         }
         ControllerAdmin.filenameLabelStatic.setText(lastOpenedFile.getName());
+        ControllerAdmin.fileStatusStatic.setText("Saved");
     }
 
     /** Adds a thread to the waiting threads queue. */

@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
+import org.openjfx.controllers.ControllerAdmin;
 import org.openjfx.dataModels.PCComponents;
 import java.util.ArrayList;
 
@@ -61,6 +62,8 @@ public class ComponentsCollection {
                 fillCombobox_TYPE(typeOptions);
                 // Keeps track of the obs list if its modified or not
                 modified = true;
+                // Shows that the file is modified
+                ControllerAdmin.fileStatusStatic.setText("Modified");
             }
         });
     }

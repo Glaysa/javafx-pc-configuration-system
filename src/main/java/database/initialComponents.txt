@@ -1,1 +1,2 @@
-{"PCComponentID":1,"componentName":"Test","componentType":"RAM","componentSpecs":"Test","componentPrice":100.0}
+{"PCComponentID":1,"componentName":"Test1","componentType":"RAM","componentSpecs":"Test","componentPrice":100.0}
+{"PCComponentID":2,"componentName":"Test2","componentType":"Keyboards","componentSpecs":"Test","componentPrice":200.0}
