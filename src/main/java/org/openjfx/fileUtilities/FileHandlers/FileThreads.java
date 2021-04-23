@@ -2,6 +2,7 @@ package org.openjfx.fileUtilities.FileHandlers;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
+import org.openjfx.controllers.ControllerAdmin;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.fileUtilities.FileParser;
@@ -221,7 +222,7 @@ class FileThreads<T> extends FileActions<T> {
         } else {
             AlertDialog.showWarningDialog("File is corrupted", "Please open another file.");
         }
-        System.out.println(lastOpenedFile);
+        ControllerAdmin.filenameLabelStatic.setText(lastOpenedFile.getName());
     }
 
     /** Adds a thread to the waiting threads queue. */

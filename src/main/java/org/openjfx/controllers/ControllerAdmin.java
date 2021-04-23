@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class ControllerAdmin implements Initializable {
 
+    public static Label filenameLabelStatic;
     @FXML private Label filenameLabel;
     @FXML private TableView<PCComponents> tableView;
     @FXML private TextField searchInput;
@@ -39,6 +40,8 @@ public class ControllerAdmin implements Initializable {
         ComponentsCollection.collectionOnChange(typeOptions);
         // (listener) Initializes detection of double click on row of tableview
         editComponentOnDoubleClick();
+        // Shows which file is opened, defined as static to be accessed by other classes
+        filenameLabelStatic = filenameLabel;
     }
 
     /** Creates a new component to add on the tableview. */
