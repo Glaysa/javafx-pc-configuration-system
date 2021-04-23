@@ -181,7 +181,7 @@ class FileThreads<T> extends FileActions<T> {
         // Run the next waiting threads if there are any
         runWaitingThreads();
         // Error shown to developers
-        System.err.println("Open Thread Failed: The default system data will be opened instead.");
+        System.err.println("Open Thread Failed: An error occurred!");
         e.getSource().getException().printStackTrace();
         System.out.println();
     }

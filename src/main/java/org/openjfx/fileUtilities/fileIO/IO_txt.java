@@ -26,6 +26,7 @@ public class IO_txt implements FileWriters, FileReaders {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> ArrayList<T> read(File file) {
         ArrayList<T> data = new ArrayList<>();
         String lines;

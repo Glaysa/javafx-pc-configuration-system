@@ -1,2 +1,0 @@
-{"componentNumber":1,"componentName":"Test1","componentType":"RAM","componentSpecs":"Test","componentPrice":100.0}
-{"componentNumber":2,"componentName":"Test2","componentType":"Keyboards","componentSpecs":"Test","componentPrice":200.0}

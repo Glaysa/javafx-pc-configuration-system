@@ -3,10 +3,11 @@ package org.openjfx.dataModels;
 import com.google.gson.Gson;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataValidator.Validator;
+import java.io.Serializable;
 
 /** Model of Pc components. */
 
-public class PCComponents {
+public class PCComponents implements Serializable {
 
     private int PCComponentID;
     private String componentName;

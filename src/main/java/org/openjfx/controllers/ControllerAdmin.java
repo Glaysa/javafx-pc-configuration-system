@@ -123,10 +123,10 @@ public class ControllerAdmin implements Initializable {
 
     private FileChooser getFileChooser(){
         File initialDir = new File("C:\\Users\\Glaysa\\IdeaProjects\\javafx-maven-pc-configuration-system\\src\\main\\java\\database");
-        FileChooser.ExtensionFilter f1 = new FileChooser.ExtensionFilter("Text Files", "*.txt");
-        FileChooser.ExtensionFilter f2 = new FileChooser.ExtensionFilter("Binary Files", "*.bin");
-        FileChooser.ExtensionFilter f3 = new FileChooser.ExtensionFilter("Jobj Files", "*.obj");
-        FileChooser.ExtensionFilter f4 = new FileChooser.ExtensionFilter("All Files", "*.*");
+        FileChooser.ExtensionFilter f1 = new FileChooser.ExtensionFilter("All Files", "*.*");
+        FileChooser.ExtensionFilter f2 = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+        FileChooser.ExtensionFilter f3 = new FileChooser.ExtensionFilter("Binary Files", "*.bin");
+        FileChooser.ExtensionFilter f4 = new FileChooser.ExtensionFilter("Jobj Files", "*.obj");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(initialDir);
         fileChooser.getExtensionFilters().addAll(f1, f2, f3, f4);
