@@ -17,13 +17,13 @@ import java.util.ResourceBundle;
 
 public class ControllerAdmin implements Initializable {
 
+    @FXML private Label filenameLabel;
     @FXML private TableView<PCComponents> tableView;
     @FXML private TextField searchInput;
     @FXML private TextField cName;
     @FXML private TextField price;
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
-    @FXML private Label filenameLabel;
     private final FileActions<PCComponents> file = new FileActions<>();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
 
@@ -39,6 +39,8 @@ public class ControllerAdmin implements Initializable {
         ComponentsCollection.collectionOnChange(typeOptions);
         // (listener) Initializes detection of double click on row of tableview
         editComponentOnDoubleClick();
+        // Shows which file is opened
+        filenameLabel.setText("System Data");
     }
 
     /** Creates a new component to add on the tableview. */
@@ -111,6 +113,7 @@ public class ControllerAdmin implements Initializable {
             AlertDialog.showWarningDialog("No file was chosen","");
         } else {
             file.open(fileToOpen, "Opening file...");
+            filenameLabel.setText(file.getCurrentOpenedFilename());
         }
     }
 
@@ -141,5 +144,9 @@ public class ControllerAdmin implements Initializable {
         fileChooser.setInitialDirectory(initialDir);
         fileChooser.getExtensionFilters().addAll(f1, f2, f3, f4);
         return fileChooser;
+    }
+
+    public Label getFilenameLabel(){
+        return filenameLabel;
     }
 }
