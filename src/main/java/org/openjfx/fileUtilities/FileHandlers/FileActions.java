@@ -44,10 +44,4 @@ public class FileActions<T> {
             threadHandlers.runSaveThread(dataToSave, currentOpenedFile, "Saving changes...");
         }
     }
-
-    @SuppressWarnings("unchecked")
-    public String getCurrentOpenedFilename(){
-        threadHandlers = FileThreads.getInstance();
-        return threadHandlers.getCurrentOpenedFile().getName();
-    }
 }

@@ -50,6 +50,7 @@ public class ControllerAdmin implements Initializable {
     }
 
     /** Creates a new component to add on the tableview. */
+
     @FXML
     void createComponent() {
         int strNumber = PCComponents.createUniqueId();
@@ -68,6 +69,8 @@ public class ControllerAdmin implements Initializable {
         }
     }
 
+    /** Deletes all selected rows */
+
     @FXML
     void deleteComponent(){
         ObservableList<PCComponents> toDelete = tableView.getSelectionModel().getSelectedItems();
@@ -75,17 +78,64 @@ public class ControllerAdmin implements Initializable {
         if(response.equals("Yes")) ComponentsCollection.removeAllSelected(toDelete);
     }
 
-    /** Resets all input fields after successful creation
-     * of components and refreshes the tableview. */
-    void resetFields() {
-        cName.setText("");
-        cDesc.setText("");
-        price.setText("");
-        tableView.refresh();
+    /** Opens a file through file chooser */
+
+    @FXML
+    void openFile(){
+        FileChooser fileChooser = getFileChooser();
+        File fileToOpen = fileChooser.showOpenDialog(new Stage());
+        if(fileToOpen == null) {
+            AlertDialog.showWarningDialog("No file was chosen","");
+        } else {
+            file.open(fileToOpen, "Opening file...");
+        }
+    }
+
+    /** Saves a file through file chooser */
+
+    @FXML
+    void saveFile(){
+        FileChooser fileChooser = getFileChooser();
+        File fileToSave = fileChooser.showSaveDialog(new Stage());
+        if(fileToSave == null) {
+            AlertDialog.showWarningDialog("No file was chosen","");
+        } else {
+            file.save(ComponentsCollection.getComponentObsList(), fileToSave, "Saving file...");
+        }
+    }
+
+    /** Save all changes to the current opened file */
+
+    @FXML
+    void saveChanges(){
+        file.saveChanges(ComponentsCollection.getComponentObsList());
+        ComponentsCollection.setModified(false);
+    }
+
+    /** search() - searches through the tableview with the given search word. */
+
+    @FXML
+    void search() {
+        throw new UnsupportedOperationException("Method not yet implemented");
+    }
+
+    /** Initializes a file chooser */
+
+    private FileChooser getFileChooser(){
+        File initialDir = new File("C:\\Users\\Glaysa\\IdeaProjects\\javafx-maven-pc-configuration-system\\src\\main\\java\\database");
+        FileChooser.ExtensionFilter f1 = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+        FileChooser.ExtensionFilter f2 = new FileChooser.ExtensionFilter("Binary Files", "*.bin");
+        FileChooser.ExtensionFilter f3 = new FileChooser.ExtensionFilter("Jobj Files", "*.obj");
+        FileChooser.ExtensionFilter f4 = new FileChooser.ExtensionFilter("All Files", "*.*");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(initialDir);
+        fileChooser.getExtensionFilters().addAll(f1, f2, f3, f4);
+        return fileChooser;
     }
 
     /** Detects a double click on a row in the tableview
      * and opens a new window for component editing.*/
+
     public void editComponentOnDoubleClick(){
         tableView.setRowFactory(tv -> {
             TableRow<PCComponents> row = new TableRow<>();
@@ -105,49 +155,13 @@ public class ControllerAdmin implements Initializable {
         });
     }
 
-    /** search() - searches through the tableview with the given search word. */
-    @FXML
-    void search() {
-        throw new UnsupportedOperationException("Method not yet implemented");
-    }
+    /** Resets all input fields after successful creation
+     * of components and refreshes the tableview. */
 
-    @FXML
-    void openFile(){
-        FileChooser fileChooser = getFileChooser();
-        File fileToOpen = fileChooser.showOpenDialog(new Stage());
-        if(fileToOpen == null) {
-            AlertDialog.showWarningDialog("No file was chosen","");
-        } else {
-            file.open(fileToOpen, "Opening file...");
-        }
-    }
-
-    @FXML
-    void saveFile(){
-        FileChooser fileChooser = getFileChooser();
-        File fileToSave = fileChooser.showSaveDialog(new Stage());
-        if(fileToSave == null) {
-            AlertDialog.showWarningDialog("No file was chosen","");
-        } else {
-            file.save(ComponentsCollection.getComponentObsList(), fileToSave, "Saving file...");
-        }
-    }
-
-    @FXML
-    void saveChanges(){
-        file.saveChanges(ComponentsCollection.getComponentObsList());
-        ComponentsCollection.setModified(false);
-    }
-
-    private FileChooser getFileChooser(){
-        File initialDir = new File("C:\\Users\\Glaysa\\IdeaProjects\\javafx-maven-pc-configuration-system\\src\\main\\java\\database");
-        FileChooser.ExtensionFilter f1 = new FileChooser.ExtensionFilter("Text Files", "*.txt");
-        FileChooser.ExtensionFilter f2 = new FileChooser.ExtensionFilter("Binary Files", "*.bin");
-        FileChooser.ExtensionFilter f3 = new FileChooser.ExtensionFilter("Jobj Files", "*.obj");
-        FileChooser.ExtensionFilter f4 = new FileChooser.ExtensionFilter("All Files", "*.*");
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(initialDir);
-        fileChooser.getExtensionFilters().addAll(f1, f2, f3, f4);
-        return fileChooser;
+    void resetFields() {
+        cName.setText("");
+        cDesc.setText("");
+        price.setText("");
+        tableView.refresh();
     }
 }
