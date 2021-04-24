@@ -132,9 +132,9 @@ public class ControllerAdmin implements Initializable {
             if(response.equals("Yes")) {
                 file.saveChanges(ComponentsCollection.getComponentObsList(), "Saving changes...");
             }
-            ComponentsCollection.clearCollection();
-            App.setRoot("login");
         }
+        ComponentsCollection.clearCollection();
+        App.setRoot("login");
     }
 
     /** Initializes a file chooser */

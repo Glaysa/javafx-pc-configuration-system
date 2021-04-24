@@ -8,10 +8,10 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1274.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerCustomer">
    <top>
@@ -84,7 +84,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="searchInput" layoutX="127.0" layoutY="10.0" promptText="Search" AnchorPane.leftAnchor="130.0">
+            <TextField fx:id="searchInput" layoutX="497.0" layoutY="10.0" prefWidth="200.0" promptText="Search" AnchorPane.rightAnchor="202.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -94,18 +94,39 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button layoutX="315.0" layoutY="10.0" mnemonicParsing="false" onAction="#filterTableView" text="Filter Table" AnchorPane.leftAnchor="315.0">
+            <Button layoutX="679.0" layoutY="10.0" mnemonicParsing="false" onAction="#filterTableView" text="Filter Table" AnchorPane.rightAnchor="107.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
 
-            <TableView fx:id="tableViewProducts" layoutX="337.0" layoutY="288.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+            <TableView fx:id="tableViewProducts" layoutX="337.0" layoutY="288.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
               <columns>
-                <TableColumn prefWidth="200.0" text="Name" />
-                <TableColumn prefWidth="200.0" text="Type" />
-                  <TableColumn prefWidth="200.0" text="Description" />
-                  <TableColumn prefWidth="200.0" text="Price" />
+
+                  <TableColumn maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Name">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentName" />
+                      </cellValueFactory>
+                  </TableColumn>
+
+                  <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Type">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentType" />
+                      </cellValueFactory>
+                  </TableColumn>
+
+                  <TableColumn minWidth="200.0" prefWidth="300.0" text="Specifications">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentSpecs" />
+                      </cellValueFactory>
+                  </TableColumn>
+
+                  <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Price">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentPrice" />
+                      </cellValueFactory>
+                  </TableColumn>
+
               </columns>
             </TableView>
 
