@@ -9,23 +9,18 @@ import java.io.Serializable;
 
 public class PCComponents implements Serializable {
 
-    private int PCComponentID;
+    private final int PCComponentID;
     private String componentName;
     private String componentType;
     private String componentSpecs;
     private double componentPrice;
 
     public PCComponents(int PCComponentID, String componentName, String componentType, String componentSpecs, String componentPrice){
-        Validator.validateComponentName(componentName);
-        Validator.validateComponentSpecs(componentSpecs);
-        Validator.validateComponentType(componentType);
-        Validator.validateComponentPrice(componentPrice);
-
         this.PCComponentID = PCComponentID;
-        this.componentName = Validator.getComponentName();
-        this.componentType = Validator.getComponentType();
-        this.componentSpecs = Validator.getComponentSpecs();
-        this.componentPrice = Validator.getComponentPrice();
+        setComponentName(componentName);
+        setComponentType(componentType);
+        setComponentSpecs(componentSpecs);
+        setComponentPrice(componentPrice);
     }
 
     public String toString(){
@@ -43,11 +38,6 @@ public class PCComponents implements Serializable {
     public static String getClassReference(){
         // Must be unique (id name)
         return "PCComponentID";
-    }
-
-    public void setPCComponentID(String PCComponentID) {
-        Validator.validateComponentNumber(PCComponentID);
-        this.PCComponentID = Validator.getPCComponentID();
     }
 
     public void setComponentName(String componentName) {
