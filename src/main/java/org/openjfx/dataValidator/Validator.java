@@ -1,46 +1,26 @@
 package org.openjfx.dataValidator;
 
 import org.openjfx.customExceptions.InvalidNumberException;
-import org.openjfx.dataCollection.ComponentsCollection;
-import org.openjfx.dataModels.PCComponents;
 
 /** This class is responsible for validating components added on the tableview. */
 
 public class Validator {
 
-    private static int PCComponentID;
     private static String componentName;
     private static String componentType;
     private static String componentSpecs;
     private static double componentPrice;
 
-    private static String removeDelimeter(String toValidate){
-        if(toValidate.contains(";")){
-            toValidate = toValidate.replace(';',',');
+    private static String removeDelimiter(String toValidate){
+        if(toValidate.contains(",")){
+            toValidate = toValidate.replace(',','-');
         }
         return toValidate;
     }
 
-    public static void validateComponentNumber(String txtComponentNumber){
-        try {
-            PCComponentID = Integer.parseInt(txtComponentNumber);
-            if(PCComponentID <= 0) {
-                throw new InvalidNumberException("Component number must be greater than 0");
-            }
-            for(PCComponents c : ComponentsCollection.getComponentObsList()){
-                if(c.getPCComponentID() == PCComponentID){
-                    throw new InvalidNumberException("Component number is already in use");
-                }
-            }
-        } catch (InvalidNumberException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid component number"); }
-    }
-
     public static void validateComponentName(String componentName) {
 
-        Validator.componentName = removeDelimeter(componentName);
+        Validator.componentName = removeDelimiter(componentName);
         if(componentName.isEmpty()){
             throw new IllegalArgumentException("Component name cannot be empty");
         } else if(componentName.length() < 3) {
@@ -51,7 +31,7 @@ public class Validator {
 
     public static void validateComponentType(String componentType) {
 
-        Validator.componentType = removeDelimeter(componentType);
+        Validator.componentType = removeDelimiter(componentType);
         if(componentType.isEmpty()){
             throw new IllegalArgumentException("Component type cannot be empty");
         } else if(componentType.length() < 3) {
@@ -62,7 +42,7 @@ public class Validator {
 
     public static void validateComponentSpecs(String componentSpecs) {
 
-        Validator.componentSpecs = removeDelimeter(componentSpecs);
+        Validator.componentSpecs = removeDelimiter(componentSpecs);
         if(componentSpecs.isEmpty()){
             throw new IllegalArgumentException("Component specifications cannot be empty");
         } else if(componentSpecs.length() < 3) {
@@ -87,7 +67,6 @@ public class Validator {
         }
     }
 
-    public static int getPCComponentID(){ return PCComponentID; }
     public static String getComponentName(){ return componentName; }
     public static String getComponentType(){ return componentType; }
     public static String getComponentSpecs(){ return componentSpecs; }
