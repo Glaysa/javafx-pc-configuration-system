@@ -7,6 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.openjfx.App;
+import org.openjfx.controllers.PopupFilterTableViewController;
 import org.openjfx.dataModels.PCComponents;
 
 public class PopupForTableView {
@@ -16,6 +17,10 @@ public class PopupForTableView {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("popupFilterTableView.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
+
+            PopupFilterTableViewController controller = fxmlLoader.getController();
+            controller.setTableView(tableView);
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.setResizable(false);

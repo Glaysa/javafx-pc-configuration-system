@@ -105,7 +105,7 @@ public class ControllerAdmin implements Initializable {
         if(fileToSave == null) {
             AlertDialog.showWarningDialog("No file was chosen","");
         } else {
-            file.save(ComponentsCollection.getComponentObsList(), fileToSave, "Saving file...");
+            file.save(ComponentsCollection.getComponentArrayList(), fileToSave, "Saving file...");
         }
     }
 
@@ -113,7 +113,7 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void saveChanges(){
-        file.saveChanges(ComponentsCollection.getComponentObsList(), "Saving changes...");
+        file.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
     }
 
     /** search() - searches through the tableview with the given search word. */
@@ -130,7 +130,7 @@ public class ControllerAdmin implements Initializable {
         if(ComponentsCollection.isModified()) {
             String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
             if(response.equals("Yes")) {
-                file.saveChanges(ComponentsCollection.getComponentObsList(), "Saving changes...");
+                file.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
             }
         }
         ComponentsCollection.clearCollection();

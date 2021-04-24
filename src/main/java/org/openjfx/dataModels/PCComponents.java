@@ -31,7 +31,7 @@ public class PCComponents implements Serializable {
     }
 
     public static int createUniqueId(){
-        int prevId = ComponentsCollection.getComponentObsList().size();
+        int prevId = ComponentsCollection.getComponentArrayList().size();
         return prevId + 1;
     }
 

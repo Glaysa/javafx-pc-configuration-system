@@ -70,8 +70,12 @@ public class ComponentsCollection {
 
     /** Get/Set methods */
 
-    public static ArrayList<PCComponents> getComponentObsList() {
+    public static ArrayList<PCComponents> getComponentArrayList() {
         return new ArrayList<>(componentObsList);
+    }
+
+    public static ObservableList<PCComponents> getComponentObList() {
+        return componentObsList;
     }
 
     public static ObservableList<String> getComponentTypeObsList(){

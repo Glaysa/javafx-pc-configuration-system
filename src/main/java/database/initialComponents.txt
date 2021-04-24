@@ -1,3 +1,5 @@
 {"PCComponentID":1,"componentName":"Test1","componentType":"RAM","componentSpecs":"Test","componentPrice":100.0}
-{"PCComponentID":2,"componentName":"Test2","componentType":"Keyboards","componentSpecs":"Test","componentPrice":200.0}
+{"PCComponentID":2,"componentName":"Test2","componentType":"Graphic Cards","componentSpecs":"Test","componentPrice":200.0}
 {"PCComponentID":3,"componentName":"Test3","componentType":"Keyboards","componentSpecs":"Test3","componentPrice":300.0}
+{"PCComponentID":4,"componentName":"Test4","componentType":"Processors","componentSpecs":"Test","componentPrice":400.0}
+{"PCComponentID":5,"componentName":"Test5","componentType":"Mouse","componentSpecs":"Test","componentPrice":500.0}
