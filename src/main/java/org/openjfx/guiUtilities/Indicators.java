@@ -6,12 +6,12 @@ import org.openjfx.controllers.ControllerAdmin;
 public class Indicators {
 
     /** Whenever a new file is opened, the filename of that file will be shown */
-    public static void showFilename(String filename){
+    public static void updateFilename(String filename){
         ControllerAdmin.filenameLabelStatic.setText(filename);
     }
 
     /** Shows whether the current opened file is modified or not */
-    public static void showFileStatus(boolean isModified){
+    public static void updateFileStatus(boolean isModified){
         if(isModified) {
             ControllerAdmin.fileStatusStatic.setText("Modified");
             ControllerAdmin.fileStatusStatic.setStyle("-fx-text-fill: darkred");

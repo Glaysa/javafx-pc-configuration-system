@@ -63,7 +63,7 @@ public class ComponentsCollection {
                 // Keeps track of the obs list if its modified or not
                 modified = true;
                 // Shows that the file is modified
-                Indicators.showFileStatus(true);
+                Indicators.updateFileStatus(true);
             }
         });
     }

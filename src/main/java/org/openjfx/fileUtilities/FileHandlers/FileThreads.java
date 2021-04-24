@@ -138,7 +138,7 @@ class FileThreads<T> extends FileActions<T> {
         loadingAlert.close();
         threadRunning = false;
         System.out.println("Save Thread Successful!\n");
-        Indicators.showFileStatus(false);
+        Indicators.updateFileStatus(false);
         writer = new Writer<>();
         runWaitingThreads();
     }
@@ -220,11 +220,11 @@ class FileThreads<T> extends FileActions<T> {
                 ComponentsCollection.setModified(false);
                 lastOpenedFile = currentOpenedFile;
             }
+            Indicators.updateFilename(lastOpenedFile.getName());
+            Indicators.updateFileStatus(false);
         } else {
-            AlertDialog.showWarningDialog("File is corrupted", "Please open another file.");
+            System.out.println("Unable to load data");
         }
-        Indicators.showFilename(lastOpenedFile.getName());
-        Indicators.showFileStatus(false);
     }
 
     /** Adds a thread to the waiting threads queue. */
