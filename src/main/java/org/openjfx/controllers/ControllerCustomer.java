@@ -49,29 +49,15 @@ public class ControllerCustomer implements Initializable {
     @FXML
     void addToCart() {
         ObservableList<PCComponents> selected = tableViewProducts.getSelectionModel().getSelectedItems();
-        if(!selected.isEmpty()) {
-            for(PCComponents toAdd : selected){
-                if(ComponentsCartCollection.getComponentObsList().contains(toAdd)) {
-                    String response = AlertDialog.showConfirmDialog(toAdd.getComponentName() + " is already in the cart, do you want to add another one?");
-                    if(response.equals("Yes")) ComponentsCartCollection.addToCollection(toAdd);
-                } else {
-                    ComponentsCartCollection.addToCollection(toAdd);
-                }
-            }
-        } else {
-            AlertDialog.showWarningDialog("Please select a product to add from the products table","");
-        }
+        if(!selected.isEmpty()) for(PCComponents toAdd : selected) ComponentsCartCollection.addToCollection(toAdd);
+        else AlertDialog.showWarningDialog("Please select a product to add","");
         tableViewCart.refresh();
     }
 
     @FXML
     void removeFromCart() {
         PCComponents selected = tableViewCart.getSelectionModel().getSelectedItem();
-        if(selected != null) {
-            ComponentsCartCollection.removeSelected(selected);
-        } else {
-            AlertDialog.showWarningDialog("Please select a product to remove from the cart", "");
-        }
+        ComponentsCartCollection.removeSelected(selected);
         tableViewCart.refresh();
     }
 

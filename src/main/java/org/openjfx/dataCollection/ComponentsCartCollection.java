@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.guiUtilities.AlertDialog;
 import java.util.ArrayList;
 
 /** This class is responsible of all methods related to the components cart tableview in the customer view */
@@ -17,7 +18,12 @@ public class ComponentsCartCollection {
 
     /** Adds new components to the observable list componentObsList */
     public static void addToCollection(PCComponents toAdd){
-        cartObsList.add(toAdd);
+        if(cartObsList.contains(toAdd)) {
+            String response = AlertDialog.showConfirmDialog(toAdd.getComponentName() + " is already in the cart. Add anyway?");
+            if(response.equals("Yes")) cartObsList.add(toAdd);
+        } else {
+            cartObsList.add(toAdd);
+        }
     }
 
     /** Sets the items of the tableview to componentObsList */
@@ -32,7 +38,8 @@ public class ComponentsCartCollection {
 
     /** Removes all selected values from the collection */
     public static void removeSelected(PCComponents toRemove){
-        cartObsList.remove(toRemove);
+        if(toRemove != null) cartObsList.remove(toRemove);
+        else AlertDialog.showWarningDialog("Please select a product to remove", "");
     }
 
     /** Updates the combobox of component types whenever there is a change in componentsObsList */
