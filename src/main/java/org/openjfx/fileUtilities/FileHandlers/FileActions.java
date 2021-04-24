@@ -34,14 +34,9 @@ public class FileActions<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public void saveChanges(ArrayList<T> dataToSave){
+    public void saveChanges(ArrayList<T> dataToSave, String msg){
         threadHandlers = FileThreads.getInstance();
         File currentOpenedFile = threadHandlers.getCurrentOpenedFile();
-        if(threadHandlers.isThreadRunning()) {
-            FileThreadInfo<T> fileThreadInfo = new FileThreadInfo<>(currentOpenedFile, dataToSave, SAVE_THREAD, "Saving changes...");
-            threadHandlers.addToWaitingThreads(fileThreadInfo);
-        } else {
-            threadHandlers.runSaveThread(dataToSave, currentOpenedFile, "Saving changes...");
-        }
+        save(dataToSave, currentOpenedFile, msg);
     }
 }

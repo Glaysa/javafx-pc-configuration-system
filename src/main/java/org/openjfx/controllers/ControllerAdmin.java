@@ -113,7 +113,7 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void saveChanges(){
-        file.saveChanges(ComponentsCollection.getComponentObsList());
+        file.saveChanges(ComponentsCollection.getComponentObsList(), "Saving changes...");
     }
 
     /** search() - searches through the tableview with the given search word. */
@@ -130,8 +130,7 @@ public class ControllerAdmin implements Initializable {
         if(ComponentsCollection.isModified()) {
             String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
             if(response.equals("Yes")) {
-                FileActions<PCComponents> fileActions = new FileActions<>();
-                fileActions.saveChanges(ComponentsCollection.getComponentObsList());
+                file.saveChanges(ComponentsCollection.getComponentObsList(), "Saving changes...");
             }
             ComponentsCollection.clearCollection();
             App.setRoot("login");
