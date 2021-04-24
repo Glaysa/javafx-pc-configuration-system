@@ -11,16 +11,9 @@ public class Validator {
     private static String componentSpecs;
     private static double componentPrice;
 
-    private static String removeDelimiter(String toValidate){
-        if(toValidate.contains(",")){
-            toValidate = toValidate.replace(',','-');
-        }
-        return toValidate;
-    }
-
     public static void validateComponentName(String componentName) {
 
-        Validator.componentName = removeDelimiter(componentName);
+        if(componentName.contains(",")) componentName = componentName.replace(",","");
         if(componentName.isEmpty()){
             throw new IllegalArgumentException("Component name cannot be empty");
         } else if(componentName.length() < 3) {
@@ -31,7 +24,7 @@ public class Validator {
 
     public static void validateComponentType(String componentType) {
 
-        Validator.componentType = removeDelimiter(componentType);
+        if(componentType.contains(",")) componentType = componentType.replace(",","");
         if(componentType.isEmpty()){
             throw new IllegalArgumentException("Component type cannot be empty");
         } else if(componentType.length() < 3) {
@@ -42,7 +35,7 @@ public class Validator {
 
     public static void validateComponentSpecs(String componentSpecs) {
 
-        Validator.componentSpecs = removeDelimiter(componentSpecs);
+        if(componentSpecs.contains(",")) componentSpecs = componentSpecs.replace(",","");
         if(componentSpecs.isEmpty()){
             throw new IllegalArgumentException("Component specifications cannot be empty");
         } else if(componentSpecs.length() < 3) {
