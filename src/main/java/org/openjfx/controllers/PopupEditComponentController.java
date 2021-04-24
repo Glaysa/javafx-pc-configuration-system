@@ -54,7 +54,6 @@ public class PopupEditComponentController implements Initializable, Callable<Voi
         Callable<Void> callable = this;
         OnEnterKeyEvent.execute(componentNumber, callable);
         OnEnterKeyEvent.execute(componentName, callable);
-        OnEnterKeyEvent.execute(componentSpecs, callable);
         OnEnterKeyEvent.execute(typeOptions, callable);
         OnEnterKeyEvent.execute(componentPrice, callable);
     }
