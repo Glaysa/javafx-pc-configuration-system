@@ -68,8 +68,19 @@
 
             <TableView fx:id="tableViewCart" layoutX="100.0" layoutY="188.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
               <columns>
-                <TableColumn maxWidth="1.7976931348623157E308" minWidth="200" prefWidth="200.0" text="Product Name" />
-                <TableColumn maxWidth="1.7976931348623157E308" minWidth="200" prefWidth="200.0" text="Price" />
+
+                  <TableColumn maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Name">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentName" />
+                      </cellValueFactory>
+                  </TableColumn>
+
+                  <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Price">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="componentPrice" />
+                      </cellValueFactory>
+                  </TableColumn>
+
               </columns>
             </TableView>
 

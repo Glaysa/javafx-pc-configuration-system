@@ -10,11 +10,11 @@ import org.openjfx.dataModels.PCComponents;
 import org.openjfx.guiUtilities.Indicators;
 import java.util.ArrayList;
 
-/** This class is responsible of all methods related to the components tableview */
+/** This class is responsible of all methods related to the components tableview in the admin view */
 
 public class ComponentsCollection {
 
-    private static ObservableList<PCComponents> componentObsList = FXCollections.observableArrayList();
+    private static final ObservableList<PCComponents> componentObsList = FXCollections.observableArrayList();
     private static ObservableList<String> componentTypeObsList;
     private static boolean modified = false;
 
