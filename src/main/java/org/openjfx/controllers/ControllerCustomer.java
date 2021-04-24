@@ -15,6 +15,7 @@ import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.PopupForComponents;
+import org.openjfx.guiUtilities.PopupForTableView;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -46,6 +47,8 @@ public class ControllerCustomer implements Initializable {
         Indicators.showToolTip(tableViewCart, "Double click to see product details");
     }
 
+    /** Add components to cart */
+
     @FXML
     void addToCart() {
         ObservableList<PCComponents> selected = tableViewProducts.getSelectionModel().getSelectedItems();
@@ -53,6 +56,8 @@ public class ControllerCustomer implements Initializable {
         else AlertDialog.showWarningDialog("Please select a product to add","");
         tableViewCart.refresh();
     }
+
+    /** Removes a component from the cart */
 
     @FXML
     void removeFromCart() {
@@ -66,14 +71,16 @@ public class ControllerCustomer implements Initializable {
 
     }
 
+    /** Opens a popup window to show filter options of the tableview of products */
+
     @FXML
     void filterTableView() {
-
+        PopupForTableView.showFilterOptions(tableViewProducts);
     }
 
     @FXML
     void logout() throws IOException {
-        ComponentsCartCollection.clearCollection();
+        ComponentsCollection.clearCollection();
         App.setRoot("login");
     }
 
