@@ -10,6 +10,7 @@ import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
+import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.PopupEditComponent;
 import java.io.File;
 import java.net.URL;
@@ -42,6 +43,8 @@ public class ControllerAdmin implements Initializable {
         ComponentsCollection.collectionOnChange(typeOptions);
         // (listener) Initializes detection of double click on row of tableview
         editComponentOnDoubleClick();
+        // Initializes tableview tooltips
+        Indicators.showToolTip(tableView, "Double click to edit");
 
         // Shows which file is opened and it's saved or modified
         // Assign to another static element to give access to other classes

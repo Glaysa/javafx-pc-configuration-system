@@ -1,5 +1,7 @@
 package org.openjfx.guiUtilities;
 
+import javafx.scene.control.Control;
+import javafx.scene.control.Tooltip;
 import org.openjfx.controllers.ControllerAdmin;
 
 /** Class responsible for updating the element indicators in the gui */
@@ -19,5 +21,12 @@ public class Indicators {
             ControllerAdmin.fileStatusStatic.setText("Saved");
             ControllerAdmin.fileStatusStatic.setStyle("-fx-text-fill: seagreen");
         }
+    }
+
+    /** Shows tooltips on jfx controls when hovered upon */
+    public static <T extends Control> void showToolTip(T object, String toolTipMessage){
+        Tooltip tooltip = new Tooltip(toolTipMessage);
+        object.setTooltip(tooltip);
+        object.getTooltip().setStyle("-fx-text-fill: black; -fx-background-color: gold; -fx-font-size: 12px;");
     }
 }
