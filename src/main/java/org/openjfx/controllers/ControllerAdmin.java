@@ -140,7 +140,7 @@ public class ControllerAdmin implements Initializable {
     /** Initializes a file chooser */
 
     private FileChooser getFileChooser(){
-        File initialDir = new File("C:\\Users\\Glaysa\\IdeaProjects\\javafx-maven-pc-configuration-system\\src\\main\\java\\database");
+        File initialDir = new File(System.getProperty("user.home") + "\\Desktop");
         FileChooser.ExtensionFilter f1 = new FileChooser.ExtensionFilter("All Files", "*.*");
         FileChooser.ExtensionFilter f2 = new FileChooser.ExtensionFilter("Text Files", "*.txt");
         FileChooser.ExtensionFilter f3 = new FileChooser.ExtensionFilter("Binary Files", "*.bin");
