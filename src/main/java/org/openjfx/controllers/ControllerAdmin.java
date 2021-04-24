@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.openjfx.App;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
@@ -13,6 +14,7 @@ import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.PopupEditComponent;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -112,7 +114,6 @@ public class ControllerAdmin implements Initializable {
     @FXML
     void saveChanges(){
         file.saveChanges(ComponentsCollection.getComponentObsList());
-        ComponentsCollection.setModified(false);
     }
 
     /** search() - searches through the tableview with the given search word. */
@@ -120,6 +121,21 @@ public class ControllerAdmin implements Initializable {
     @FXML
     void search() {
         throw new UnsupportedOperationException("Method not yet implemented");
+    }
+
+    /** Change view to login view */
+
+    @FXML
+    void logout() throws IOException {
+        if(ComponentsCollection.isModified()) {
+            String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
+            if(response.equals("Yes")) {
+                FileActions<PCComponents> fileActions = new FileActions<>();
+                fileActions.saveChanges(ComponentsCollection.getComponentObsList());
+            }
+            ComponentsCollection.clearCollection();
+            App.setRoot("login");
+        }
     }
 
     /** Initializes a file chooser */

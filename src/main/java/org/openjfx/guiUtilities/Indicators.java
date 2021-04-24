@@ -3,6 +3,7 @@ package org.openjfx.guiUtilities;
 import javafx.scene.control.Control;
 import javafx.scene.control.Tooltip;
 import org.openjfx.controllers.ControllerAdmin;
+import org.openjfx.dataCollection.ComponentsCollection;
 
 /** Class responsible for updating the element indicators in the gui */
 public class Indicators {
@@ -14,6 +15,7 @@ public class Indicators {
 
     /** Shows whether the current opened file is modified or not */
     public static void updateFileStatus(boolean isModified){
+        ComponentsCollection.setModified(isModified);
         if(isModified) {
             ControllerAdmin.fileStatusStatic.setText("Modified");
             ControllerAdmin.fileStatusStatic.setStyle("-fx-text-fill: darkred");

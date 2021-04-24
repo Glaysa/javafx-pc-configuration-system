@@ -217,7 +217,6 @@ class FileThreads<T> extends FileActions<T> {
             for(T datum : data){
                 Object p = FileParser.convertToObject(datum.toString());
                 ComponentsCollection.addToCollection((PCComponents) p);
-                ComponentsCollection.setModified(false);
                 lastOpenedFile = currentOpenedFile;
             }
             Indicators.updateFilename(lastOpenedFile.getName());
