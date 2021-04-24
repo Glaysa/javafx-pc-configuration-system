@@ -6,12 +6,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import org.openjfx.App;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -75,8 +77,9 @@ public class ControllerCustomer implements Initializable {
     }
 
     @FXML
-    void logout() {
-
+    void logout() throws IOException {
+        ComponentsCartCollection.clearCollection();
+        App.setRoot("login");
     }
 
     @FXML
