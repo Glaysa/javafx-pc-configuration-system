@@ -8,9 +8,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.openjfx.App;
 import org.openjfx.controllers.PopupEditComponentController;
+import org.openjfx.controllers.PopupShowComponentController;
 import org.openjfx.dataModels.PCComponents;
 
-public class PopupEditComponent {
+public class PopupForComponents {
 
     /** This method is responsible for opening a popup for editing the components in the tableview when double clicked */
 
@@ -41,6 +42,22 @@ public class PopupEditComponent {
             stage.setTitle("Edit Components");
             stage.show();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showComponent(PCComponents componentToShow) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("popupShowComponent.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            PopupShowComponentController controller = fxmlLoader.getController();
+            controller.setComponentToShow(componentToShow);
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.setTitle("Component Details");
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }

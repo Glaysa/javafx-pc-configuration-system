@@ -12,7 +12,7 @@ import org.openjfx.dataModels.PCComponents;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
-import org.openjfx.guiUtilities.PopupEditComponent;
+import org.openjfx.guiUtilities.PopupForComponents;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -165,7 +165,7 @@ public class ControllerAdmin implements Initializable {
                         // Component to edit
                         PCComponents componentToUpdate = row.getItem();
                         // Opens a popup window for component editing
-                        PopupEditComponent.editComponent(componentToUpdate, tableView, index);
+                        PopupForComponents.editComponent(componentToUpdate, tableView, index);
                     }
                 }
             });
