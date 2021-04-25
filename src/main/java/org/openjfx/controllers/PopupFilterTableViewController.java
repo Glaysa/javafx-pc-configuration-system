@@ -22,6 +22,7 @@ public class PopupFilterTableViewController implements Initializable {
     @FXML private RadioButton checkAll;
     @FXML private Button clearAll;
     @FXML private Button selectAll;
+    @FXML private Button reset;
     private final ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
     private final ObservableList<PCComponents> temp = FXCollections.observableArrayList();
     private final ToggleGroup typeToggles = new ToggleGroup();
@@ -36,9 +37,10 @@ public class PopupFilterTableViewController implements Initializable {
         checkMore1000.setToggleGroup(typeToggles);
         typeToggles.selectToggle(checkAll);
 
-        // Filtering helpers
+        // Initializes Filtering helpers
         selectAllHelper();
         clearAllHelper();
+        resetFilter();
     }
 
     /** Applies all filters */
@@ -97,6 +99,15 @@ public class PopupFilterTableViewController implements Initializable {
         clearAll.setOnAction((actionEvent -> {
             for(CheckBox c: checkBoxes) c.setSelected(false);
         }));
+    }
+
+    /** Resets all filter to original form */
+    void resetFilter(){
+        reset.setOnAction(actionEvent -> {
+            tableView.setItems(ComponentsCollection.getComponentObList());
+            selectAll.fire();
+            typeToggles.selectToggle(checkAll);
+        });
     }
 
     /** Creates the filter checkboxes */

@@ -100,5 +100,10 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <Button fx:id="reset" layoutX="30.0" layoutY="359.0" mnemonicParsing="false" text="Reset" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
