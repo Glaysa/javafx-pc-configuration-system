@@ -20,6 +20,7 @@ public class PopupForTableView {
 
             PopupFilterTableViewController controller = fxmlLoader.getController();
             controller.setTableView(tableView);
+            controller.createFilterCheckboxes();
 
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));

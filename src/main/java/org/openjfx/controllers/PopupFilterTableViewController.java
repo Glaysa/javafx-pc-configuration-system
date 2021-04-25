@@ -6,6 +6,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import java.net.URL;
@@ -14,13 +15,7 @@ import java.util.function.Predicate;
 
 public class PopupFilterTableViewController implements Initializable {
 
-    @FXML private CheckBox checkProcessors;
-    @FXML private CheckBox checkRam;
-    @FXML private CheckBox checkKeyboards;
-    @FXML private CheckBox checkMouse;
-    @FXML private CheckBox checkGraphicCards;
-    @FXML private CheckBox checkCabinet;
-    @FXML private CheckBox checkOthers;
+    @FXML private VBox vBox;
     @FXML private RadioButton checkLess500;
     @FXML private RadioButton checkLess1000;
     @FXML private RadioButton checkMore1000;
@@ -34,15 +29,7 @@ public class PopupFilterTableViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         // Initialize component type checkboxes
-        checkBoxes.add(checkProcessors);
-        checkBoxes.add(checkRam);
-        checkBoxes.add(checkKeyboards);
-        checkBoxes.add(checkMouse);
-        checkBoxes.add(checkGraphicCards);
-        checkBoxes.add(checkCabinet);
-        checkBoxes.add(checkOthers);
         for(CheckBox checkBox: checkBoxes) checkBox.fire();
 
         // Price range choices
@@ -57,28 +44,26 @@ public class PopupFilterTableViewController implements Initializable {
         clearAllHelper();
     }
 
+    /** Applies all filters */
+
     @FXML
     void applyFilters() {
-        filter();
+        temp.clear();
+        for(CheckBox checkBox: checkBoxes){
+            if(checkBox.isSelected()) {
+                filter(checkBox);
+            }
+        }
         if(!temp.isEmpty()) tableView.setItems(temp);
         tableView.refresh();
     }
 
-    void filter(){
-        temp.clear();
-        for(CheckBox checkBox: checkBoxes){
-            if(checkBox.isSelected()) {
-                checkPriceRange(checkBox);
-            }
-        }
-    }
-
-    void checkPriceRange(CheckBox checkBox){
+    /** Filters the tableview based on ticked checkboxes */
+    void filter(CheckBox checkBox){
         FilteredList<PCComponents> filteredList = new FilteredList<>(ComponentsCollection.getComponentObList());
 
         // Conditions
         Predicate<PCComponents> matchedTypes = c -> c.getComponentType().equals(checkBox.getText());
-        Predicate<PCComponents> otherTypes = c -> !c.getComponentType().equals(checkBox.getText());
         Predicate<PCComponents> priceLessThan500 = c -> c.getComponentPrice() < 500;
         Predicate<PCComponents> priceLessThan1000 = c -> c.getComponentPrice() < 1000;
         Predicate<PCComponents> priceMoreThan1000 = c -> c.getComponentPrice() > 1000;
@@ -87,7 +72,6 @@ public class PopupFilterTableViewController implements Initializable {
         Predicate<PCComponents> filter1 = priceLessThan500.and(matchedTypes);
         Predicate<PCComponents> filter2 = priceLessThan1000.and(matchedTypes);
         Predicate<PCComponents> filter3 = priceMoreThan1000.and(matchedTypes);
-        Predicate<PCComponents> filter4 = priceMoreThan1000.and(otherTypes);
 
         // Filter assignments
         if(typeToggles.getSelectedToggle().equals(checkAll)){
@@ -98,7 +82,6 @@ public class PopupFilterTableViewController implements Initializable {
             filteredList.setPredicate(filter2);
         } else if(typeToggles.getSelectedToggle().equals(checkMore1000)){
             filteredList.setPredicate(filter3);
-            filteredList.setPredicate(filter4);
         }
 
         // Apply filter to table
@@ -106,18 +89,30 @@ public class PopupFilterTableViewController implements Initializable {
         tableView.setItems(temp);
     }
 
+    /** Checks all checkboxes */
     void selectAllHelper(){
         selectAll.setOnAction((actionEvent -> {
             for(CheckBox c: checkBoxes) c.setSelected(true);
         }));
     }
 
+    /** Unchecks all checkboxes */
     void clearAllHelper(){
         clearAll.setOnAction((actionEvent -> {
             for(CheckBox c: checkBoxes) c.setSelected(false);
         }));
     }
 
+    /** Creates the filter checkboxes */
+    public void createFilterCheckboxes(){
+        for(PCComponents object: ComponentsCollection.getComponentObList()) {
+            CheckBox checkBox = new CheckBox(object.getComponentType());
+            vBox.getChildren().add(checkBox);
+            if(!checkBoxes.contains(checkBox)) checkBoxes.add(checkBox);
+        }
+    }
+
+    /** Gets access to tableview */
     public void setTableView(TableView<PCComponents> tableView){
         this.tableView = tableView;
     }
