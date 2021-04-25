@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class PopupFilterTableViewController implements Initializable {
@@ -29,9 +29,6 @@ public class PopupFilterTableViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize component type checkboxes
-        for(CheckBox checkBox: checkBoxes) checkBox.fire();
-
         // Price range choices
         checkAll.setToggleGroup(typeToggles);
         checkLess500.setToggleGroup(typeToggles);
@@ -54,8 +51,6 @@ public class PopupFilterTableViewController implements Initializable {
                 filter(checkBox);
             }
         }
-        if(!temp.isEmpty()) tableView.setItems(temp);
-        tableView.refresh();
     }
 
     /** Filters the tableview based on ticked checkboxes */
@@ -87,6 +82,7 @@ public class PopupFilterTableViewController implements Initializable {
         // Apply filter to table
         temp.addAll(filteredList);
         tableView.setItems(temp);
+        tableView.refresh();
     }
 
     /** Checks all checkboxes */
@@ -105,10 +101,11 @@ public class PopupFilterTableViewController implements Initializable {
 
     /** Creates the filter checkboxes */
     public void createFilterCheckboxes(){
-        for(PCComponents object: ComponentsCollection.getComponentObList()) {
-            CheckBox checkBox = new CheckBox(object.getComponentType());
+        for(String type: ComponentsCollection.getComponentTypeObsList()) {
+            CheckBox checkBox = new CheckBox(type);
             vBox.getChildren().add(checkBox);
-            if(!checkBoxes.contains(checkBox)) checkBoxes.add(checkBox);
+            checkBoxes.add(checkBox);
+            checkBox.fire();
         }
     }
 

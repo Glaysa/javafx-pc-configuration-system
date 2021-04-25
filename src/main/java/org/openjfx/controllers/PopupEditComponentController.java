@@ -32,7 +32,8 @@ public class PopupEditComponentController implements Initializable, Callable<Voi
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Fills the component type combobox with values.
-        ComponentsCollection.fillCombobox_TYPE(typeOptions);
+        ComponentsCollection.fillComponentTypeObsList();
+        ComponentsCollection.setItemsToTypeObsList(typeOptions);
         // (listener) check methods to see its functions
         ComponentsCollection.collectionOnChange(typeOptions);
         // Component Number cannot be edited

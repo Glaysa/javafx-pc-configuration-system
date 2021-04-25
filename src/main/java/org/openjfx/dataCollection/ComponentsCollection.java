@@ -3,9 +3,7 @@ package org.openjfx.dataCollection;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.guiUtilities.Indicators;
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class ComponentsCollection {
     }
 
     /** This fills the combobox of component types with the defined types and new types found in the componentObsList */
-    public static void fillCombobox_TYPE(ComboBox<String> typeOptions){
+    public static void fillComponentTypeObsList(){
         String[] definedTypes = {"RAM","Keyboards","Processors","Graphic Cards", "Mouse"};
         componentTypeObsList = FXCollections.observableArrayList(definedTypes);
         for(PCComponents c : componentObsList){
@@ -48,9 +46,6 @@ public class ComponentsCollection {
                 componentTypeObsList.add(c.getComponentType());
             }
         }
-        typeOptions.setEditable(true);
-        typeOptions.setPromptText("Choose/Enter Component Type");
-        typeOptions.setItems(componentTypeObsList);
     }
 
     /** Updates the combobox of component types whenever there is a change in componentsObsList */
@@ -58,8 +53,10 @@ public class ComponentsCollection {
         componentObsList.addListener(new ListChangeListener<PCComponents>() {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
-                // Whenever there is a change on component list, update the combobox of component types
-                fillCombobox_TYPE(typeOptions);
+                // Checks if there are new component type, if yes, it adds it to the combobox given
+                fillComponentTypeObsList();
+                // Update the combobox of component types
+                setItemsToTypeObsList(typeOptions);
                 // Keeps track of the obs list if its modified or not
                 modified = true;
                 // Shows that the file is modified
@@ -88,5 +85,11 @@ public class ComponentsCollection {
 
     public static void setModified(boolean modified) {
         ComponentsCollection.modified = modified;
+    }
+
+    public static void setItemsToTypeObsList(ComboBox<String> typeOptions){
+        typeOptions.setEditable(true);
+        typeOptions.setPromptText("Choose/Enter Component Type");
+        typeOptions.setItems(componentTypeObsList);
     }
 }

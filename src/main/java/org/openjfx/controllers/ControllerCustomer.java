@@ -39,6 +39,8 @@ public class ControllerCustomer implements Initializable {
         // Initializes the tableviews
         ComponentsCollection.setTableView(tableViewProducts);
         ComponentsCartCollection.setTableView(tableViewCart);
+        // Fills component type obs list
+        ComponentsCollection.fillComponentTypeObsList();
         // (listener) Initializes detection of double click on row of tableview
         showComponentOnDoubleClick(tableViewProducts);
         showComponentOnDoubleClick(tableViewCart);

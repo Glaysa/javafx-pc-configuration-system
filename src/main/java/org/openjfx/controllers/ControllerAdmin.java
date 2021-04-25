@@ -41,7 +41,8 @@ public class ControllerAdmin implements Initializable {
         // Initializes the tableview.
         ComponentsCollection.setTableView(tableView);
         // Fills the component type combobox with values.
-        ComponentsCollection.fillCombobox_TYPE(typeOptions);
+        ComponentsCollection.fillComponentTypeObsList();
+        ComponentsCollection.setItemsToTypeObsList(typeOptions);
         // (listener) Initializes detection of a change on the component collection
         ComponentsCollection.collectionOnChange(typeOptions);
         // (listener) Initializes detection of double click on row of tableview
