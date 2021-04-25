@@ -14,7 +14,6 @@ import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.PopupForComponents;
 import org.openjfx.guiUtilities.PopupForTableView;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
