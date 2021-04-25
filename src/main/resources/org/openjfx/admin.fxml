@@ -60,12 +60,12 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="searchInput" layoutX="332.0" layoutY="43.0" prefHeight="30.0" prefWidth="378.0" promptText="ram, mouse, keyboard, etc..." AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="43.0">
+            <TextField fx:id="searchInput" layoutX="340.0" layoutY="44.0" prefHeight="30.0" prefWidth="378.0" promptText="ram, mouse, keyboard, etc..." AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="44.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Button layoutX="718.0" layoutY="43.0" mnemonicParsing="false" onAction="#search" prefHeight="30.0" prefWidth="68.0" text="Search" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="43.0">
+            <Button layoutX="726.0" layoutY="44.0" mnemonicParsing="false" onAction="#search" prefHeight="30.0" prefWidth="68.0" text="Search" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="44.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -80,6 +80,11 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <Button layoutX="803.0" layoutY="44.0" mnemonicParsing="false" onAction="#filterTableView" text="Filter" AnchorPane.rightAnchor="20.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
          </children></AnchorPane>
    </center>
    <left>

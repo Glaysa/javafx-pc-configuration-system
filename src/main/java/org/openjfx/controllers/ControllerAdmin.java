@@ -13,6 +13,8 @@ import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.PopupForComponents;
+import org.openjfx.guiUtilities.PopupForTableView;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -114,6 +116,13 @@ public class ControllerAdmin implements Initializable {
     @FXML
     void saveChanges(){
         file.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
+    }
+
+    /** Opens a popup window to show filter options of the tableview of products */
+
+    @FXML
+    void filterTableView(){
+        PopupForTableView.showFilterOptions(tableView);
     }
 
     /** search() - searches through the tableview with the given search word. */
