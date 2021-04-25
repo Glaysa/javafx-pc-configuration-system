@@ -33,7 +33,7 @@ public class PopupEditComponentController implements Initializable, Callable<Voi
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Fills the component type combobox with values.
         ComponentsCollection.fillComponentTypeObsList();
-        ComponentsCollection.setItemsToTypeObsList(typeOptions);
+        ComponentsCollection.fillComponentTypeComboBox(typeOptions);
         // (listener) check methods to see its functions
         ComponentsCollection.collectionOnChange(typeOptions);
         // Component Number cannot be edited
@@ -44,13 +44,14 @@ public class PopupEditComponentController implements Initializable, Callable<Voi
 
     /** When ENTER key is pressed, the updatedComponent() method runs
      *  through the button event handler */
+
     @Override
     public Void call() {
         updateComponentBtn.fire();
         return null;
     }
 
-    /** Detects on enter key on the text jfx controls */
+    /** Detects on enter key on the jfx controls */
     public void onEnterKey(){
         Callable<Void> callable = this;
         OnEnterKeyEvent.execute(componentNumber, callable);

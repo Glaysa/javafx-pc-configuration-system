@@ -3,10 +3,7 @@ package org.openjfx.controllers;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.openjfx.App;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ComponentsCollection;
@@ -39,6 +36,8 @@ public class ControllerCustomer implements Initializable {
         // Initializes the tableviews
         ComponentsCollection.setTableView(tableViewProducts);
         ComponentsCartCollection.setTableView(tableViewCart);
+        // (listener)
+        ComponentsCollection.collectionOnChange(null);
         // Fills component type obs list
         ComponentsCollection.fillComponentTypeObsList();
         // (listener) Initializes detection of double click on row of tableview

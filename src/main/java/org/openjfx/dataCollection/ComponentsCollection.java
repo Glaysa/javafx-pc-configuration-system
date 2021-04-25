@@ -8,7 +8,8 @@ import org.openjfx.dataModels.PCComponents;
 import org.openjfx.guiUtilities.Indicators;
 import java.util.ArrayList;
 
-/** This class is responsible of all methods related to the components tableview in the admin view */
+/** This class is responsible of all methods related to the components tableview in the admin view and
+ * products tableview in customer view */
 
 public class ComponentsCollection {
 
@@ -37,6 +38,13 @@ public class ComponentsCollection {
         componentObsList.removeAll(toRemove);
     }
 
+    /** Fills a combobox with the type obs list items */
+    public static void fillComponentTypeComboBox(ComboBox<String> typeOptions){
+        typeOptions.setEditable(true);
+        typeOptions.setPromptText("Choose/Enter Component Type");
+        typeOptions.setItems(componentTypeObsList);
+    }
+
     /** This fills the combobox of component types with the defined types and new types found in the componentObsList */
     public static void fillComponentTypeObsList(){
         String[] definedTypes = {"RAM","Keyboards","Processors","Graphic Cards", "Mouse"};
@@ -49,18 +57,20 @@ public class ComponentsCollection {
     }
 
     /** Updates the combobox of component types whenever there is a change in componentsObsList */
-    public static void collectionOnChange(ComboBox<String> typeOptions){
+    public static void collectionOnChange(ComboBox<String> typeOptions) {
         componentObsList.addListener(new ListChangeListener<PCComponents>() {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
-                // Checks if there are new component type, if yes, it adds it to the combobox given
-                fillComponentTypeObsList();
-                // Update the combobox of component types
-                setItemsToTypeObsList(typeOptions);
-                // Keeps track of the obs list if its modified or not
-                modified = true;
-                // Shows that the file is modified
-                Indicators.updateFileStatus(true);
+                try {
+                    // Checks if there are new component type, if yes, it adds it to the combobox given
+                    fillComponentTypeObsList();
+                    // Update the combobox of component types
+                    fillComponentTypeComboBox(typeOptions);
+                    // Keeps track of the obs list if its modified or not
+                    modified = true;
+                    // Shows that the file is modified
+                    Indicators.updateFileStatus(true);
+                } catch (NullPointerException ignore){}
             }
         });
     }
@@ -85,11 +95,5 @@ public class ComponentsCollection {
 
     public static void setModified(boolean modified) {
         ComponentsCollection.modified = modified;
-    }
-
-    public static void setItemsToTypeObsList(ComboBox<String> typeOptions){
-        typeOptions.setEditable(true);
-        typeOptions.setPromptText("Choose/Enter Component Type");
-        typeOptions.setItems(componentTypeObsList);
     }
 }
