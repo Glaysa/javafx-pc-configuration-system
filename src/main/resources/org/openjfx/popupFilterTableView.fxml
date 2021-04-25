@@ -11,6 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
+<?import javafx.scene.control.RadioButton?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.PopupFilterTableViewController">
    <children>
       <Label alignment="CENTER" layoutX="186.0" layoutY="31.0" text="Filter Options" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
@@ -85,30 +86,38 @@
             </VBox>
             <VBox prefHeight="220.0" prefWidth="171.0">
                <children>
-                  <CheckBox fx:id="checkLess500" mnemonicParsing="false" text="Price &lt; 500 kr">
+                  <RadioButton fx:id="checkLess500" mnemonicParsing="false" text="Price &lt; 500 kr">
                      <padding>
                         <Insets bottom="10.0" />
                      </padding>
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </CheckBox>
-                  <CheckBox fx:id="checkLess1000" mnemonicParsing="false" text="Price &lt; 1000 kr">
+                  </RadioButton>
+                  <RadioButton fx:id="checkLess1000" mnemonicParsing="false" text="Price &lt; 1000 kr">
                      <padding>
                         <Insets bottom="10.0" />
                      </padding>
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </CheckBox>
-                  <CheckBox fx:id="checkMore1000" mnemonicParsing="false" text="Price &gt; 1000 kr">
+                  </RadioButton>
+                  <RadioButton fx:id="checkMore1000" mnemonicParsing="false" text="Price &gt; 1000 kr">
                      <padding>
                         <Insets bottom="10.0" />
                      </padding>
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </CheckBox>
+                  </RadioButton>
+                  <RadioButton fx:id="checkAll" mnemonicParsing="false" text="All">
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
                </children>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
