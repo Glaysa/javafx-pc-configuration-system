@@ -91,7 +91,7 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void openFile(){
-        FileChooser fileChooser = getFileChooser();
+        FileChooser fileChooser = file.getFileChooser();
         File fileToOpen = fileChooser.showOpenDialog(new Stage());
         if(fileToOpen == null) {
             AlertDialog.showWarningDialog("No file was chosen","");
@@ -104,7 +104,7 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void saveFile(){
-        FileChooser fileChooser = getFileChooser();
+        FileChooser fileChooser = file.getFileChooser();
         File fileToSave = fileChooser.showSaveDialog(new Stage());
         if(fileToSave == null) {
             AlertDialog.showWarningDialog("No file was chosen","");
@@ -145,20 +145,6 @@ public class ControllerAdmin implements Initializable {
     /** searches through the tableview with the given search input */
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableView);
-    }
-
-    /** Initializes a file chooser */
-
-    private FileChooser getFileChooser(){
-        File initialDir = new File(System.getProperty("user.home") + "\\Desktop");
-        FileChooser.ExtensionFilter f1 = new FileChooser.ExtensionFilter("All Files", "*.*");
-        FileChooser.ExtensionFilter f2 = new FileChooser.ExtensionFilter("Text Files", "*.txt");
-        FileChooser.ExtensionFilter f3 = new FileChooser.ExtensionFilter("Binary Files", "*.bin");
-        FileChooser.ExtensionFilter f4 = new FileChooser.ExtensionFilter("Jobj Files", "*.obj");
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(initialDir);
-        fileChooser.getExtensionFilters().addAll(f1, f2, f3, f4);
-        return fileChooser;
     }
 
     /** Detects a double click on a row in the tableview
