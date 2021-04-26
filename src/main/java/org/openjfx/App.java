@@ -42,6 +42,7 @@ public class App extends Application {
                 fileActions.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
             }
             stage.close();
+            ComponentsCollection.setModified(false);
         }
     }
 

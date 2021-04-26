@@ -45,6 +45,8 @@ public class ControllerAdmin implements Initializable {
         ComponentsCollection.fillComponentTypeComboBox(typeOptions);
         // (listener) Initializes detection of a change on the component collection
         ComponentsCollection.collectionOnChange(typeOptions);
+        // (listener) Initializes search functionality
+        search();
         // (listener) Initializes detection of double click on row of tableview
         editComponentOnDoubleClick();
         // Initializes tableview tooltips
@@ -125,13 +127,6 @@ public class ControllerAdmin implements Initializable {
         PopupForTableView.showFilterOptions(tableView);
     }
 
-    /** search() - searches through the tableview with the given search word. */
-
-    @FXML
-    void search() {
-        throw new UnsupportedOperationException("Method not yet implemented");
-    }
-
     /** Change view to login view */
 
     @FXML
@@ -143,7 +138,13 @@ public class ControllerAdmin implements Initializable {
             }
         }
         ComponentsCollection.clearCollection();
+        ComponentsCollection.setModified(false);
         App.setRoot("login");
+    }
+
+    /** searches through the tableview with the given search input */
+    void search() {
+        ComponentsCollection.collectionSearch(searchInput, tableView);
     }
 
     /** Initializes a file chooser */

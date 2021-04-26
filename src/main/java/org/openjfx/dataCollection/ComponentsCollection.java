@@ -3,10 +3,12 @@ package org.openjfx.dataCollection;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.*;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.guiUtilities.Indicators;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 /** This class is responsible of all methods related to the components tableview in the admin view and
  * products tableview in customer view */
@@ -72,6 +74,24 @@ public class ComponentsCollection {
                     Indicators.updateFileStatus(true);
                 } catch (NullPointerException ignore){}
             }
+        });
+    }
+
+    /** Searches through the obs list */
+    public static void collectionSearch(TextField searchInput, TableView<PCComponents> tableView){
+        FilteredList<PCComponents> filteredList = new FilteredList<>(componentObsList);
+        searchInput.textProperty().addListener((observable, oldValue, newValue)-> {
+            Predicate<PCComponents> matchesName = p -> p.getComponentName().toLowerCase().contains(newValue);
+            Predicate<PCComponents> matchesType = p -> p.getComponentType().toLowerCase().contains(newValue);
+            Predicate<PCComponents> matchesID = p -> Integer.toString(p.getPCComponentID()).equals(newValue);
+            Predicate<PCComponents> matching = matchesName.or(matchesType).or(matchesID);
+
+            if(newValue.isEmpty()) {
+                filteredList.setPredicate(null);
+            } else {
+                filteredList.setPredicate(matching);
+            }
+            tableView.setItems(filteredList);
         });
     }
 

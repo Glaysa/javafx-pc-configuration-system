@@ -46,6 +46,8 @@ public class ControllerCustomer implements Initializable {
         // Initializes tableview tooltips
         Indicators.showToolTip(tableViewProducts, "Double click to see product details");
         Indicators.showToolTip(tableViewCart, "Double click to see product details");
+        // (listener) Initializes search functionality
+        search();
     }
 
     /** Add components to cart */
@@ -82,6 +84,7 @@ public class ControllerCustomer implements Initializable {
     @FXML
     void logout() throws IOException {
         ComponentsCollection.clearCollection();
+        ComponentsCollection.setModified(false);
         App.setRoot("login");
     }
 
@@ -98,6 +101,11 @@ public class ControllerCustomer implements Initializable {
     @FXML
     void saveFile() {
 
+    }
+
+    /** searches through the tableview with the given search input */
+    void search() {
+        ComponentsCollection.collectionSearch(searchInput, tableViewProducts);
     }
 
     /** Detects a double click on a row in the tableview

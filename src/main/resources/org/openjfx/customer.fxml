@@ -69,13 +69,13 @@
             <TableView fx:id="tableViewCart" layoutX="100.0" layoutY="188.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
               <columns>
 
-                  <TableColumn maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Name">
+                  <TableColumn maxWidth="500.0" minWidth="100.0" prefWidth="200.0" resizable="false" text="Name">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentName" />
                       </cellValueFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Price">
+                  <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="200.0" resizable="false" text="Price">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentPrice" />
                       </cellValueFactory>
@@ -114,25 +114,31 @@
             <TableView fx:id="tableViewProducts" layoutX="337.0" layoutY="288.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
               <columns>
 
-                  <TableColumn maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Name">
+                  <TableColumn maxWidth="200.0" minWidth="-Infinity" prefWidth="50.0" resizable="false" text="ID">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="PCComponentID" />
+                      </cellValueFactory>
+                  </TableColumn>
+
+                  <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Name">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentName" />
                       </cellValueFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Type">
+                  <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Type">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentType" />
                       </cellValueFactory>
                   </TableColumn>
 
-                  <TableColumn minWidth="200.0" prefWidth="300.0" text="Specifications">
+                  <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Specifications">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentSpecs" />
                       </cellValueFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="200.0" minWidth="75.0" prefWidth="100.0" text="Price">
+                  <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="200.0" text="Price">
                       <cellValueFactory>
                           <PropertyValueFactory property="componentPrice" />
                       </cellValueFactory>
