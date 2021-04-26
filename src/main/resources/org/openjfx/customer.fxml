@@ -95,7 +95,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="searchInput" layoutX="497.0" layoutY="10.0" prefWidth="200.0" promptText="Search" AnchorPane.rightAnchor="202.0">
+            <TextField fx:id="searchInput" layoutX="384.0" layoutY="10.0" prefWidth="200.0" promptText="Search" AnchorPane.rightAnchor="290.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -105,7 +105,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button layoutX="679.0" layoutY="10.0" mnemonicParsing="false" onAction="#filterTableView" text="Filter Table" AnchorPane.rightAnchor="107.0">
+            <Button layoutX="593.0" layoutY="10.0" mnemonicParsing="false" onAction="#filterTableView" text="Filter Table" AnchorPane.rightAnchor="193.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -146,6 +146,11 @@
 
               </columns>
             </TableView>
+            <Button layoutX="689.0" layoutY="10.0" mnemonicParsing="false" onAction="#compare" text="Compare" AnchorPane.rightAnchor="108.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
 
          </children>
       </AnchorPane>

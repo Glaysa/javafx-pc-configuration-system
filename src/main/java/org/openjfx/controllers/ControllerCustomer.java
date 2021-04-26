@@ -103,6 +103,22 @@ public class ControllerCustomer implements Initializable {
 
     }
 
+    /** Opens a popup window to show all components the user wants to compare */
+
+    @FXML
+    void compare(){
+        ObservableList<PCComponents> selected = tableViewProducts.getSelectionModel().getSelectedItems();
+        if(selected.isEmpty()) {
+            AlertDialog.showWarningDialog("Choose components to compare","");
+        } else if(selected.size() > 5){
+            AlertDialog.showWarningDialog("You can only compare max 5 components","");
+        } else if(selected.size() < 2){
+            AlertDialog.showWarningDialog("You must choose at least 2 components", "");
+        } else {
+            PopupForComponents.compareComponent(selected);
+        }
+    }
+
     /** searches through the tableview with the given search input */
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableViewProducts);
