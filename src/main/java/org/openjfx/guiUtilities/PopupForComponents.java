@@ -5,14 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.openjfx.App;
 import org.openjfx.controllers.PopupCompareComponentsController;
 import org.openjfx.controllers.PopupEditComponentController;
 import org.openjfx.controllers.PopupShowComponentController;
-import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataModels.PCComponents;
 
 public class PopupForComponents {
@@ -61,11 +59,6 @@ public class PopupForComponents {
             PopupShowComponentController controller = fxmlLoader.getController();
             // Send the component to edit
             controller.setComponentToShow(componentToShow);
-            // Listen to a click on the add to cart button
-            controller.getAddToCartBtn().setOnAction((event) -> {
-                // Add the component to cart
-                ComponentsCartCollection.addToCollection(componentToShow);
-            });
 
             // Opens the popup window
             stage.setScene(new Scene(root));
@@ -95,7 +88,6 @@ public class PopupForComponents {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.setResizable(true);
-            stage.setMaximized(true);
             stage.setTitle("Compare Components");
             stage.show();
         } catch (Exception e) {

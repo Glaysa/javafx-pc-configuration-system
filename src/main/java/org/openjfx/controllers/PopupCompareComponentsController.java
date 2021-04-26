@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
+import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataModels.PCComponents;
 import java.util.ArrayList;
 
@@ -20,14 +22,18 @@ public class PopupCompareComponentsController{
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.TOP_LEFT);
         vBox.setPrefWidth(200);
+        vBox.setSpacing(10);
+        vBox.setStyle("-fx-padding: 20px 20px 20px 20px");
         HBox.setHgrow(vBox, Priority.ALWAYS);
 
+        HBox addToCartWrapper = createButton(component);
         Label id = createLabel(Integer.toString(component.getPCComponentID()));
         Label name = createLabel(component.getComponentName());
         Label type = createLabel(component.getComponentType());
         Label price = createLabel(Double.toString(component.getComponentPrice()));
         Label specs = createLabel(component.getComponentSpecs());
 
+        vBox.getChildren().add(addToCartWrapper);
         vBox.getChildren().add(id);
         vBox.getChildren().add(new Separator());
         vBox.getChildren().add(name);
@@ -49,12 +55,23 @@ public class PopupCompareComponentsController{
         }
     }
 
-    Label createLabel(String text){
+    private Label createLabel(String text){
         Label label = new Label(text);
         label.setWrapText(true);
-        label.setStyle(
-                "-fx-font-size: 14px;" +
-                "-fx-padding: 10px 10px 10px 10px");
+        label.setStyle("-fx-font-size: 14px;");
         return label;
+    }
+
+    private HBox createButton(PCComponents component){
+        HBox wrapper = new HBox();
+        Button addToCartBtn = new Button("Add to Cart");
+        addToCartBtn.setStyle("-fx-font-size: 14px;");
+
+        addToCartBtn.setOnAction((e) -> {
+            ComponentsCartCollection.addToCollection(component);
+        });
+        wrapper.getChildren().add(addToCartBtn);
+        wrapper.setAlignment(Pos.CENTER);
+        return wrapper;
     }
 }

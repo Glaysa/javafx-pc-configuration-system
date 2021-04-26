@@ -3,6 +3,7 @@ package org.openjfx.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataModels.PCComponents;
 
 /** This controller is used for the popup window of components when being shown. */
@@ -23,12 +24,10 @@ public class PopupShowComponentController{
         labelType.setText(componentToShow.getComponentType());
         labelPrice.setText(Double.toString(componentToShow.getComponentPrice()));
         labelDescription.setText(componentToShow.getComponentSpecs());
-    }
 
-    /** Get the add to cart button */
-    public Button getAddToCartBtn(){
-        return addToCart;
+        addToCart.setOnAction((e) -> {
+            ComponentsCartCollection.addToCollection(componentToShow);
+        });
     }
-
 }
 

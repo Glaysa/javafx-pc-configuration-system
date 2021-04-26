@@ -1,8 +1,8 @@
-{"PCComponentID":1,"componentName":"Test1","componentType":"RAM","componentSpecs":"Test","componentPrice":100.0}
-{"PCComponentID":2,"componentName":"Test1","componentType":"RAM","componentSpecs":"Test","componentPrice":200.0}
-{"PCComponentID":3,"componentName":"Test3","componentType":"Keyboards","componentSpecs":"Test3","componentPrice":300.0}
-{"PCComponentID":4,"componentName":"Test3","componentType":"Keyboards","componentSpecs":"Test","componentPrice":799.0}
-{"PCComponentID":5,"componentName":"Test5","componentType":"Mouse","componentSpecs":"Test","componentPrice":500.0}
-{"PCComponentID":6,"componentName":"Test5","componentType":"Mouse","componentSpecs":"Test","componentPrice":1800.0}
-{"PCComponentID":7,"componentName":"Test7","componentType":"Core","componentSpecs":"Test","componentPrice":1200.0}
-{"PCComponentID":8,"componentName":"Test8","componentType":"Core","componentSpecs":"Test","componentPrice":1020.0}
+{"PCComponentID":1,"componentName":"Dragonite RAM GenX","componentType":"RAM","componentSpecs":"Test","componentPrice":600.0}
+{"PCComponentID":2,"componentName":"Dragonite RAM GenY","componentType":"RAM","componentSpecs":"Test","componentPrice":400.0}
+{"PCComponentID":3,"componentName":"Fnair Keys 2000","componentType":"Keyboards","componentSpecs":"Test3","componentPrice":300.0}
+{"PCComponentID":4,"componentName":"Fnair Keys 9000","componentType":"Keyboards","componentSpecs":"Test","componentPrice":1299.0}
+{"PCComponentID":5,"componentName":"NovaGate M20","componentType":"Mouse","componentSpecs":"Test","componentPrice":500.0}
+{"PCComponentID":6,"componentName":"NovaGate M30","componentType":"Mouse","componentSpecs":"Test","componentPrice":1800.0}
+{"PCComponentID":7,"componentName":"PowerHouse Core 20","componentType":"Core","componentSpecs":"Test","componentPrice":1200.0}
+{"PCComponentID":8,"componentName":"PowerHouse Core 21","componentType":"Core","componentSpecs":"Test","componentPrice":2500.0}
