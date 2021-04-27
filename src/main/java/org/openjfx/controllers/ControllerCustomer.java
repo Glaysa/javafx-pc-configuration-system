@@ -119,6 +119,13 @@ public class ControllerCustomer implements Initializable {
         }
     }
 
+    /** Let's the user create their own pc configurations */
+
+    @FXML
+    void addCustomConfiguration(){
+
+    }
+
     /** searches through the tableview with the given search input */
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableViewProducts);
