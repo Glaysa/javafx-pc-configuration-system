@@ -10,10 +10,8 @@ import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
-import org.openjfx.guiUtilities.AlertDialog;
-import org.openjfx.guiUtilities.Indicators;
-import org.openjfx.guiUtilities.PopupForComponents;
-import org.openjfx.guiUtilities.PopupForTableView;
+import org.openjfx.guiUtilities.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -122,11 +120,11 @@ public class ControllerCustomer implements Initializable {
         }
     }
 
-    /** Let's the user create their own pc configurations */
+    /** Opens a popup window and let's the user create their own pc configurations */
 
     @FXML
-    void addCustomConfiguration(){
-
+    void newConfiguration(){
+        PopupForConfigurations.newConfiguration();
     }
 
     /** searches through the tableview with the given search input */
