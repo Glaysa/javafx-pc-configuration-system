@@ -8,6 +8,7 @@ import org.openjfx.App;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
@@ -22,8 +23,10 @@ public class ControllerCustomer implements Initializable {
 
     @FXML private Label totalPriceLabel;
     @FXML private TextField searchInput;
-    @FXML private TableView<PCComponents> tableViewCart;
-    @FXML private TableView<PCComponents> tableViewProducts;
+    @FXML private TableView<PCComponents> tableViewCartComponents;
+    @FXML private TableView<PCComponents> tableViewComponents;
+    @FXML private TableView<PCConfigurations> tableViewCartConfigurations;
+    @FXML private TableView<PCConfigurations> tableViewConfigurations;
     private final FileActions<PCComponents> file = new FileActions<>();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
 
@@ -34,18 +37,18 @@ public class ControllerCustomer implements Initializable {
         // (listener) Initializes detection of a change on the cart collection
         ComponentsCartCollection.collectionOnChange(totalPriceLabel);
         // Initializes the tableviews
-        ComponentsCollection.setTableView(tableViewProducts);
-        ComponentsCartCollection.setTableView(tableViewCart);
+        ComponentsCollection.setTableView(tableViewComponents);
+        ComponentsCartCollection.setTableView(tableViewCartComponents);
         // (listener)
         ComponentsCollection.collectionOnChange(null);
         // Fills component type obs list
         ComponentsCollection.fillComponentTypeObsList();
         // (listener) Initializes detection of double click on row of tableview
-        showComponentOnDoubleClick(tableViewProducts);
-        showComponentOnDoubleClick(tableViewCart);
+        showComponentOnDoubleClick(tableViewComponents);
+        showComponentOnDoubleClick(tableViewCartComponents);
         // Initializes tableview tooltips
-        Indicators.showToolTip(tableViewProducts, "Double click to see product details");
-        Indicators.showToolTip(tableViewCart, "Double click to see product details");
+        Indicators.showToolTip(tableViewComponents, "Double click to see component details");
+        Indicators.showToolTip(tableViewCartComponents, "Double click to see component details");
         // (listener) Initializes search functionality
         search();
     }
@@ -54,19 +57,19 @@ public class ControllerCustomer implements Initializable {
 
     @FXML
     void addToCart() {
-        ObservableList<PCComponents> selected = tableViewProducts.getSelectionModel().getSelectedItems();
+        ObservableList<PCComponents> selected = tableViewComponents.getSelectionModel().getSelectedItems();
         if(!selected.isEmpty()) for(PCComponents toAdd : selected) ComponentsCartCollection.addToCollection(toAdd);
-        else AlertDialog.showWarningDialog("Please select a product to add","");
-        tableViewCart.refresh();
+        else AlertDialog.showWarningDialog("Please select a component to add","");
+        tableViewCartComponents.refresh();
     }
 
     /** Removes a component from the cart */
 
     @FXML
     void removeFromCart() {
-        PCComponents selected = tableViewCart.getSelectionModel().getSelectedItem();
+        PCComponents selected = tableViewCartComponents.getSelectionModel().getSelectedItem();
         ComponentsCartCollection.removeSelected(selected);
-        tableViewCart.refresh();
+        tableViewCartComponents.refresh();
     }
 
     @FXML
@@ -78,7 +81,7 @@ public class ControllerCustomer implements Initializable {
 
     @FXML
     void filterTableView() {
-        PopupForTableView.showFilterOptions(tableViewProducts);
+        PopupForTableView.showFilterOptions(tableViewComponents);
     }
 
     @FXML
@@ -107,7 +110,7 @@ public class ControllerCustomer implements Initializable {
 
     @FXML
     void compare(){
-        ObservableList<PCComponents> selected = tableViewProducts.getSelectionModel().getSelectedItems();
+        ObservableList<PCComponents> selected = tableViewComponents.getSelectionModel().getSelectedItems();
         if(selected.isEmpty()) {
             AlertDialog.showWarningDialog("Choose components to compare","");
         } else if(selected.size() > 5){
@@ -128,7 +131,7 @@ public class ControllerCustomer implements Initializable {
 
     /** searches through the tableview with the given search input */
     void search() {
-        ComponentsCollection.collectionSearch(searchInput, tableViewProducts);
+        ComponentsCollection.collectionSearch(searchInput, tableViewComponents);
     }
 
     /** Detects a double click on a row in the tableview
