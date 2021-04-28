@@ -64,7 +64,7 @@
             </Label>
          </content>
       </ScrollPane>
-      <Button fx:id="addToCart" layoutX="728.0" layoutY="561.0" mnemonicParsing="false" text="Add to Cart" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
+      <Button fx:id="button" layoutX="728.0" layoutY="561.0" mnemonicParsing="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font size="14.0" />
          </font>

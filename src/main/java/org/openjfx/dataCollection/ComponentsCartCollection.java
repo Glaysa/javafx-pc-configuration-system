@@ -28,6 +28,7 @@ public class ComponentsCartCollection {
 
     /** Sets the items of the tableview to componentObsList */
     public static void setTableView(TableView<PCComponents> tableView){
+        tableView.setId("componentsCartTableView");
         tableView.setItems(cartObsList);
     }
 

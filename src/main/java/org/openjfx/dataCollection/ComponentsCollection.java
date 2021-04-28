@@ -27,6 +27,7 @@ public class ComponentsCollection {
     /** Sets the items of the tableview to componentObsList */
     public static void setTableView(TableView<PCComponents> tableView){
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.setId("componentsTableView");
         tableView.setItems(componentObsList);
     }
 

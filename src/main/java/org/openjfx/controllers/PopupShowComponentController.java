@@ -10,7 +10,7 @@ import org.openjfx.dataModels.PCComponents;
 
 public class PopupShowComponentController{
 
-    @FXML private Button addToCart;
+    @FXML private Button button;
     @FXML private Label labelName;
     @FXML private Label labelId;
     @FXML private Label labelType;
@@ -24,10 +24,24 @@ public class PopupShowComponentController{
         labelType.setText(componentToShow.getComponentType());
         labelPrice.setText(Double.toString(componentToShow.getComponentPrice()));
         labelDescription.setText(componentToShow.getComponentSpecs());
+    }
 
-        addToCart.setOnAction((e) -> {
+    public void setButtonAsAddToCart(PCComponents componentToShow){
+        button.setText("Add to cart");
+        button.setOnAction((e) -> {
             ComponentsCartCollection.addToCollection(componentToShow);
         });
     }
-}
 
+    public void setButtonAsSelect(PCComponents selected){
+        button.setText("Select");
+        button.setOnAction((e) -> {
+            System.out.println("Selected");
+        });
+    }
+
+    public void hideButton(){
+        button.setDisable(true);
+        button.setOpacity(0);
+    }
+}

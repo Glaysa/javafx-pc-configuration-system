@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,7 +50,7 @@ public class PopupForComponents {
     }
 
     /** Opens a popup window to show component details */
-    public static void showComponent(PCComponents componentToShow) {
+    private static void showComponent(PCComponents componentToShow, TableView<PCComponents> tv) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("popupShowComponent.fxml"));
             Parent root = fxmlLoader.load();
@@ -57,10 +58,19 @@ public class PopupForComponents {
 
             // Get the controller of another fxml to access it's methods
             PopupShowComponentController controller = fxmlLoader.getController();
-            // Send the component to edit
+            // Send the component to show
             controller.setComponentToShow(componentToShow);
+            // Depending on which table view we are on, different button will show up
+            if(tv.getId().equals("configurationsSelectTableView")) {
+                controller.setButtonAsSelect(componentToShow);
+            } else if(tv.getId().equals("componentsTableView")) {
+                controller.setButtonAsAddToCart(componentToShow);
+            } else {
+                controller.hideButton();
+            }
 
             // Opens the popup window
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.setResizable(false);
             stage.setTitle("Component Details");
@@ -93,5 +103,25 @@ public class PopupForComponents {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /** Detects a double click on a row in the tableview
+     * and opens a new window to show the component details.*/
+
+    public static void showComponentOnDoubleClick(TableView<PCComponents> tableView){
+        tableView.setRowFactory(tv -> {
+            TableRow<PCComponents> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if(event.getClickCount() == 2) {
+                    if(row.getItem() != null) {
+                        // Component to show
+                        PCComponents componentToShow = row.getItem();
+                        // opens a popup window to show component details
+                        PopupForComponents.showComponent(componentToShow, tableView);
+                    }
+                }
+            });
+            return row;
+        });
     }
 }
