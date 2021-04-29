@@ -52,7 +52,7 @@
                <children>
                   <ScrollPane fitToWidth="true" layoutY="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                      <content>
-                        <VBox fx:id="vBoxConfigurationOptions" prefHeight="400.0" spacing="10.0" style="-fx-background-color: white;">
+                        <VBox fx:id="vBoxConfigurations" prefHeight="428.0" spacing="10.0" style="-fx-background-color: white;">
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
@@ -70,7 +70,7 @@
                <children>
                   <ScrollPane fitToWidth="true" layoutY="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                      <content>
-                        <VBox fx:id="vBoxConfigurations" prefHeight="400.0" spacing="10.0" style="-fx-background-color: white;">
+                        <VBox fx:id="vBoxConfigurationOptions" prefHeight="428.0" spacing="10.0" style="-fx-background-color: white;">
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
@@ -88,22 +88,22 @@
       </AnchorPane>
       <AnchorPane>
          <children>
-            <Label text="Total Price:" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <Label layoutX="400.0" layoutY="11.0" text="Total Price:" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="11.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="249.0" layoutY="13.0" prefHeight="25.0" prefWidth="20.0" text="kr">
+            <Label layoutX="517.0" layoutY="13.0" prefHeight="25.0" prefWidth="20.0" text="kr" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Button alignment="CENTER_RIGHT" layoutY="20.0" mnemonicParsing="false" onAction="#addConfiguration" text="Add Configuration" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <Button alignment="CENTER_RIGHT" layoutY="10.0" mnemonicParsing="false" onAction="#addConfiguration" text="Add Configuration" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="10.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Label fx:id="totalPrice" layoutX="104.0" layoutY="13.0" prefHeight="25.0" prefWidth="141.0">
+            <Label fx:id="totalPrice" alignment="CENTER_RIGHT" layoutX="492.0" layoutY="13.0" prefHeight="25.0" prefWidth="282.0" text="0.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -111,4 +111,7 @@
          </children>
       </AnchorPane>
    </children>
+   <padding>
+      <Insets left="20.0" right="20.0" top="20.0" />
+   </padding>
 </VBox>

@@ -7,14 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.guiUtilities.AlertDialog;
-import java.util.ArrayList;
 
 /** This class is responsible of all methods related to the components cart tableview in the customer view */
 
 public class ComponentsCartCollection {
 
     private static final ObservableList<PCComponents> cartObsList = FXCollections.observableArrayList();
-    private static boolean modified = false;
 
     /** Adds new components to the observable list componentObsList */
     public static void addToCollection(PCComponents toAdd){
@@ -32,11 +30,6 @@ public class ComponentsCartCollection {
         tableView.setItems(cartObsList);
     }
 
-    /** Clears the componentObsList */
-    public static void clearCollection(){
-        cartObsList.clear();
-    }
-
     /** Removes all selected values from the collection */
     public static void removeSelected(PCComponents toRemove){
         if(toRemove != null) cartObsList.remove(toRemove);
@@ -48,10 +41,11 @@ public class ComponentsCartCollection {
         cartObsList.addListener(new ListChangeListener<PCComponents>() {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
-                // Keeps track of the obs list if its modified or not
-                modified = true;
                 // Update total price
-                totalPrice.setText(Double.toString(getTotalPrice()));
+                double configurationTotalPrice = ConfigurationCartCollection.getTotalPrice();
+                double componentsTotalPrice = getTotalPrice();
+                double totalSum = componentsTotalPrice + configurationTotalPrice;
+                totalPrice.setText(Double.toString(totalSum));
             }
         });
     }
@@ -64,17 +58,5 @@ public class ComponentsCartCollection {
             totalPrice += component.getComponentPrice();
         }
         return totalPrice;
-    }
-
-    public static ArrayList<PCComponents> getComponentObsList() {
-        return new ArrayList<>(cartObsList);
-    }
-
-    public static boolean isModified() {
-        return modified;
-    }
-
-    public static void setModified(boolean modified) {
-        ComponentsCartCollection.modified = modified;
     }
 }

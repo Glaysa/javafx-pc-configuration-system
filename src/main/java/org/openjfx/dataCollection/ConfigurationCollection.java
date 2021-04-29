@@ -22,7 +22,7 @@ public class ConfigurationCollection {
         configObsList.add(toAdd);
     }
 
-    public static void setConfigTableView(TableView<PCConfigurations> tableView){
+    public static void setTableView(TableView<PCConfigurations> tableView){
         tableView.setItems(configObsList);
     }
 

@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import org.openjfx.App;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataCollection.ConfigurationCartCollection;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
@@ -15,7 +16,6 @@ import org.openjfx.guiUtilities.*;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
 import org.openjfx.guiUtilities.popupDialogs.PopupForConfigurations;
 import org.openjfx.guiUtilities.popupDialogs.PopupForTableView;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -36,12 +36,17 @@ public class ControllerCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Opens a file containing the default list of components.
         file.open(defaultData, "Loading products...");
+
         // (listener) Initializes detection of a change on the cart collection
         ComponentsCartCollection.collectionOnChange(totalPriceLabel);
+        ConfigurationCartCollection.collectionOnChange(totalPriceLabel);
+
         // Initializes the tableviews
         ComponentsCollection.setTableView(tableViewComponents);
         ComponentsCartCollection.setTableView(tableViewCartComponents);
-        ConfigurationCollection.setConfigTableView(tableViewConfigurations);
+        ConfigurationCollection.setTableView(tableViewConfigurations);
+        ConfigurationCartCollection.setTableView(tableViewCartConfigurations);
+
         // (listener)
         ComponentsCollection.collectionOnChange(null);
         // Fills component type obs list
@@ -130,6 +135,14 @@ public class ControllerCustomer implements Initializable {
     @FXML
     void newConfiguration(){
         PopupForConfigurations.newConfiguration();
+    }
+
+    @FXML
+    void addConfigToCart(){
+        PCConfigurations selected = tableViewConfigurations.getSelectionModel().getSelectedItem();
+        if(selected != null) ConfigurationCartCollection.addToCollection(selected);
+        else AlertDialog.showWarningDialog("Choose a configured pc to add", "");
+        tableViewCartConfigurations.refresh();
     }
 
     /** searches through the tableview with the given search input */
