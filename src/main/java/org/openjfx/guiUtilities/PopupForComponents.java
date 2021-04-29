@@ -61,12 +61,19 @@ public class PopupForComponents {
             // Send the component to show
             controller.setComponentToShow(componentToShow);
             // Depending on which table view we are on, different button will show up
-            if(tv.getId().equals("configurationsSelectTableView")) {
-                controller.setButtonAsSelect(componentToShow);
-            } else if(tv.getId().equals("componentsTableView")) {
-                controller.setButtonAsAddToCart(componentToShow);
-            } else {
-                controller.hideButton();
+            switch (tv.getId()) {
+                case "configurationsSelectTableView":
+                    controller.setButtonAsSelect(componentToShow);
+                    break;
+                case "componentsTableView":
+                    controller.setButtonAsAddToCart(componentToShow);
+                    break;
+                case "componentsCartTableView":
+                    controller.setButtonAsRemoveFromCart(componentToShow);
+                    break;
+                default:
+                    controller.hideButton();
+                    break;
             }
 
             // Opens the popup window

@@ -6,7 +6,9 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import java.net.URL;
@@ -15,6 +17,7 @@ import java.util.function.Predicate;
 
 public class PopupFilterTableViewController implements Initializable {
 
+    @FXML private AnchorPane parentPane;
     @FXML private VBox vBox;
     @FXML private RadioButton checkLess500;
     @FXML private RadioButton checkLess1000;
@@ -38,8 +41,8 @@ public class PopupFilterTableViewController implements Initializable {
         typeToggles.selectToggle(checkAll);
 
         // Initializes Filtering helpers
-        selectAllHelper();
-        clearAllHelper();
+        selectAll();
+        clearAll();
         resetFilter();
     }
 
@@ -51,6 +54,7 @@ public class PopupFilterTableViewController implements Initializable {
         for(CheckBox checkBox: checkBoxes){
             if(checkBox.isSelected()) {
                 filter(checkBox);
+                closePopup();
             }
         }
     }
@@ -88,14 +92,14 @@ public class PopupFilterTableViewController implements Initializable {
     }
 
     /** Checks all checkboxes */
-    void selectAllHelper(){
+    void selectAll(){
         selectAll.setOnAction((actionEvent -> {
             for(CheckBox c: checkBoxes) c.setSelected(true);
         }));
     }
 
     /** Unchecks all checkboxes */
-    void clearAllHelper(){
+    void clearAll(){
         clearAll.setOnAction((actionEvent -> {
             for(CheckBox c: checkBoxes) c.setSelected(false);
         }));
@@ -123,5 +127,10 @@ public class PopupFilterTableViewController implements Initializable {
     /** Gets access to tableview */
     public void setTableView(TableView<PCComponents> tableView){
         this.tableView = tableView;
+    }
+
+    private void closePopup(){
+        Stage stage = (Stage) parentPane.getScene().getWindow();
+        stage.close();
     }
 }
