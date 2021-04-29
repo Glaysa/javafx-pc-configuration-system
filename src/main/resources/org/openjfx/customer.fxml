@@ -187,9 +187,25 @@
                                 <Separator layoutX="20.0" layoutY="70.0" prefWidth="200.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0" />
                                 <TableView fx:id="tableViewConfigurations" layoutX="20.0" layoutY="91.0" prefHeight="200.0" prefWidth="700.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="90.0">
                                     <columns>
-                                        <TableColumn prefWidth="75.0" text="Id" />
-                                        <TableColumn minWidth="200.0" prefWidth="400.0" resizable="false" text="Configuration Name" />
-                                        <TableColumn minWidth="200.0" prefWidth="200.0" resizable="false" text="Total Price" />
+
+                                        <TableColumn prefWidth="75.0" text="Id" >
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="PCConfigurationID" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn minWidth="200.0" prefWidth="400.0" resizable="false" text="Configuration Name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="configurationName" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn minWidth="200.0" prefWidth="200.0" resizable="false" text="Total Price">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="totalPrice" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+
                                     </columns>
                                 </TableView>
                                 <VBox layoutX="889.0" layoutY="115.0" prefHeight="200.0" prefWidth="518.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="740.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="90.0" />

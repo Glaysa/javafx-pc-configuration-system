@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import org.openjfx.App;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
@@ -36,6 +37,7 @@ public class ControllerCustomer implements Initializable {
         // Initializes the tableviews
         ComponentsCollection.setTableView(tableViewComponents);
         ComponentsCartCollection.setTableView(tableViewCartComponents);
+        ConfigurationCollection.setConfigTableView(tableViewConfigurations);
         // (listener)
         ComponentsCollection.collectionOnChange(null);
         // Fills component type obs list

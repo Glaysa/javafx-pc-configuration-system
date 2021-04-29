@@ -1,36 +1,31 @@
 package org.openjfx.dataModels;
 
 import com.google.gson.Gson;
+import org.openjfx.dataCollection.ConfigurationCollection;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class PCConfigurations implements Serializable {
 
-    private static AtomicLong PCConfigurationID = new AtomicLong();
+    private final int PCConfigurationID;
     private ArrayList<PCComponents> pcComponents;
     private final double totalPrice;
+    private final String configurationName;
 
-    public PCConfigurations(AtomicLong pcConfigurationID, ArrayList<PCComponents> pcComponents, double totalPrice){
+    public PCConfigurations(String configurationName, int pcConfigurationID, ArrayList<PCComponents> pcComponents, double totalPrice){
         PCConfigurationID = pcConfigurationID;
         this.pcComponents = pcComponents;
         this.totalPrice = totalPrice;
+        this.configurationName = configurationName;
     }
 
-    public static String createID() {
-        return String.valueOf(PCConfigurationID.getAndIncrement());
-    }
-
-    public static double calculateTotalPrice(ArrayList<PCComponents> pcComponents){
-        double totalPrice = 0;
-        for(PCComponents component : pcComponents){
-            totalPrice += component.getComponentPrice();
-        }
-        return totalPrice;
+    public static int createID() {
+        int prevId = ConfigurationCollection.getConfigsArrayList().size();
+        return prevId + 1;
     }
 
     public String toString() {
-        PCConfigurations configuration = new PCConfigurations(PCConfigurationID, pcComponents, totalPrice);
+        PCConfigurations configuration = new PCConfigurations(configurationName, PCConfigurationID, pcComponents, totalPrice);
         Gson gson = new Gson();
         String objectStr = gson.toJson(configuration);
         return String.format("%s\n", objectStr);
@@ -42,5 +37,17 @@ public class PCConfigurations implements Serializable {
 
     public ArrayList<PCComponents> getPcComponents() {
         return pcComponents;
+    }
+
+    public int getPCConfigurationID() {
+        return PCConfigurationID;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public String getConfigurationName() {
+        return configurationName;
     }
 }

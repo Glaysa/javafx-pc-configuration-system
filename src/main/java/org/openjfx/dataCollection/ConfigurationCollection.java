@@ -4,16 +4,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.guiUtilities.AlertDialog;
+import java.util.ArrayList;
 
 public class ConfigurationCollection {
 
     private static final ObservableList<PCConfigurations> configObsList = FXCollections.observableArrayList();
     private static final ObservableList<PCComponents> itemsObsList = FXCollections.observableArrayList();
+
+    /** Adds finished configuration to config obs list */
+    public static void addConfiguration(PCConfigurations toAdd){
+        configObsList.add(toAdd);
+    }
+
+    public static void setConfigTableView(TableView<PCConfigurations> tableView){
+        tableView.setItems(configObsList);
+    }
 
     /** Adds new item on the item obs list */
     public static void addConfigurationItem(PCComponents toAdd){
@@ -29,7 +40,7 @@ public class ConfigurationCollection {
     }
 
     /** Listens to changes and updates the list of selected components */
-    public static void itemCollectionOnChange(VBox vBox){
+    public static void itemCollectionOnChange(VBox vBox, Label totalPrice){
         itemsObsList.addListener(new ListChangeListener<PCComponents>() {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
@@ -46,12 +57,29 @@ public class ConfigurationCollection {
                     wrapper.setStyle("-fx-background-color: gold; -fx-padding: 10px 10px 10px 10px");
                     vBox.getChildren().add(wrapper);
                 }
+                totalPrice.setText(Double.toString(getTotalPrice()));
             }
         });
     }
 
+    public static void clearItemCollection(){
+        itemsObsList.clear();
+    }
+
+    public static double getTotalPrice(){
+        double totalPrice = 0;
+        for(PCComponents component : itemsObsList) {
+            totalPrice += component.getComponentPrice();
+        }
+        return totalPrice;
+    }
+
     /** Get / Set methods */
-    public static ObservableList<PCComponents> getItemsObsList(){
-        return itemsObsList;
+    public static ArrayList<PCComponents> getItemsArrayList(){
+        return new ArrayList<>(itemsObsList);
+    }
+
+    public static ArrayList<PCConfigurations> getConfigsArrayList(){
+        return new ArrayList<>(configObsList);
     }
 }
