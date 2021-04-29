@@ -11,6 +11,7 @@ import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.guiUtilities.AlertDialog;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ConfigurationCollection {
 
@@ -19,7 +20,20 @@ public class ConfigurationCollection {
 
     /** Adds finished configuration to config obs list */
     public static void addConfiguration(PCConfigurations toAdd){
-        configObsList.add(toAdd);
+        String[] mustHave = {"RAM", "Mouse", "Keyboards"};
+        ArrayList<String> mustHaveComponents = new ArrayList(Arrays.asList(mustHave));
+        for(PCComponents item: toAdd.getPcComponents()) {
+            mustHaveComponents.removeIf(c -> c.equals(item.getComponentType()));
+        }
+        if(mustHaveComponents.isEmpty()){
+            configObsList.add(toAdd);
+        } else {
+            StringBuilder missing = new StringBuilder();
+            for(String m: mustHaveComponents) {
+                missing.append(m).append(", ");
+            }
+            throw new IllegalArgumentException("Missing components: " + missing);
+        }
     }
 
     public static void setTableView(TableView<PCConfigurations> tableView){
@@ -31,7 +45,7 @@ public class ConfigurationCollection {
         if(itemsObsList.isEmpty()){
             itemsObsList.add(toAdd);
         } else if(itemsObsList.contains(toAdd)) {
-            AlertDialog.showWarningDialog(toAdd.getComponentName() + " already selected!","");
+            throw new IllegalArgumentException(toAdd.getComponentName() + " already selected!");
         } else {
             boolean itemRemoved = itemsObsList.removeIf(p -> p.getComponentType().equals(toAdd.getComponentType()));
             if(itemRemoved) AlertDialog.showSuccessDialog(toAdd.getComponentType() + " has been replaced");

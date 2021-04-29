@@ -14,6 +14,7 @@ import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
+import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
 import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 
@@ -43,13 +44,17 @@ public class PopupNewConfigurationController implements Initializable {
 
     @FXML
     void addConfiguration(){
-        int id = PCConfigurations.createID();
-        ArrayList<PCComponents> list = ConfigurationCollection.getItemsArrayList();
-        double totalPrice = ConfigurationCollection.getTotalPrice();
-        PCConfigurations configuration = new PCConfigurations("Configuration " + id, id, list, totalPrice);
-        ConfigurationCollection.addConfiguration(configuration);
-        ConfigurationCollection.clearItemCollection();
-        PopupUtilities.closePopup(parentPane);
+        try {
+            int id = PCConfigurations.createID();
+            ArrayList<PCComponents> list = ConfigurationCollection.getItemsArrayList();
+            double totalPrice = ConfigurationCollection.getTotalPrice();
+            PCConfigurations configuration = new PCConfigurations("Configuration " + id, id, list, totalPrice);
+            ConfigurationCollection.addConfiguration(configuration);
+            ConfigurationCollection.clearItemCollection();
+            PopupUtilities.closePopup(parentPane);
+        } catch (Exception e) {
+            AlertDialog.showWarningDialog(e.getMessage(),"");
+        }
     }
 
     /** Create buttons as configuration options based on all component types */
