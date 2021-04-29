@@ -1,13 +1,13 @@
-package org.openjfx.controllers;
+package org.openjfx.controllers.popupControllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 
 /** This controller is used for the popup window of components when being shown. */
 
@@ -36,7 +36,7 @@ public class PopupShowComponentController{
         button.setText("Add to cart");
         button.setOnAction((e) -> {
             ComponentsCartCollection.addToCollection(componentToShow);
-            closePopup();
+            PopupUtilities.closePopup(parentPane);
         });
     }
 
@@ -44,7 +44,7 @@ public class PopupShowComponentController{
         button.setText("Remove from Cart");
         button.setOnAction((e) -> {
             ComponentsCartCollection.removeSelected(toRemove);
-            closePopup();
+            PopupUtilities.closePopup(parentPane);
         });
     }
 
@@ -52,17 +52,12 @@ public class PopupShowComponentController{
         button.setText("Select");
         button.setOnAction((e) -> {
             ConfigurationCollection.addConfigurationItem(selected);
-            closePopup();
+            PopupUtilities.closePopup(parentPane);
         });
     }
 
     public void hideButton(){
         button.setDisable(true);
         button.setOpacity(0);
-    }
-
-    private void closePopup(){
-        Stage stage = (Stage) parentPane.getScene().getWindow();
-        stage.close();
     }
 }

@@ -1,4 +1,4 @@
-package org.openjfx.controllers;
+package org.openjfx.controllers.popupControllers;
 
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -14,7 +14,9 @@ import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
-import org.openjfx.guiUtilities.PopupForComponents;
+import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
+import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -47,7 +49,7 @@ public class PopupNewConfigurationController implements Initializable {
         PCConfigurations configuration = new PCConfigurations("Configuration " + id, id, list, totalPrice);
         ConfigurationCollection.addConfiguration(configuration);
         ConfigurationCollection.clearItemCollection();
-        closePopup();
+        PopupUtilities.closePopup(parentPane);
     }
 
     /** Create buttons as configuration options based on all component types */
@@ -68,10 +70,5 @@ public class PopupNewConfigurationController implements Initializable {
         filteredList.setPredicate(matchesType);
         tableViewComponents.setItems(filteredList);
         tableViewComponents.refresh();
-    }
-
-    private void closePopup(){
-        Stage stage = (Stage) parentPane.getScene().getWindow();
-        stage.close();
     }
 }

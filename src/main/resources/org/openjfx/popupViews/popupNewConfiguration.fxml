@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="parentPane" prefHeight="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.PopupNewConfigurationController">
+<VBox fx:id="parentPane" prefHeight="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.popupControllers.PopupNewConfigurationController">
    <children>
       <TableView fx:id="tableViewComponents" prefHeight="300.0" prefWidth="200.0">
         <columns>

@@ -1,4 +1,4 @@
-package org.openjfx.controllers;
+package org.openjfx.controllers.popupControllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

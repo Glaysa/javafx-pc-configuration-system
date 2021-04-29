@@ -1,4 +1,4 @@
-package org.openjfx.controllers;
+package org.openjfx.controllers.popupControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,9 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 import java.net.URL;
 import java.util.*;
 import java.util.function.Predicate;
@@ -54,7 +54,7 @@ public class PopupFilterTableViewController implements Initializable {
         for(CheckBox checkBox: checkBoxes){
             if(checkBox.isSelected()) {
                 filter(checkBox);
-                closePopup();
+                PopupUtilities.closePopup(parentPane);
             }
         }
     }
@@ -127,10 +127,5 @@ public class PopupFilterTableViewController implements Initializable {
     /** Gets access to tableview */
     public void setTableView(TableView<PCComponents> tableView){
         this.tableView = tableView;
-    }
-
-    private void closePopup(){
-        Stage stage = (Stage) parentPane.getScene().getWindow();
-        stage.close();
     }
 }

@@ -1,4 +1,4 @@
-package org.openjfx.guiUtilities;
+package org.openjfx.guiUtilities.popupDialogs;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -9,9 +9,9 @@ import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.openjfx.App;
-import org.openjfx.controllers.PopupCompareComponentsController;
-import org.openjfx.controllers.PopupEditComponentController;
-import org.openjfx.controllers.PopupShowComponentController;
+import org.openjfx.controllers.popupControllers.PopupCompareComponentsController;
+import org.openjfx.controllers.popupControllers.PopupEditComponentController;
+import org.openjfx.controllers.popupControllers.PopupShowComponentController;
 import org.openjfx.dataModels.PCComponents;
 
 public class PopupForComponents {
@@ -19,7 +19,8 @@ public class PopupForComponents {
     /** Opens a popup window to edit components */
     public static void editComponent(PCComponents componentToEdit, TableView<PCComponents> tableview, int index) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("popupEditComponent.fxml"));
+            String fileUrl = PopupUtilities.getPopupPath("popupEditComponent");
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileUrl));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
@@ -52,7 +53,8 @@ public class PopupForComponents {
     /** Opens a popup window to show component details */
     private static void showComponent(PCComponents componentToShow, TableView<PCComponents> tv) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("popupShowComponent.fxml"));
+            String fileUrl = PopupUtilities.getPopupPath("popupShowComponent");
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileUrl));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
@@ -90,7 +92,8 @@ public class PopupForComponents {
     /** Opens a popup window to show components to compare */
     public static void compareComponent(ObservableList<PCComponents> components){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("popupCompareComponents.fxml"));
+            String fileUrl = PopupUtilities.getPopupPath("popupCompareComponents");
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileUrl));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 

@@ -1,4 +1,4 @@
-package org.openjfx.controllers;
+package org.openjfx.controllers.popupControllers;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
@@ -8,9 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
+
 import java.util.ArrayList;
 
 public class PopupCompareComponentsController{
@@ -70,16 +71,11 @@ public class PopupCompareComponentsController{
 
         addToCartBtn.setOnAction((e) -> {
             ComponentsCartCollection.addToCollection(component);
-            closePopup();
+            PopupUtilities.closePopup(parentPane);
         });
 
         wrapper.getChildren().add(addToCartBtn);
         wrapper.setAlignment(Pos.CENTER);
         return wrapper;
-    }
-
-    private void closePopup(){
-        Stage stage = (Stage) parentPane.getScene().getWindow();
-        stage.close();
     }
 }

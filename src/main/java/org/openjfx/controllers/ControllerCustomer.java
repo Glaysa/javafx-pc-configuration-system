@@ -12,6 +12,10 @@ import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.*;
+import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
+import org.openjfx.guiUtilities.popupDialogs.PopupForConfigurations;
+import org.openjfx.guiUtilities.popupDialogs.PopupForTableView;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
