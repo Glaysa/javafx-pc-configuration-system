@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.openjfx.App;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ComponentsCollection;
@@ -30,6 +32,7 @@ public class ControllerCustomer implements Initializable {
     @FXML private TableView<PCConfigurations> tableViewCartConfigurations;
     @FXML private TableView<PCConfigurations> tableViewConfigurations;
     private final FileActions<PCComponents> file = new FileActions<>();
+    private final FileActions<PCConfigurations> fileConfig = new FileActions<>();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
 
     @Override
@@ -80,38 +83,52 @@ public class ControllerCustomer implements Initializable {
         tableViewCartComponents.refresh();
     }
 
+    /** Adds configured pc to cart as well */
+
+    @FXML
+    void addConfigToCart(){
+        PCConfigurations selected = tableViewConfigurations.getSelectionModel().getSelectedItem();
+        if(selected != null) ConfigurationCartCollection.addToCollection(selected);
+        else AlertDialog.showWarningDialog("Choose a configured pc to add", "");
+        tableViewCartConfigurations.refresh();
+    }
+
     @FXML
     void checkout() {
 
     }
 
-    /** Opens a popup window to show filter options of the tableview of products */
-
-    @FXML
-    void filterTableView() {
-        PopupForTableView.showFilterOptions(tableViewComponents);
-    }
-
-    @FXML
-    void logout() throws IOException {
-        ComponentsCollection.clearCollection();
-        ComponentsCollection.setModified(false);
-        App.setRoot("login");
-    }
+    /** Opens a file through file chooser */
 
     @FXML
     void openFile() {
-
+        FileChooser fileChooser = fileConfig.getFileChooser();
+        File fileToOpen = fileChooser.showOpenDialog(new Stage());
+        if(fileToOpen == null) {
+            AlertDialog.showWarningDialog("No file was chosen","");
+        } else {
+            fileConfig.open(fileToOpen, "Opening file...");
+        }
     }
 
-    @FXML
-    void saveChanges() {
-
-    }
+    /** Saves a file through file chooser */
 
     @FXML
     void saveFile() {
+        FileChooser fileChooser = fileConfig.getFileChooser();
+        File fileToSave = fileChooser.showSaveDialog(new Stage());
+        if(fileToSave == null) {
+            AlertDialog.showWarningDialog("No file was chosen","");
+        } else {
+            fileConfig.save(ConfigurationCollection.getConfigsArrayList(), fileToSave, "Saving file...");
+        }
+    }
 
+    /** Save all changes to the current opened file */
+
+    @FXML
+    void saveChanges() {
+        fileConfig.saveChanges(ConfigurationCollection.getConfigsArrayList(), "Saving changes...");
     }
 
     /** Opens a popup window to show all components the user wants to compare */
@@ -137,16 +154,22 @@ public class ControllerCustomer implements Initializable {
         PopupForConfigurations.newConfiguration();
     }
 
+    /** Opens a popup window to show filter options of the tableview of products */
+
     @FXML
-    void addConfigToCart(){
-        PCConfigurations selected = tableViewConfigurations.getSelectionModel().getSelectedItem();
-        if(selected != null) ConfigurationCartCollection.addToCollection(selected);
-        else AlertDialog.showWarningDialog("Choose a configured pc to add", "");
-        tableViewCartConfigurations.refresh();
+    void filterTableView() {
+        PopupForTableView.showFilterOptions(tableViewComponents);
     }
 
     /** searches through the tableview with the given search input */
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableViewComponents);
+    }
+
+    @FXML
+    void logout() throws IOException {
+        ComponentsCollection.clearCollection();
+        ComponentsCollection.setModified(false);
+        App.setRoot("login");
     }
 }

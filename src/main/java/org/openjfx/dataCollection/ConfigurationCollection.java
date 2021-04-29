@@ -80,6 +80,10 @@ public class ConfigurationCollection {
         itemsObsList.clear();
     }
 
+    public static void clearCollection(){
+        configObsList.clear();
+    }
+
     public static double getTotalPrice(){
         double totalPrice = 0;
         for(PCComponents component : itemsObsList) {

@@ -24,6 +24,11 @@ public class PCConfigurations implements Serializable {
         return prevId + 1;
     }
 
+    public static String getClassReference(){
+        // Must be unique (id name)
+        return "PCConfigurationID";
+    }
+
     public String toString() {
         PCConfigurations configuration = new PCConfigurations(configurationName, PCConfigurationID, pcComponents, totalPrice);
         Gson gson = new Gson();

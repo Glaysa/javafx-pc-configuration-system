@@ -9,7 +9,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
@@ -17,7 +16,6 @@ import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
 import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

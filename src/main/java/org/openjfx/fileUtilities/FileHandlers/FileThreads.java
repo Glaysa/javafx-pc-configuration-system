@@ -3,7 +3,9 @@ package org.openjfx.fileUtilities.FileHandlers;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
 import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileParser;
 import org.openjfx.fileUtilities.fileIO.IO_bin;
 import org.openjfx.fileUtilities.fileIO.IO_txt;
@@ -221,6 +223,13 @@ class FileThreads<T> extends FileActions<T> {
             }
             Indicators.updateFilename(lastOpenedFile.getName());
             Indicators.updateFileStatus(false);
+        } else if(object instanceof PCConfigurations){
+            ConfigurationCollection.clearCollection();
+            for(T datum : data){
+                Object p = FileParser.convertToObject(datum.toString());
+                ConfigurationCollection.addConfiguration((PCConfigurations) p);
+                lastOpenedFile = currentOpenedFile;
+            }
         } else {
             System.out.println("Unable to load data");
         }
