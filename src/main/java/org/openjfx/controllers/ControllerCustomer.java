@@ -40,9 +40,13 @@ public class ControllerCustomer implements Initializable {
         // Opens a file containing the default list of components.
         file.open(defaultData, "Loading products...");
 
-        // (listener) Initializes detection of a change on the cart collection
+        // (listener) Initializes detection of a change on the collections
         ComponentsCartCollection.collectionOnChange(totalPriceLabel);
         ConfigurationCartCollection.collectionOnChange(totalPriceLabel);
+        ComponentsCollection.collectionOnChange(null);
+
+        // Fills component type obs list
+        ComponentsCollection.fillComponentTypeObsList();
 
         // Initializes the tableviews
         ComponentsCollection.setTableView(tableViewComponents);
@@ -50,16 +54,14 @@ public class ControllerCustomer implements Initializable {
         ConfigurationCollection.setTableView(tableViewConfigurations);
         ConfigurationCartCollection.setTableView(tableViewCartConfigurations);
 
-        // (listener)
-        ComponentsCollection.collectionOnChange(null);
-        // Fills component type obs list
-        ComponentsCollection.fillComponentTypeObsList();
         // (listener) Initializes detection of double click on row of tableview
         PopupForComponents.showComponentOnDoubleClick(tableViewComponents);
         PopupForComponents.showComponentOnDoubleClick(tableViewCartComponents);
+
         // Initializes tableview tooltips
         Indicators.showToolTip(tableViewComponents, "Double click to see component details");
         Indicators.showToolTip(tableViewCartComponents, "Double click to see component details");
+
         // (listener) Initializes search functionality
         search();
     }

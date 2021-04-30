@@ -230,6 +230,7 @@ class FileThreads<T> extends FileActions<T> {
                 ComponentsCollection.addToCollection((PCComponents) p);
                 lastOpenedFile = currentOpenedFile;
             }
+            ComponentsCollection.setModified(false);
             Indicators.updateFilename(lastOpenedFile.getName());
             Indicators.updateFileStatus(false);
 

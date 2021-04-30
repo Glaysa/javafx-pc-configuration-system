@@ -18,7 +18,6 @@ public class Indicators {
     /** Shows whether the current opened file is modified or not */
     public static void updateFileStatus(boolean isModified){
         if(ControllerAdmin.fileStatusStatic != null) {
-            ComponentsCollection.setModified(isModified);
             if(isModified) {
                 ControllerAdmin.fileStatusStatic.setText("Modified");
                 ControllerAdmin.fileStatusStatic.setStyle("-fx-text-fill: darkred");
