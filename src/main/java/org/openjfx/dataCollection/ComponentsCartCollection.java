@@ -14,7 +14,7 @@ public class ComponentsCartCollection {
 
     private static final ObservableList<PCComponents> cartObsList = FXCollections.observableArrayList();
 
-    /** Adds new components to the observable list componentObsList */
+    /** Adds new components to the observable list cartObsList */
     public static void addToCollection(PCComponents toAdd){
         if(cartObsList.contains(toAdd)) {
             String response = AlertDialog.showConfirmDialog(toAdd.getComponentName() + " is already in the cart. Add anyway?");
@@ -24,24 +24,23 @@ public class ComponentsCartCollection {
         }
     }
 
-    /** Sets the items of the tableview to componentObsList */
+    /** Sets the items of the tableview to cartObsList */
     public static void setTableView(TableView<PCComponents> tableView){
         tableView.setId("componentsCartTableView");
         tableView.setItems(cartObsList);
     }
 
-    /** Removes all selected values from the collection */
+    /** Removes all selected values from cartObsList */
     public static void removeSelected(PCComponents toRemove){
         if(toRemove != null) cartObsList.remove(toRemove);
         else AlertDialog.showWarningDialog("Please select a product to remove", "");
     }
 
-    /** Updates the combobox of component types whenever there is a change in componentsObsList */
+    /** Updates the total price whenever there is change on all carts */
     public static void collectionOnChange(Label totalPrice){
         cartObsList.addListener(new ListChangeListener<PCComponents>() {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
-                // Update total price
                 double configurationTotalPrice = ConfigurationCartCollection.getTotalPrice();
                 double componentsTotalPrice = getTotalPrice();
                 double totalSum = componentsTotalPrice + configurationTotalPrice;
@@ -50,8 +49,7 @@ public class ComponentsCartCollection {
         });
     }
 
-    /** Get / Set methods */
-
+    /** Calculates the total price of all components in the cart */
     public static double getTotalPrice(){
         double totalPrice = 0;
         for(PCComponents component : cartObsList) {

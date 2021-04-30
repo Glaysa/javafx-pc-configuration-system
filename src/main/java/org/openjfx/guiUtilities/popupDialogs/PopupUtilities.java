@@ -10,7 +10,7 @@ public class PopupUtilities {
         return "popupViews/" + fxml + ".fxml";
     }
 
-    /** Closes current popup */
+    /** Closes given popup */
     public static void closePopup(Pane parentPane){
         Stage stage = (Stage) parentPane.getScene().getWindow();
         stage.close();

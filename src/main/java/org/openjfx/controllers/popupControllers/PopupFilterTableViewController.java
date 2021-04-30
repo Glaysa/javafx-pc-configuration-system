@@ -6,18 +6,17 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
-import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 import java.net.URL;
 import java.util.*;
 import java.util.function.Predicate;
 
+/** This controller is used for the popup window of when user wants to filter the tableview */
+
 public class PopupFilterTableViewController implements Initializable {
 
-    @FXML private AnchorPane parentPane;
     @FXML private VBox vBox;
     @FXML private RadioButton checkLess500;
     @FXML private RadioButton checkLess1000;
@@ -54,12 +53,11 @@ public class PopupFilterTableViewController implements Initializable {
         for(CheckBox checkBox: checkBoxes){
             if(checkBox.isSelected()) {
                 filter(checkBox);
-                PopupUtilities.closePopup(parentPane);
             }
         }
     }
 
-    /** Filters the tableview based on ticked checkboxes */
+    /** Filters the tableview based on which checkboxes are ticked */
     void filter(CheckBox checkBox){
         FilteredList<PCComponents> filteredList = new FilteredList<>(ComponentsCollection.getComponentObList());
 
@@ -105,7 +103,7 @@ public class PopupFilterTableViewController implements Initializable {
         }));
     }
 
-    /** Resets all filter to original form */
+    /** Resets all filters and tableview to their original values */
     void resetFilter(){
         reset.setOnAction(actionEvent -> {
             tableView.setItems(ComponentsCollection.getComponentObList());

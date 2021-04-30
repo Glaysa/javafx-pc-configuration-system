@@ -8,11 +8,13 @@ import javafx.scene.control.TableView;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.guiUtilities.AlertDialog;
 
+/** This class is responsible of all methods related to the configuration cart tableview in the customer view */
+
 public class ConfigurationCartCollection {
 
     private static final ObservableList<PCConfigurations> cartObsList = FXCollections.observableArrayList();
 
-    /** Adds new components to the observable list componentObsList */
+    /** Adds new configured PC to the observable list cartObsList */
     public static void addToCollection(PCConfigurations toAdd){
         if(cartObsList.contains(toAdd)) {
             String response = AlertDialog.showConfirmDialog(toAdd.getConfigurationName() + " is already in the cart. Add anyway?");
@@ -22,18 +24,17 @@ public class ConfigurationCartCollection {
         }
     }
 
-    /** Sets the items of the tableview to componentObsList */
+    /** Sets the items of the tableview to cartObsList */
     public static void setTableView(TableView<PCConfigurations> tableView){
-        tableView.setId("componentsCartTableView");
+        tableView.setId("configurationCartTableView");
         tableView.setItems(cartObsList);
     }
 
-    /** Updates the combobox of component types whenever there is a change in componentsObsList */
+    /** Updates the total price whenever there is change on all carts */
     public static void collectionOnChange(Label totalPrice){
         cartObsList.addListener(new ListChangeListener<PCConfigurations>() {
             @Override
             public void onChanged(Change<? extends PCConfigurations> change) {
-                // Update total price
                 double componentsTotalPrice = ComponentsCartCollection.getTotalPrice();
                 double configurationTotalPrice = getTotalPrice();
                 double totalSum = componentsTotalPrice + configurationTotalPrice;
@@ -42,8 +43,7 @@ public class ConfigurationCartCollection {
         });
     }
 
-    /** Get / Set methods */
-
+    /** Calculates the total price of all configured PC in the cart */
     public static double getTotalPrice(){
         double totalPrice = 0;
         for(PCConfigurations config : cartObsList) {
@@ -51,5 +51,4 @@ public class ConfigurationCartCollection {
         }
         return totalPrice;
     }
-
 }

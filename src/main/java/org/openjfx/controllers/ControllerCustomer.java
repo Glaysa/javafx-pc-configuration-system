@@ -89,7 +89,7 @@ public class ControllerCustomer implements Initializable {
     void addConfigToCart(){
         PCConfigurations selected = tableViewConfigurations.getSelectionModel().getSelectedItem();
         if(selected != null) ConfigurationCartCollection.addToCollection(selected);
-        else AlertDialog.showWarningDialog("Choose a configured pc to add", "");
+        else AlertDialog.showWarningDialog("Choose a configured PC to add", "");
         tableViewCartConfigurations.refresh();
     }
 
@@ -154,7 +154,7 @@ public class ControllerCustomer implements Initializable {
         PopupForConfigurations.newConfiguration();
     }
 
-    /** Opens a popup window to show filter options of the tableview of products */
+    /** Opens a popup window to let the user filter the tableview */
 
     @FXML
     void filterTableView() {
@@ -165,6 +165,8 @@ public class ControllerCustomer implements Initializable {
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableViewComponents);
     }
+
+    /* TODO: Prompt user when there are unsaved changes */
 
     @FXML
     void logout() throws IOException {

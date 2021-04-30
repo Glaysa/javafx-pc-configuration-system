@@ -45,12 +45,12 @@ public class ControllerAdmin implements Initializable {
         ComponentsCollection.fillComponentTypeComboBox(typeOptions);
         // (listener) Initializes detection of a change on the component collection
         ComponentsCollection.collectionOnChange(typeOptions);
-        // (listener) Initializes search functionality
-        search();
         // (listener) Initializes detection of double click on row of tableview
         editComponentOnDoubleClick();
         // Initializes tableview tooltips
         Indicators.showToolTip(tableView, "Double click to edit");
+        // (listener) Initializes search functionality
+        search();
 
         // Shows which file is opened and it's saved or modified
         // Assign to another static element to give access to other classes
@@ -62,16 +62,17 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void createComponent() {
-        int strNumber = PCComponents.createUniqueId();
-        String strName = cName.getText();
-        String strType = typeOptions.getValue();
-        String strSpecs = cDesc.getText();
-        String strPrice = price.getText();
-
         try {
+            int strNumber = PCComponents.createUniqueId();
+            String strName = cName.getText();
+            String strType = typeOptions.getValue();
+            String strSpecs = cDesc.getText();
+            String strPrice = price.getText();
+
             PCComponents c = new PCComponents(strNumber, strName, strType, strSpecs, strPrice);
             ComponentsCollection.addToCollection(c);
             resetFields();
+
             AlertDialog.showSuccessDialog("Component Added Successfully!");
         } catch (IllegalArgumentException e) {
             AlertDialog.showWarningDialog(e.getMessage(), "");
@@ -120,7 +121,7 @@ public class ControllerAdmin implements Initializable {
         file.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
     }
 
-    /** Opens a popup window to show filter options of the tableview of products */
+    /** Opens a popup window to let the admin filter the tableview */
 
     @FXML
     void filterTableView(){
@@ -131,18 +132,20 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void logout() throws IOException {
+        // Admin is prompted when there are unsaved changes
         if(ComponentsCollection.isModified()) {
             String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
             if(response.equals("Yes")) {
                 file.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
             }
         }
+        // Otherwise, the admin is logged out
         ComponentsCollection.clearCollection();
         ComponentsCollection.setModified(false);
         App.setRoot("login");
     }
 
-    /** searches through the tableview with the given search input */
+    /** Searches through the tableview with the given search input */
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableView);
     }
@@ -169,7 +172,7 @@ public class ControllerAdmin implements Initializable {
         });
     }
 
-    /** Resets all input fields after successful creation
+    /** Resets all input fields after successful addition
      * of components and refreshes the tableview. */
 
     void resetFields() {

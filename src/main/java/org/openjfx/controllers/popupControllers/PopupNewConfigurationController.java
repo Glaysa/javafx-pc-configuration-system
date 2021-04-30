@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
+/** This controller is used for the popup window when creating new pc configurations */
+
 public class PopupNewConfigurationController implements Initializable {
 
     @FXML private VBox parentPane;
@@ -32,13 +34,20 @@ public class PopupNewConfigurationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Assign to another static element to give access to other classes
         totalPriceStatic = totalPrice;
+        // Initializes tableview
         tableViewComponents.setId("configurationsSelectTableView");
         tableViewComponents.setItems(ComponentsCollection.getComponentObList());
+        // Initializes collection change listener
         ConfigurationCollection.itemCollectionOnChange(vBoxConfigurations, totalPriceStatic);
+        // Initializes detection of double click on row of tableview
         PopupForComponents.showComponentOnDoubleClick(tableViewComponents);
+        // Layout Initialization
         HBox.setHgrow(vBoxConfigurations, Priority.ALWAYS);
     }
+
+    /** Adds new configuration to a table view */
 
     @FXML
     void addConfiguration(){
@@ -66,7 +75,8 @@ public class PopupNewConfigurationController implements Initializable {
         }
     }
 
-    /** Shows the correct items on tableview depending on which button was click on the configuration options */
+    /** Shows the correct items on tableview depending on which configuration button
+     * was clicked on the configuration options */
     public void fillTableView(Button button) {
         FilteredList<PCComponents> filteredList = new FilteredList<>(ComponentsCollection.getComponentObList());
         Predicate<PCComponents> matchesType = c -> c.getComponentType().equals(button.getText());

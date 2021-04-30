@@ -9,7 +9,9 @@ import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 
-/** This controller is used for the popup window of components when being shown. */
+/** This controller is used for the popup window of components when being shown. This popup is shown
+ * when double clicking a tableview and is used by different tableviews. Different buttons show up depending
+ * on which tableview the user has double clicked. */
 
 public class PopupShowComponentController{
 
@@ -30,8 +32,7 @@ public class PopupShowComponentController{
         labelDescription.setText(componentToShow.getComponentSpecs());
     }
 
-    /** Different buttons are assigned depending on which tableview the user is on */
-
+    /** When on the components tableview, the add to cart button is shown */
     public void setButtonAsAddToCart(PCComponents componentToShow){
         button.setText("Add to cart");
         button.setOnAction((e) -> {
@@ -40,6 +41,7 @@ public class PopupShowComponentController{
         });
     }
 
+    /** When on the components cart tableview, the remove from cart button is shown */
     public void setButtonAsRemoveFromCart(PCComponents toRemove){
         button.setText("Remove from Cart");
         button.setOnAction((e) -> {
@@ -48,6 +50,7 @@ public class PopupShowComponentController{
         });
     }
 
+    /** When selecting a component for the pc configuration, the select button is shown */
     public void setButtonAsSelect(PCComponents selected){
         button.setText("Select");
         button.setOnAction((e) -> {
@@ -56,6 +59,7 @@ public class PopupShowComponentController{
         });
     }
 
+    /** A button will not show up on other tableviews */
     public void hideButton(){
         button.setDisable(true);
         button.setOpacity(0);

@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class PopupForConfigurations {
 
+    /** Opens the popup window to let the user add a new configured PC */
     public static void newConfiguration(){
         try {
             String fileUrl = PopupUtilities.getPopupPath("popupNewConfiguration");
@@ -18,7 +19,9 @@ public class PopupForConfigurations {
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
+            // Get the controller of another fxml to access it's methods
             PopupNewConfigurationController controller = fxmlLoader.getController();
+            // Loads buttons as configuration options
             controller.loadConfigurationOptions();
 
             stage.initModality(Modality.APPLICATION_MODAL);

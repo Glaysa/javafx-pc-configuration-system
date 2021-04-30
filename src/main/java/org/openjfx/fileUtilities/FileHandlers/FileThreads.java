@@ -214,6 +214,8 @@ class FileThreads<T> extends FileActions<T> {
     private void processData(ArrayList<T> data) {
         reader = new Reader<>();
         Object object = FileParser.convertToObject(data.get(0).toString());
+
+        // Check if file contains PC components
         if(object instanceof PCComponents) {
             ComponentsCollection.clearCollection();
             for(T datum : data){
@@ -223,6 +225,8 @@ class FileThreads<T> extends FileActions<T> {
             }
             Indicators.updateFilename(lastOpenedFile.getName());
             Indicators.updateFileStatus(false);
+
+        // Check if file contains PC configurations
         } else if(object instanceof PCConfigurations){
             ConfigurationCollection.clearCollection();
             for(T datum : data){
@@ -230,6 +234,8 @@ class FileThreads<T> extends FileActions<T> {
                 ConfigurationCollection.addConfiguration((PCConfigurations) p);
                 lastOpenedFile = currentOpenedFile;
             }
+
+        // Otherwise, do not load anything
         } else {
             System.out.println("Unable to load data");
         }

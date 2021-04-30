@@ -12,6 +12,7 @@ import org.openjfx.dataModels.PCComponents;
 
 public class PopupForTableView {
 
+    /** Opens a popup window to let the user/admin filter the tableview */
     public static void showFilterOptions(TableView<PCComponents> tableView){
         try {
             String fileUrl = PopupUtilities.getPopupPath("popupFilterTableView");

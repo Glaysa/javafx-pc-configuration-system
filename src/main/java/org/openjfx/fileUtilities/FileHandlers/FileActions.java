@@ -1,11 +1,10 @@
 package org.openjfx.fileUtilities.FileHandlers;
 
 import javafx.stage.FileChooser;
-
 import java.io.File;
 import java.util.ArrayList;
 
-/** This class is responsible for calling the open and save threads. They are often called in the controllers. */
+/** This class is responsible for calling the open and save threads */
 
 public class FileActions<T> {
 

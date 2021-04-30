@@ -14,6 +14,8 @@ import org.openjfx.controllers.popupControllers.PopupEditComponentController;
 import org.openjfx.controllers.popupControllers.PopupShowComponentController;
 import org.openjfx.dataModels.PCComponents;
 
+/** This class is responsible of opening the popups related to components */
+
 public class PopupForComponents {
 
     /** Opens a popup window to edit components */
@@ -99,7 +101,7 @@ public class PopupForComponents {
 
             // Get the controller of another fxml to access it's methods
             PopupCompareComponentsController controller = fxmlLoader.getController();
-            // Load components to compare
+            // Load component details to compare
             for(PCComponents component: components) controller.loadComponentsToCompare(component);
             // Add to hBox as its children
             controller.compareComponents();

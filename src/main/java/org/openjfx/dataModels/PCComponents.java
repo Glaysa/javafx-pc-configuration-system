@@ -24,6 +24,7 @@ public class PCComponents implements Serializable {
     }
 
     public String toString(){
+        // Gson -> easy conversion of object from string to object when deserializing
         PCComponents p = new PCComponents(PCComponentID, componentName, componentType, componentSpecs, Double.toString(componentPrice));
         Gson gson = new Gson();
         String objectStr = gson.toJson(p);

@@ -11,8 +11,9 @@ import javafx.scene.layout.*;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
-
 import java.util.ArrayList;
+
+/** This controller is used for the popup window of components when being compared. */
 
 public class PopupCompareComponentsController{
 
@@ -20,6 +21,7 @@ public class PopupCompareComponentsController{
     @FXML AnchorPane parentPane;
     private final ArrayList<Node> list = new ArrayList<>();;
 
+    /** Takes all component details in adds it on a vBox */
     public void loadComponentsToCompare(PCComponents component){
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.TOP_LEFT);
@@ -48,6 +50,7 @@ public class PopupCompareComponentsController{
         list.add(vBox);
     }
 
+    /** All components vBoxes are displayed in h box to be compared */
     public void compareComponents(){
         for(Node component: list){
             Separator s = new Separator();
@@ -57,6 +60,7 @@ public class PopupCompareComponentsController{
         }
     }
 
+    /** Label used to display the details on the vbox */
     private Label createLabel(String text){
         Label label = new Label(text);
         label.setWrapText(true);
@@ -64,6 +68,7 @@ public class PopupCompareComponentsController{
         return label;
     }
 
+    /** Along with the component labels, a button is also shown to let the user add it to the cart */
     private HBox createButton(PCComponents component){
         HBox wrapper = new HBox();
         Button addToCartBtn = new Button("Add to Cart");

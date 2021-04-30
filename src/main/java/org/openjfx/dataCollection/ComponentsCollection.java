@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 /** This class is responsible of all methods related to the components tableview in the admin view and
- * products tableview in customer view */
+ * in customer view */
 
 public class ComponentsCollection {
 
@@ -41,14 +41,14 @@ public class ComponentsCollection {
         componentObsList.removeAll(toRemove);
     }
 
-    /** Fills a combobox with the type obs list items */
+    /** Fills a combobox with the componentTypeObsList items */
     public static void fillComponentTypeComboBox(ComboBox<String> typeOptions){
         typeOptions.setEditable(true);
         typeOptions.setPromptText("Choose/Enter Component Type");
         typeOptions.setItems(componentTypeObsList);
     }
 
-    /** This fills the combobox of component types with the defined types and new types found in the componentObsList */
+    /** This fills the componentTypeObslist with the defined types and new types found in the componentObsList */
     public static void fillComponentTypeObsList(){
         String[] definedTypes = {"RAM","Keyboards","Processors","Graphic Cards", "Mouse"};
         componentTypeObsList = FXCollections.observableArrayList(definedTypes);
@@ -65,12 +65,12 @@ public class ComponentsCollection {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
                 try {
+                    // Keeps track of the obs list if its modified or not
+                    modified = true;
                     // Checks if there are new component type, if yes, it adds it to the combobox given
                     fillComponentTypeObsList();
                     // Update the combobox of component types
                     fillComponentTypeComboBox(typeOptions);
-                    // Keeps track of the obs list if its modified or not
-                    modified = true;
                     // Shows that the file is modified
                     Indicators.updateFileStatus(true);
                 } catch (NullPointerException ignore){}
@@ -78,7 +78,7 @@ public class ComponentsCollection {
         });
     }
 
-    /** Searches through the obs list */
+    /** Searches through the componentObsList */
     public static void collectionSearch(TextField searchInput, TableView<PCComponents> tableView){
         FilteredList<PCComponents> filteredList = new FilteredList<>(componentObsList);
         searchInput.textProperty().addListener((observable, oldValue, newValue)-> {

@@ -19,6 +19,14 @@ public class PCConfigurations implements Serializable {
         this.configurationName = configurationName;
     }
 
+    public String toString() {
+        // Gson -> easy conversion of object from string to object when deserializing
+        PCConfigurations configuration = new PCConfigurations(configurationName, PCConfigurationID, pcComponents, totalPrice);
+        Gson gson = new Gson();
+        String objectStr = gson.toJson(configuration);
+        return String.format("%s\n", objectStr);
+    }
+
     public static int createID() {
         int prevId = ConfigurationCollection.getConfigsArrayList().size();
         return prevId + 1;
@@ -27,13 +35,6 @@ public class PCConfigurations implements Serializable {
     public static String getClassReference(){
         // Must be unique (id name)
         return "PCConfigurationID";
-    }
-
-    public String toString() {
-        PCConfigurations configuration = new PCConfigurations(configurationName, PCConfigurationID, pcComponents, totalPrice);
-        Gson gson = new Gson();
-        String objectStr = gson.toJson(configuration);
-        return String.format("%s\n", objectStr);
     }
 
     public void setPcComponents(ArrayList<PCComponents> pcComponents) {

@@ -13,20 +13,29 @@ import org.openjfx.guiUtilities.AlertDialog;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/** This class is responsible of all methods related to the configuration tableview in the admin view */
+
 public class ConfigurationCollection {
 
     private static final ObservableList<PCConfigurations> configObsList = FXCollections.observableArrayList();
     private static final ObservableList<PCComponents> itemsObsList = FXCollections.observableArrayList();
 
-    /** Adds finished configuration to config obs list */
+    /** Adds configured PC to configObsList */
     public static void addConfiguration(PCConfigurations toAdd){
+        // Must have components when configuring a PC
         String[] mustHave = {"RAM", "Mouse", "Keyboards"};
-        ArrayList<String> mustHaveComponents = new ArrayList(Arrays.asList(mustHave));
+        ArrayList<String> mustHaveComponents = new ArrayList<>(Arrays.asList(mustHave));
+
+        // Removes type from mustHave[] if is selected
         for(PCComponents item: toAdd.getPcComponents()) {
             mustHaveComponents.removeIf(c -> c.equals(item.getComponentType()));
         }
+
+        // When mustHave[] is empty, it means all component needed to configure a PC is added
         if(mustHaveComponents.isEmpty()){
             configObsList.add(toAdd);
+
+        // Otherwise, the user is shown with the other components that is needed to be added
         } else {
             StringBuilder missing = new StringBuilder();
             for(String m: mustHaveComponents) {
@@ -36,12 +45,9 @@ public class ConfigurationCollection {
         }
     }
 
-    public static void setTableView(TableView<PCConfigurations> tableView){
-        tableView.setItems(configObsList);
-    }
-
-    /** Adds new item on the item obs list */
+    /** Adds selected component to itemObsList */
     public static void addConfigurationItem(PCComponents toAdd){
+        // The user can only add one component of each type when configuring a PC
         if(itemsObsList.isEmpty()){
             itemsObsList.add(toAdd);
         } else if(itemsObsList.contains(toAdd)) {
@@ -51,6 +57,12 @@ public class ConfigurationCollection {
             if(itemRemoved) AlertDialog.showSuccessDialog(toAdd.getComponentType() + " has been replaced");
             itemsObsList.add(toAdd);
         }
+    }
+
+    /** Sets the tableview */
+    public static void setTableView(TableView<PCConfigurations> tableView){
+        tableView.setId("configurationTableView");
+        tableView.setItems(configObsList);
     }
 
     /** Listens to changes and updates the list of selected components */
@@ -76,14 +88,17 @@ public class ConfigurationCollection {
         });
     }
 
-    public static void clearItemCollection(){
-        itemsObsList.clear();
-    }
+    /** Clears collections */
 
     public static void clearCollection(){
         configObsList.clear();
     }
 
+    public static void clearItemCollection(){
+        itemsObsList.clear();
+    }
+
+    /** Calculates the total price of all the items added to configure a PC */
     public static double getTotalPrice(){
         double totalPrice = 0;
         for(PCComponents component : itemsObsList) {
@@ -93,6 +108,7 @@ public class ConfigurationCollection {
     }
 
     /** Get / Set methods */
+
     public static ArrayList<PCComponents> getItemsArrayList(){
         return new ArrayList<>(itemsObsList);
     }

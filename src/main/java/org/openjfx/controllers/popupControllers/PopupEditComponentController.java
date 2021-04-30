@@ -7,11 +7,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.OnEnterKeyEvent;
+import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
@@ -42,8 +42,7 @@ public class PopupEditComponentController implements Initializable, Callable<Voi
         onEnterKey();
     }
 
-    /** When ENTER key is pressed, the updatedComponent() method runs
-     *  through the button event handler */
+    /** Initializes callable - this updateComponent() runs when ENTER key is pressed */
 
     @Override
     public Void call() {
@@ -51,9 +50,9 @@ public class PopupEditComponentController implements Initializable, Callable<Voi
         return null;
     }
 
-    /** Detects on enter key on the jfx controls */
+    /** Sets on which jfx controls do we want to listen for an enter key event */
     public void onEnterKey(){
-        Callable<Void> callable = this;
+        Callable<Void> callable = this; // call()
         OnEnterKeyEvent.execute(componentNumber, callable);
         OnEnterKeyEvent.execute(componentName, callable);
         OnEnterKeyEvent.execute(typeOptions, callable);
@@ -78,8 +77,7 @@ public class PopupEditComponentController implements Initializable, Callable<Voi
     /** Closes the popup window */
     @FXML
     private void cancelEditComponent(){
-        Stage stage = (Stage) parentPane.getScene().getWindow();
-        stage.close();
+        PopupUtilities.closePopup(parentPane);
     }
 
     /** Displays the data of component to be edited */
