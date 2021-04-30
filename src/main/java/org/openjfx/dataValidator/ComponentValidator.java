@@ -4,7 +4,7 @@ import org.openjfx.customExceptions.InvalidNumberException;
 
 /** This class is responsible for validating components added on the tableview. */
 
-public class Validator {
+public class ComponentValidator {
 
     private static String componentName;
     private static String componentType;
@@ -19,7 +19,7 @@ public class Validator {
         } else if(componentName.length() < 3) {
             throw new IllegalArgumentException("Component name must be at least 3 characters");
         }
-        Validator.componentName = Character.toString(componentName.charAt(0)).toUpperCase()+componentName.substring(1);
+        ComponentValidator.componentName = Character.toString(componentName.charAt(0)).toUpperCase()+componentName.substring(1);
     }
 
     public static void validateComponentType(String componentType) {
@@ -30,7 +30,7 @@ public class Validator {
         } else if(componentType.length() < 3) {
             throw new IllegalArgumentException("Component type must be at least 3 characters");
         }
-        Validator.componentType = Character.toString(componentType.charAt(0)).toUpperCase()+componentType.substring(1);
+        ComponentValidator.componentType = Character.toString(componentType.charAt(0)).toUpperCase()+componentType.substring(1);
     }
 
     public static void validateComponentSpecs(String componentSpecs) {
@@ -41,7 +41,7 @@ public class Validator {
         } else if(componentSpecs.length() < 3) {
             throw new IllegalArgumentException("Component specifications must be at least 3 characters");
         }
-        Validator.componentSpecs = Character.toString(componentSpecs.charAt(0)).toUpperCase()+componentSpecs.substring(1);
+        ComponentValidator.componentSpecs = Character.toString(componentSpecs.charAt(0)).toUpperCase()+componentSpecs.substring(1);
     }
 
     public static void validateComponentPrice(String txtComponentPrice){
@@ -51,7 +51,7 @@ public class Validator {
             }
             double componentPrice = Double.parseDouble(txtComponentPrice);
             if(componentPrice <= 0) { throw new InvalidNumberException("Price must greater than 0"); }
-            Validator.componentPrice = componentPrice;
+            ComponentValidator.componentPrice = componentPrice;
 
         } catch (InvalidNumberException e) {
             throw new IllegalArgumentException(e.getMessage());

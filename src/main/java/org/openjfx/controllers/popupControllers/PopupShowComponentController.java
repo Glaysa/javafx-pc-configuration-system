@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 
 /** This controller is used for the popup window of components when being shown. This popup is shown
@@ -53,9 +54,13 @@ public class PopupShowComponentController{
     /** When selecting a component for the pc configuration, the select button is shown */
     public void setButtonAsSelect(PCComponents selected){
         button.setText("Select");
-        button.setOnAction((e) -> {
-            ConfigurationCollection.addConfigurationItem(selected);
-            PopupUtilities.closePopup(parentPane);
+        button.setOnAction((event) -> {
+            try {
+                ConfigurationCollection.addConfigurationItem(selected);
+                PopupUtilities.closePopup(parentPane);
+            } catch (Exception e) {
+                AlertDialog.showWarningDialog(e.getMessage(),"");
+            }
         });
     }
 

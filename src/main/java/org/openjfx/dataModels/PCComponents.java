@@ -2,7 +2,7 @@ package org.openjfx.dataModels;
 
 import com.google.gson.Gson;
 import org.openjfx.dataCollection.ComponentsCollection;
-import org.openjfx.dataValidator.Validator;
+import org.openjfx.dataValidator.ComponentValidator;
 import java.io.Serializable;
 
 /** Model of Pc components. */
@@ -42,23 +42,23 @@ public class PCComponents implements Serializable {
     }
 
     public void setComponentName(String componentName) {
-        Validator.validateComponentName(componentName);
-        this.componentName = Validator.getComponentName();
+        ComponentValidator.validateComponentName(componentName);
+        this.componentName = ComponentValidator.getComponentName();
     }
 
     public void setComponentType(String componentType) {
-        Validator.validateComponentType(componentType);
-        this.componentType = Validator.getComponentType();
+        ComponentValidator.validateComponentType(componentType);
+        this.componentType = ComponentValidator.getComponentType();
     }
 
     public void setComponentSpecs(String componentSpecs) {
-        Validator.validateComponentSpecs(componentSpecs);
-        this.componentSpecs = Validator.getComponentSpecs();
+        ComponentValidator.validateComponentSpecs(componentSpecs);
+        this.componentSpecs = ComponentValidator.getComponentSpecs();
     }
 
     public void setComponentPrice(String componentPrice) {
-        Validator.validateComponentPrice(componentPrice);
-        this.componentPrice = Validator.getComponentPrice();
+        ComponentValidator.validateComponentPrice(componentPrice);
+        this.componentPrice = ComponentValidator.getComponentPrice();
     }
 
     public int getPCComponentID() {

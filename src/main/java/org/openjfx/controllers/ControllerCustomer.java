@@ -31,14 +31,15 @@ public class ControllerCustomer implements Initializable {
     @FXML private TableView<PCComponents> tableViewComponents;
     @FXML private TableView<PCConfigurations> tableViewCartConfigurations;
     @FXML private TableView<PCConfigurations> tableViewConfigurations;
-    private final FileActions<PCComponents> file = new FileActions<>();
-    private final FileActions<PCConfigurations> fileConfig = new FileActions<>();
+    private final FileActions file = new FileActions<>();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
+    private final File defaultConfigs = new File("src/main/java/database/initialConfigurations.txt");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Opens a file containing the default list of components.
         file.open(defaultData, "Loading products...");
+        file.open(defaultConfigs, "Loading PC Configurations...");
 
         // (listener) Initializes detection of a change on the collections
         ComponentsCartCollection.collectionOnChange(totalPriceLabel);
@@ -104,12 +105,12 @@ public class ControllerCustomer implements Initializable {
 
     @FXML
     void openFile() {
-        FileChooser fileChooser = fileConfig.getFileChooser();
+        FileChooser fileChooser = file.getFileChooser();
         File fileToOpen = fileChooser.showOpenDialog(new Stage());
         if(fileToOpen == null) {
             AlertDialog.showWarningDialog("No file was chosen","");
         } else {
-            fileConfig.open(fileToOpen, "Opening file...");
+            file.open(fileToOpen, "Opening file...");
         }
     }
 
@@ -117,12 +118,12 @@ public class ControllerCustomer implements Initializable {
 
     @FXML
     void saveFile() {
-        FileChooser fileChooser = fileConfig.getFileChooser();
+        FileChooser fileChooser = file.getFileChooser();
         File fileToSave = fileChooser.showSaveDialog(new Stage());
         if(fileToSave == null) {
             AlertDialog.showWarningDialog("No file was chosen","");
         } else {
-            fileConfig.save(ConfigurationCollection.getConfigsArrayList(), fileToSave, "Saving file...");
+            file.save(ConfigurationCollection.getConfigsArrayList(), fileToSave, "Saving file...");
         }
     }
 
@@ -130,7 +131,7 @@ public class ControllerCustomer implements Initializable {
 
     @FXML
     void saveChanges() {
-        fileConfig.saveChanges(ConfigurationCollection.getConfigsArrayList(), "Saving changes...");
+        file.saveChanges(ConfigurationCollection.getConfigsArrayList(), "Saving changes...");
     }
 
     /** Opens a popup window to show all components the user wants to compare */
