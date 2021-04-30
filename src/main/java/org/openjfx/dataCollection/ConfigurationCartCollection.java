@@ -18,9 +18,13 @@ public class ConfigurationCartCollection {
     public static void addToCollection(PCConfigurations toAdd){
         if(cartObsList.contains(toAdd)) {
             String response = AlertDialog.showConfirmDialog(toAdd.getConfigurationName() + " is already in the cart. Add anyway?");
-            if(response.equals("Yes")) cartObsList.add(toAdd);
+            if(response.equals("Yes")) {
+                cartObsList.add(toAdd);
+                AlertDialog.showSuccessDialog(toAdd.getConfigurationName() + " is added to your cart!");
+            }
         } else {
             cartObsList.add(toAdd);
+            AlertDialog.showSuccessDialog(toAdd.getConfigurationName() + " is added to your cart!");
         }
     }
 
