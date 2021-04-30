@@ -179,9 +179,13 @@ public class ControllerCustomer implements Initializable {
 
     /** Loads configuration data when user click on the configured PC tab */
 
+    boolean loaded = false;
     @FXML
     void tabConfigurationsInit(){
-        file.open(defaultConfigs, "Loading PC Configurations...");
+        if(!loaded) {
+            file.open(defaultConfigs, "Loading PC Configurations...");
+            loaded = true;
+        }
     }
 
     /* TODO: Prompt user when there are unsaved changes */
