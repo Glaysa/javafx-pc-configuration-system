@@ -39,7 +39,6 @@ public class ControllerCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Opens a file containing the default list of components.
         file.open(defaultData, "Loading products...");
-        file.open(defaultConfigs, "Loading PC Configurations...");
 
         // (listener) Initializes detection of a change on the collections
         ComponentsCartCollection.collectionOnChange(totalPriceLabel);
@@ -167,6 +166,13 @@ public class ControllerCustomer implements Initializable {
     /** searches through the tableview with the given search input */
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableViewComponents);
+    }
+
+    /** Loads configuration data when user click on the configured PC tab */
+
+    @FXML
+    void tabConfigurationsInit(){
+        file.open(defaultConfigs, "Loading PC Configurations...");
     }
 
     /* TODO: Prompt user when there are unsaved changes */

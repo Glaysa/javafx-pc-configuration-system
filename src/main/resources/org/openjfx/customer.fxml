@@ -183,7 +183,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Buy Configured PC">
+                <Tab closable="false" onSelectionChanged="#tabConfigurationsInit" text="Buy Configured PC">
                     <content>
                         <AnchorPane>
                             <children>
