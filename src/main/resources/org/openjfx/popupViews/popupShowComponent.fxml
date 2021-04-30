@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="parentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.popupControllers.PopupShowComponentController">
    <children>
       <Label fx:id="labelName" layoutX="14.0" layoutY="26.0" text="Product Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
@@ -54,7 +53,7 @@
       </Label>
       <ScrollPane fitToWidth="true" layoutX="300.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">
          <content>
-            <Label fx:id="labelDescription" alignment="TOP_LEFT" prefHeight="349.0" prefWidth="742.0" text="Label">
+            <Label fx:id="labelDescription" alignment="TOP_LEFT" prefHeight="349.0" prefWidth="742.0" text="Label" wrapText="true">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>

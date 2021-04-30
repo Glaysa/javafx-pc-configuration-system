@@ -90,7 +90,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextArea fx:id="cDesc" layoutX="75.0" layoutY="190.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="190.0">
+            <TextArea fx:id="cDesc" layoutX="75.0" layoutY="190.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="190.0">
                <font>
                   <Font size="14.0" />
                </font>

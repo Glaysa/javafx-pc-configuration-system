@@ -212,6 +212,13 @@ class FileThreads<T> extends FileActions<T> {
 
     /** Opening a file returns data, that data is processed here. */
     private void processData(ArrayList<T> data) {
+
+        // If opened file is empty
+        if(data.isEmpty()) {
+            lastOpenedFile = currentOpenedFile;
+            return;
+        }
+
         reader = new Reader<>();
         Object object = FileParser.convertToObject(data.get(0).toString());
 

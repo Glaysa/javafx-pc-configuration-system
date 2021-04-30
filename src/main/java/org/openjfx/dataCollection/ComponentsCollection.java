@@ -50,7 +50,7 @@ public class ComponentsCollection {
 
     /** This fills the componentTypeObslist with the defined types and new types found in the componentObsList */
     public static void fillComponentTypeObsList(){
-        String[] definedTypes = {"RAM","Keyboards","Processors","Graphic Cards", "Mouse"};
+        String[] definedTypes = {"CPU","Cooler","Motherboard","RAM", "Storage","Case","Power Supply", "Operating System", "Monitor", "External Storage"};
         componentTypeObsList = FXCollections.observableArrayList(definedTypes);
         for(PCComponents c : componentObsList){
             if(!componentTypeObsList.contains(c.getComponentType())){
