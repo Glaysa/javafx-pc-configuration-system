@@ -29,13 +29,13 @@
                     </cellValueFactory>
                  </TableColumn>
 
-                 <TableColumn fx:id="nameColumn" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Name">
+                 <TableColumn fx:id="nameColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Name">
                     <cellValueFactory>
                        <PropertyValueFactory property="componentName" />
                     </cellValueFactory>
                  </TableColumn>
 
-                 <TableColumn fx:id="typeColumn" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Type">
+                 <TableColumn fx:id="typeColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Type">
                     <cellValueFactory>
                        <PropertyValueFactory property="componentType" />
                     </cellValueFactory>
