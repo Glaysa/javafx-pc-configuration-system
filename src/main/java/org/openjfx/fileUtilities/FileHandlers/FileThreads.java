@@ -27,7 +27,6 @@ import java.util.*;
 
 class FileThreads<T> extends FileActions<T> {
 
-    private final File defaultFile = new File("src/main/java/database/initialComponents.txt");
     private boolean threadRunning = false;
     private Alert loadingAlert;
     private File lastOpenedFile, currentOpenedFile;

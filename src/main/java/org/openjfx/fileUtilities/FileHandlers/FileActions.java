@@ -6,17 +6,17 @@ import java.util.ArrayList;
 
 /** This class is responsible for calling the open and save threads */
 
-public class FileActions<T> {
+public class FileActions<Object> {
 
-    private FileThreads<T> threadHandlers;
+    private FileThreads<Object> threadHandlers;
     protected final String SAVE_THREAD = "Save Thread";
     protected final String OPEN_THREAD = "Open Thread";
 
     @SuppressWarnings("unchecked")
-    public void save(ArrayList<T> dataToSave, File file, String msg){
+    public void save(ArrayList<Object> dataToSave, File file, String msg){
         threadHandlers = FileThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            FileThreadInfo<T> fileThreadInfo = new FileThreadInfo<>(file, dataToSave, SAVE_THREAD, msg);
+            FileThreadInfo<Object> fileThreadInfo = new FileThreadInfo<>(file, dataToSave, SAVE_THREAD, msg);
             threadHandlers.addToWaitingThreads(fileThreadInfo);
         } else {
             threadHandlers.runSaveThread(dataToSave, file, msg);
@@ -27,7 +27,7 @@ public class FileActions<T> {
     public void open(File file, String msg){
         threadHandlers = FileThreads.getInstance();
         if(threadHandlers.isThreadRunning()) {
-            FileThreadInfo<T> fileThreadInfo = new FileThreadInfo<>(file, null, OPEN_THREAD, msg);
+            FileThreadInfo<Object> fileThreadInfo = new FileThreadInfo<>(file, null, OPEN_THREAD, msg);
             threadHandlers.addToWaitingThreads(fileThreadInfo);
         } else {
             threadHandlers.runOpenThread(file, msg);
@@ -35,7 +35,7 @@ public class FileActions<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public void saveChanges(ArrayList<T> dataToSave, String msg){
+    public void saveChanges(ArrayList<Object> dataToSave, String msg){
         threadHandlers = FileThreads.getInstance();
         File currentOpenedFile = threadHandlers.getCurrentOpenedFile();
         save(dataToSave, currentOpenedFile, msg);
