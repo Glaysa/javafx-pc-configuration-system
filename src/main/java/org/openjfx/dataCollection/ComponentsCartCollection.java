@@ -6,7 +6,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.guiUtilities.AlertDialog;
+
+import java.util.ArrayList;
 
 /** This class is responsible of all methods related to the components cart tableview in the customer view */
 
@@ -56,5 +59,10 @@ public class ComponentsCartCollection {
             totalPrice += component.getComponentPrice();
         }
         return totalPrice;
+    }
+
+    /** Get / Set methods */
+    public static ArrayList<PCComponents> getCartArraylist(){
+        return new ArrayList<>(cartObsList);
     }
 }

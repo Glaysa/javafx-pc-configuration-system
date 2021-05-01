@@ -5,8 +5,11 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.guiUtilities.AlertDialog;
+
+import java.util.ArrayList;
 
 /** This class is responsible of all methods related to the configuration cart tableview in the customer view */
 
@@ -60,5 +63,10 @@ public class ConfigurationCartCollection {
             totalPrice += config.getTotalPrice();
         }
         return totalPrice;
+    }
+
+    /** Get / Set methods */
+    public static ArrayList<PCConfigurations> getCartArraylist(){
+        return new ArrayList<>(cartObsList);
     }
 }

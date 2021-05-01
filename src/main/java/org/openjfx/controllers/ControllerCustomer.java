@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.openjfx.App;
+import org.openjfx.controllers.popupControllers.PopupCheckoutController;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataCollection.ConfigurationCartCollection;
@@ -15,6 +16,7 @@ import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.*;
+import org.openjfx.guiUtilities.popupDialogs.PopupForCheckout;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
 import org.openjfx.guiUtilities.popupDialogs.PopupForConfigurations;
 import org.openjfx.guiUtilities.popupDialogs.PopupForTableView;
@@ -105,11 +107,12 @@ public class ControllerCustomer implements Initializable {
         tableViewCartConfigurations.refresh();
     }
 
-    /* TODO: Show popup summary of all the items in the cart */
+
+    /** Opens a popup to show cart summary */
 
     @FXML
     void checkout() {
-
+        PopupForCheckout.showCheckout();
     }
 
     /** Opens a file through file chooser */
