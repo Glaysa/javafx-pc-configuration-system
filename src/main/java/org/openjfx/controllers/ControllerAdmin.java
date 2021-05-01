@@ -52,8 +52,8 @@ public class ControllerAdmin implements Initializable {
         // (listener) Initializes search functionality
         search();
 
-        // Shows which file is opened and it's saved or modified
-        // Assign to another static element to give access to other classes
+        // Shows which file is opened and if it's saved or modified
+        // Assigned to another static element to give access to other classes
         filenameLabelStatic = filenameLabel;
         fileStatusStatic = fileStatus;
     }
@@ -132,6 +132,7 @@ public class ControllerAdmin implements Initializable {
 
     @FXML
     void logout() throws IOException {
+
         // Admin is prompted when there are unsaved changes
         if(ComponentsCollection.isModified()) {
             String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
@@ -139,7 +140,8 @@ public class ControllerAdmin implements Initializable {
                 file.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
             }
         }
-        // Otherwise, the admin is logged out
+
+        // Otherwise, the admin is logged out immediately
         ComponentsCollection.clearCollection();
         ComponentsCollection.setModified(false);
         App.setRoot("login");
@@ -151,7 +153,7 @@ public class ControllerAdmin implements Initializable {
     }
 
     /** Detects a double click on a row in the tableview
-     * and opens a new window for component editing.*/
+     * and opens a popup for component editing.*/
 
     public void editComponentOnDoubleClick(){
         tableView.setRowFactory(tv -> {

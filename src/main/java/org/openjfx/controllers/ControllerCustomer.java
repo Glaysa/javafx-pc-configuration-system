@@ -105,6 +105,8 @@ public class ControllerCustomer implements Initializable {
         tableViewCartConfigurations.refresh();
     }
 
+    /* TODO: Show popup summary of all the items in the cart */
+
     @FXML
     void checkout() {
 
@@ -181,9 +183,7 @@ public class ControllerCustomer implements Initializable {
     /** When saving files, the tab changes to the config tab to let user know
      * they're saving or opening a config collection */
     void changeTabOnFileAction(){
-        menuFile.setOnShown(event -> {
-            tabPane.getSelectionModel().selectLast();
-        });
+        menuFile.setOnShown(event -> tabPane.getSelectionModel().selectLast());
     }
 
     /** Loads configuration data when user click on the configured PC tab */

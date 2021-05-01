@@ -34,7 +34,7 @@ public class ConfigurationCartCollection {
         tableView.setItems(cartObsList);
     }
 
-    /** Removes all selected values from cartObsList */
+    /** Removes selected values from cartObsList */
     public static void removeSelected(PCConfigurations toRemove){
         if(toRemove != null) cartObsList.remove(toRemove);
         else AlertDialog.showWarningDialog("Please select a configured PC to remove", "");

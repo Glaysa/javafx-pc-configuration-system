@@ -5,7 +5,8 @@ import javafx.scene.control.Tooltip;
 import org.openjfx.controllers.ControllerAdmin;
 import org.openjfx.dataCollection.ComponentsCollection;
 
-/** Class responsible for updating the element indicators in the gui */
+/** This class is responsible for updating the element indicators in the gui */
+
 public class Indicators {
 
     /** Whenever a new file is opened, the filename of that file will be shown */

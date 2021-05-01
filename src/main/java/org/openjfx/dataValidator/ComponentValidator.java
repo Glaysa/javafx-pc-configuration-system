@@ -2,7 +2,7 @@ package org.openjfx.dataValidator;
 
 import org.openjfx.customExceptions.InvalidNumberException;
 
-/** This class is responsible for validating components added on the tableview. */
+/** This class is responsible for validating components added on a tableview. */
 
 public class ComponentValidator {
 

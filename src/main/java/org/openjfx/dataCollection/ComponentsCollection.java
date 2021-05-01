@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 /** This class is responsible of all methods related to the components tableview in the admin view and
- * in customer view */
+ * in the customer view */
 
 public class ComponentsCollection {
 
@@ -59,13 +59,13 @@ public class ComponentsCollection {
         }
     }
 
-    /** Updates the combobox of component types whenever there is a change in componentsObsList */
+    /** Updates certain variables whenever there is a change in componentsObsList */
     public static void collectionOnChange(ComboBox<String> typeOptions) {
         componentObsList.addListener(new ListChangeListener<PCComponents>() {
             @Override
             public void onChanged(Change<? extends PCComponents> change) {
                 try {
-                    // Keeps track of the obs list if its modified or not
+                    // Keeps track of the obs list if it's modified or not
                     modified = true;
                     // Checks if there are new component type, if yes, it adds it to the combobox given
                     fillComponentTypeObsList();

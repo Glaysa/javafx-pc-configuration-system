@@ -13,9 +13,11 @@ import org.openjfx.controllers.popupControllers.PopupShowConfigurationController
 import org.openjfx.dataModels.PCConfigurations;
 import java.io.IOException;
 
+/** This class is responsible of opening the popups related to components */
+
 public class PopupForConfigurations {
 
-    /** Opens the popup window to let the user add a new configured PC */
+    /** Opens a popup window to let the user add a new configured PC */
     public static void newConfiguration(){
         try {
             String fileUrl = PopupUtilities.getPopupPath("popupNewConfiguration");
@@ -39,6 +41,7 @@ public class PopupForConfigurations {
         }
     }
 
+    /** Opens a popup window to let the user see the configured PC details */
     private static void showConfiguredPC(PCConfigurations toShow, TableView<PCConfigurations> tv){
         try {
             String fileUrl = PopupUtilities.getPopupPath("popupShowConfiguration");
@@ -68,7 +71,9 @@ public class PopupForConfigurations {
         }
     }
 
-    /** Shows all configuration details */
+    /** Detects a double click on a row in the tableview
+     * and opens a new window to show the configured PC details.*/
+
     public static void showConfigurationDetails(TableView<PCConfigurations> tableViewConfigurations){
         tableViewConfigurations.setRowFactory(tv -> {
             TableRow<PCConfigurations> row = new TableRow<>();

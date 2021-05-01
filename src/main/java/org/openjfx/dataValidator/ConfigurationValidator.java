@@ -8,6 +8,8 @@ import org.openjfx.guiUtilities.AlertDialog;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/** This class is responsible for validating configured PC added on a tableview. */
+
 public class ConfigurationValidator {
 
     public static void validateConfiguredPC(PCConfigurations toValidate){

@@ -12,7 +12,7 @@ import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.dataValidator.ConfigurationValidator;
 import java.util.ArrayList;
 
-/** This class is responsible of all methods related to the configuration tableview in the admin view */
+/** This class is responsible of all methods related to the configuration tableview in the customer view */
 
 public class ConfigurationCollection {
 
@@ -60,7 +60,7 @@ public class ConfigurationCollection {
         });
     }
 
-    /** Calculates the total price of all the items added to configure a PC */
+    /** Calculates the total price of all the items added to configure a PC in the newConfiguration view */
     public static double getTotalPrice(){
         double totalPrice = 0;
         for(PCComponents component : itemsObsList) {
