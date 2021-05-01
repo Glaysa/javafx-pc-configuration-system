@@ -42,7 +42,7 @@ public class PopupNewConfigurationController implements Initializable {
         // Initializes collection change listener
         ConfigurationCollection.itemCollectionOnChange(vBoxConfigurations, totalPriceStatic);
         // Initializes detection of double click on row of tableview
-        PopupForComponents.showComponentOnDoubleClick(tableViewComponents);
+        PopupForComponents.showComponentDetails(tableViewComponents);
         // Layout Initialization
         HBox.setHgrow(vBoxConfigurations, Priority.ALWAYS);
     }

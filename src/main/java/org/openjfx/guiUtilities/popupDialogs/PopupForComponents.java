@@ -120,7 +120,7 @@ public class PopupForComponents {
     /** Detects a double click on a row in the tableview
      * and opens a new window to show the component details.*/
 
-    public static void showComponentOnDoubleClick(TableView<PCComponents> tableView){
+    public static void showComponentDetails(TableView<PCComponents> tableView){
         tableView.setRowFactory(tv -> {
             TableRow<PCComponents> row = new TableRow<>();
             row.setOnMouseClicked(event -> {

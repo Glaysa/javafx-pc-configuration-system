@@ -3,11 +3,7 @@ package org.openjfx.controllers;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.openjfx.App;
@@ -29,8 +25,6 @@ import java.util.ResourceBundle;
 
 public class ControllerCustomer implements Initializable {
 
-    @FXML private Tab configurationsTab;
-    @FXML private VBox vBoxConfigurationDetails;
     @FXML private Label totalPriceLabel;
     @FXML private TextField searchInput;
     @FXML private TableView<PCComponents> tableViewCartComponents;
@@ -45,13 +39,13 @@ public class ControllerCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Opens a file containing the default list of components.
         file.open(defaultData, "Loading products...");
+        // (listener) Initializes search functionality
+        search();
 
         // (listener) Initializes detection of a change on the collections
         ComponentsCartCollection.collectionOnChange(totalPriceLabel);
         ConfigurationCartCollection.collectionOnChange(totalPriceLabel);
         ComponentsCollection.collectionOnChange(null);
-
-        // Fills component type obs list
         ComponentsCollection.fillComponentTypeObsList();
 
         // Initializes the tableviews
@@ -60,19 +54,17 @@ public class ControllerCustomer implements Initializable {
         ConfigurationCollection.setTableView(tableViewConfigurations);
         ConfigurationCartCollection.setTableView(tableViewCartConfigurations);
 
-        // (listener) Initializes detection of double click on row of tableview
-        PopupForComponents.showComponentOnDoubleClick(tableViewComponents);
-        PopupForComponents.showComponentOnDoubleClick(tableViewCartComponents);
+        // (listener) Initializes detection of double click on row of tableviews
+        PopupForComponents.showComponentDetails(tableViewComponents);
+        PopupForComponents.showComponentDetails(tableViewCartComponents);
+        PopupForConfigurations.showConfigurationDetails(tableViewConfigurations);
+        PopupForConfigurations.showConfigurationDetails(tableViewCartConfigurations);
 
         // Initializes tableview tooltips
         Indicators.showToolTip(tableViewComponents, "Double click to see component details");
         Indicators.showToolTip(tableViewCartComponents, "Double click to see component details");
-
-        // Show configuration details when user clicks on row in the tableview
-        showConfigurationDetails();
-
-        // (listener) Initializes search functionality
-        search();
+        Indicators.showToolTip(tableViewConfigurations, "Double click to see configuration details");
+        Indicators.showToolTip(tableViewCartConfigurations, "Double click to see configuration details");
     }
 
     /** Add components to cart */
@@ -85,16 +77,23 @@ public class ControllerCustomer implements Initializable {
         tableViewCartComponents.refresh();
     }
 
-    /** Removes a component from the cart */
+    /** Removes products from the cart */
 
     @FXML
-    void removeFromCart() {
+    void removeFromComponentsCart() {
         PCComponents selected = tableViewCartComponents.getSelectionModel().getSelectedItem();
         ComponentsCartCollection.removeSelected(selected);
         tableViewCartComponents.refresh();
     }
 
-    /** Adds configured pc to cart as well */
+    @FXML
+    void removeFromConfigurationsCart() {
+        PCConfigurations selected = tableViewCartConfigurations.getSelectionModel().getSelectedItem();
+        ConfigurationCartCollection.removeSelected(selected);
+        tableViewCartConfigurations.refresh();
+    }
+
+    /** Adds configured pc to cart */
 
     @FXML
     void addConfigToCart(){
@@ -195,55 +194,5 @@ public class ControllerCustomer implements Initializable {
         ComponentsCollection.clearCollection();
         ComponentsCollection.setModified(false);
         App.setRoot("login");
-    }
-
-    /** Shows all configuration details */
-    void showConfigurationDetails(){
-        tableViewConfigurations.setRowFactory(tv -> {
-            TableRow<PCConfigurations> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                vBoxConfigurationDetails.getChildren().clear();
-                if(row.getItem() != null) {
-                    // Component to edit
-                    PCConfigurations configItem = row.getItem();
-                    loadConfigurationDetails(configItem);
-                }
-            });
-            return row;
-        });
-    }
-
-    /** Creates nodes for configuration details */
-    void loadConfigurationDetails(PCConfigurations item){
-        Label name = new Label("Name: " + item.getConfigurationName());
-        name.setStyle("-fx-font-size: 20px");
-        Label componentsList = new Label("Components: ");
-        componentsList.setStyle("-fx-font-size: 20px");
-
-        vBoxConfigurationDetails.getChildren().add(name);
-        vBoxConfigurationDetails.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        vBoxConfigurationDetails.getChildren().add(componentsList);
-        vBoxConfigurationDetails.getChildren().add(new Separator(Orientation.HORIZONTAL));
-
-        for(PCComponents components: item.getPcComponents()){
-            HBox wrapper = new HBox();
-            wrapper.setSpacing(50);
-
-            Label componentName = new Label(components.getComponentName());
-            componentName.setPrefWidth(300);
-            componentName.setStyle("-fx-font-size: 14px");
-            Label componentPrice = new Label(components.getComponentPrice() + " kr");
-            componentPrice.setAlignment(Pos.CENTER_RIGHT);
-            componentPrice.setStyle("-fx-font-size: 14px");
-
-            wrapper.getChildren().add(componentName);
-            wrapper.getChildren().add(componentPrice);
-            vBoxConfigurationDetails.getChildren().add(wrapper);
-        }
-
-        vBoxConfigurationDetails.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        Label price = new Label("Price: " + item.getTotalPrice() + " kr");
-        price.setStyle("-fx-font-size: 20px");
-        vBoxConfigurationDetails.getChildren().add(price);
     }
 }

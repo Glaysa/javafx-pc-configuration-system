@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -16,7 +15,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerCustomer">
@@ -31,17 +29,16 @@
                                     <right>
                                         <AnchorPane prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                                             <children>
-                                                <Label alignment="CENTER" layoutX="92.0" layoutY="14.0" text="Cart" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                                <Label layoutX="92.0" layoutY="14.0" text="Cart" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
                                                 </Label>
-                                                <Button layoutX="10.0" layoutY="740.0" mnemonicParsing="false" onAction="#removeFromCart" prefHeight="30.0" prefWidth="168.0" text="Remove from Cart" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="222.0">
-                                                    <font>
-                                                        <Font size="14.0" />
-                                                    </font>
-                                                </Button>
-                                                <Button layoutX="186.0" layoutY="698.0" mnemonicParsing="false" onAction="#checkout" prefHeight="25.0" prefWidth="204.0" text="Checkout" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="186.0" AnchorPane.rightAnchor="10.0">
+                                                <Button layoutX="214.0" layoutY="47.0" mnemonicParsing="false" onAction="#removeFromComponentsCart" prefHeight="30.0" prefWidth="170.0" text="Remove Component" AnchorPane.rightAnchor="10.0" />
+                                                <Button layoutX="186.0" layoutY="698.0" mnemonicParsing="false" onAction="#checkout" prefHeight="25.0" prefWidth="204.0" text="Checkout" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
@@ -79,7 +76,7 @@
 
                                                     </columns>
                                                 </TableView>
-                                                <Label layoutX="10.0" layoutY="43.0" text="PC Components" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                                <Label layoutX="10.0" layoutY="43.0" text="PC Components" AnchorPane.leftAnchor="10.0">
                                                     <padding>
                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                     </padding>
@@ -106,6 +103,7 @@
 
                                                     </columns>
                                                 </TableView>
+                                    <Button layoutX="220.0" layoutY="428.0" mnemonicParsing="false" onAction="#removeFromConfigurationsCart" prefHeight="30.0" prefWidth="170.0" text="Remove Configured PC" AnchorPane.bottomAnchor="388.0" AnchorPane.rightAnchor="10.0" />
 
                                             </children>
                                         </AnchorPane>
@@ -113,28 +111,28 @@
                                     <center>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                             <children>
-                                                <Label layoutX="255.0" layoutY="12.0" prefHeight="35.0" prefWidth="117.0" text="Products" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="7.0">
+                                                <Label layoutX="255.0" layoutY="12.0" prefHeight="35.0" prefWidth="117.0" text="Products" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="7.0">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="searchInput" layoutX="384.0" layoutY="10.0" prefWidth="200.0" promptText="Search" AnchorPane.rightAnchor="290.0">
+                                                <TextField fx:id="searchInput" layoutX="371.0" layoutY="10.0" prefWidth="200.0" promptText="Search" AnchorPane.rightAnchor="303.0">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
                                                 </TextField>
-                                                <Button layoutX="770.0" layoutY="10.0" mnemonicParsing="false" onAction="#addToCart" text="Add to cart" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                <Button layoutX="770.0" layoutY="10.0" mnemonicParsing="false" onAction="#addToCart" text="Add to cart" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Button>
-                                                <Button layoutX="593.0" layoutY="10.0" mnemonicParsing="false" onAction="#filterTableView" text="Filter Table" AnchorPane.rightAnchor="193.0">
+                                                <Button layoutX="593.0" layoutY="10.0" mnemonicParsing="false" onAction="#filterTableView" text="Filter Table" AnchorPane.rightAnchor="205.0">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Button>
 
-                                                <TableView fx:id="tableViewComponents" layoutX="337.0" layoutY="288.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                                                <TableView fx:id="tableViewComponents" layoutX="337.0" layoutY="288.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
                                                     <columns>
 
                                                         <TableColumn maxWidth="200.0" minWidth="-Infinity" prefWidth="50.0" resizable="false" text="ID">
@@ -161,7 +159,7 @@
                                                             </cellValueFactory>
                                                         </TableColumn>
 
-                                                        <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="200.0" text="Price">
+                                                        <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="Price">
                                                             <cellValueFactory>
                                                                 <PropertyValueFactory property="componentPrice" />
                                                             </cellValueFactory>
@@ -169,7 +167,7 @@
 
                                                     </columns>
                                                 </TableView>
-                                                <Button layoutX="689.0" layoutY="10.0" mnemonicParsing="false" onAction="#compare" text="Compare" AnchorPane.rightAnchor="108.0">
+                                                <Button layoutX="678.0" layoutY="10.0" mnemonicParsing="false" onAction="#compare" text="Compare" AnchorPane.rightAnchor="119.0">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
@@ -185,75 +183,55 @@
                 </Tab>
                 <Tab closable="false" onSelectionChanged="#tabConfigurationsInit" text="Buy Configured PC">
                     <content>
-                        <AnchorPane>
-                            <children>
-                        <AnchorPane layoutX="20.0" layoutY="90.0" prefHeight="735.0" prefWidth="1234.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="90.0">
+                  <HBox alignment="TOP_CENTER">
+                     <children>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="700.0">
                            <children>
-                              <HBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                            <TableView fx:id="tableViewConfigurations" prefHeight="200.0" prefWidth="600.0">
-                                                <columns>
-            
-                                                    <TableColumn prefWidth="50.0" text="Id">
-                                                        <cellValueFactory>
-                                                            <PropertyValueFactory property="PCConfigurationID" />
-                                                        </cellValueFactory>
-                                                    </TableColumn>
-            
-                                                    <TableColumn minWidth="200.0" prefWidth="200.0" resizable="false" text="Configuration Name">
-                                                        <cellValueFactory>
-                                                            <PropertyValueFactory property="configurationName" />
-                                                        </cellValueFactory>
-                                                    </TableColumn>
-            
-                                                    <TableColumn minWidth="200.0" prefWidth="200.0" resizable="false" text="Total Price">
-                                                        <cellValueFactory>
-                                                            <PropertyValueFactory property="totalPrice" />
-                                                        </cellValueFactory>
-                                                    </TableColumn>
-            
-                                                </columns>
-                                            </TableView>
-                                    <AnchorPane>
-                                       <children>
-                                                  <VBox fx:id="vBoxConfigurationDetails" prefHeight="646.0" prefWidth="634.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                             <padding>
-                                                <Insets top="10.0" />
-                                             </padding>
-                                          </VBox>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="634.0" text="Configuration Details" AnchorPane.topAnchor="10.0">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                          </Label>
-                                          <Separator prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                 </padding>
-                              </HBox>
+                                      <TableView fx:id="tableViewConfigurations" layoutY="80.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                                          <columns>
+      
+                                                                <TableColumn prefWidth="50.0" text="Id">
+                                                  <cellValueFactory>
+                                                      <PropertyValueFactory property="PCConfigurationID" />
+                                                  </cellValueFactory>
+                                              </TableColumn>
+      
+                                                                <TableColumn minWidth="200.0" prefWidth="200.0" resizable="false" text="Configuration Name">
+                                                  <cellValueFactory>
+                                                      <PropertyValueFactory property="configurationName" />
+                                                  </cellValueFactory>
+                                              </TableColumn>
+      
+                                                                <TableColumn minWidth="200.0" prefWidth="200.0" resizable="false" text="Total Price">
+                                                  <cellValueFactory>
+                                                      <PropertyValueFactory property="totalPrice" />
+                                                  </cellValueFactory>
+                                              </TableColumn>
+      
+                                                            </columns>
+                                      </TableView>
+                                      <Button layoutX="937.0" mnemonicParsing="false" onAction="#newConfiguration" text="New Configuration" AnchorPane.rightAnchor="0.0">
+                                          <font>
+                                              <Font size="14.0" />
+                                          </font>
+                                      </Button>
+                                      <Label text="Configurations">
+                                          <font>
+                                              <Font size="24.0" />
+                                          </font>
+                                      </Label>
+                              <Button layoutX="743.0" mnemonicParsing="false" onAction="#addConfigToCart" text="Add Configuration to Cart" AnchorPane.rightAnchor="150.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
-                                <Button layoutX="30.0" layoutY="29.0" mnemonicParsing="false" onAction="#newConfiguration" text="New Configuration" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Button>
-                                <Label layoutX="27.0" layoutY="27.0" text="Configurations" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                    <font>
-                                        <Font size="24.0" />
-                                    </font>
-                                </Label>
-                                <Separator layoutX="20.0" layoutY="70.0" prefWidth="200.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0" />
-                        <Button layoutX="925.0" layoutY="20.0" mnemonicParsing="false" onAction="#addConfigToCart" text="Add Configuration to Cart" AnchorPane.rightAnchor="170.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                            </children>
-                        </AnchorPane>
+                     </children>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </HBox>
                     </content>
                 </Tab>
             </tabs>
