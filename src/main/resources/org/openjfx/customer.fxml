@@ -19,7 +19,7 @@
 
 <BorderPane prefHeight="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerCustomer">
     <center>
-        <TabPane>
+        <TabPane fx:id="tabPane">
             <tabs>
                 <Tab closable="false" text="Buy Components">
                     <content>
@@ -121,7 +121,7 @@
                                                         <Font size="14.0" />
                                                     </font>
                                                 </TextField>
-                                                <Button layoutX="770.0" layoutY="10.0" mnemonicParsing="false" onAction="#addToCart" text="Add to cart" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                                                <Button layoutX="770.0" layoutY="10.0" mnemonicParsing="false" onAction="#addComponentToCart" text="Add to cart" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
@@ -220,7 +220,7 @@
                                               <Font size="24.0" />
                                           </font>
                                       </Label>
-                              <Button layoutX="743.0" mnemonicParsing="false" onAction="#addConfigToCart" text="Add Configuration to Cart" AnchorPane.rightAnchor="150.0">
+                              <Button layoutX="743.0" mnemonicParsing="false" onAction="#addConfigurationToCart" text="Add Configuration to Cart" AnchorPane.rightAnchor="150.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -240,7 +240,7 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open..." />
                         <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save as..." />

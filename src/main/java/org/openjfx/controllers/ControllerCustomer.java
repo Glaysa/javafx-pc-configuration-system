@@ -25,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class ControllerCustomer implements Initializable {
 
+    @FXML private Menu menuFile;
+    @FXML private TabPane tabPane;
     @FXML private Label totalPriceLabel;
     @FXML private TextField searchInput;
     @FXML private TableView<PCComponents> tableViewCartComponents;
@@ -39,6 +41,8 @@ public class ControllerCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Opens a file containing the default list of components.
         file.open(defaultData, "Loading products...");
+        // Changes tab to config tab to let user know, they saving or opening a config collection
+        changeTabOnFileAction();
         // (listener) Initializes search functionality
         search();
 
@@ -67,14 +71,22 @@ public class ControllerCustomer implements Initializable {
         Indicators.showToolTip(tableViewCartConfigurations, "Double click to see configuration details");
     }
 
-    /** Add components to cart */
+    /** Add products to cart */
 
     @FXML
-    void addToCart() {
+    void addComponentToCart() {
         ObservableList<PCComponents> selected = tableViewComponents.getSelectionModel().getSelectedItems();
         if(!selected.isEmpty()) for(PCComponents toAdd : selected) ComponentsCartCollection.addToCollection(toAdd);
         else AlertDialog.showWarningDialog("Please select a component to add","");
         tableViewCartComponents.refresh();
+    }
+
+    @FXML
+    void addConfigurationToCart(){
+        PCConfigurations selected = tableViewConfigurations.getSelectionModel().getSelectedItem();
+        if(selected != null) ConfigurationCartCollection.addToCollection(selected);
+        else AlertDialog.showWarningDialog("Choose a configured PC to add", "");
+        tableViewCartConfigurations.refresh();
     }
 
     /** Removes products from the cart */
@@ -90,16 +102,6 @@ public class ControllerCustomer implements Initializable {
     void removeFromConfigurationsCart() {
         PCConfigurations selected = tableViewCartConfigurations.getSelectionModel().getSelectedItem();
         ConfigurationCartCollection.removeSelected(selected);
-        tableViewCartConfigurations.refresh();
-    }
-
-    /** Adds configured pc to cart */
-
-    @FXML
-    void addConfigToCart(){
-        PCConfigurations selected = tableViewConfigurations.getSelectionModel().getSelectedItem();
-        if(selected != null) ConfigurationCartCollection.addToCollection(selected);
-        else AlertDialog.showWarningDialog("Choose a configured PC to add", "");
         tableViewCartConfigurations.refresh();
     }
 
@@ -174,6 +176,14 @@ public class ControllerCustomer implements Initializable {
     /** searches through the tableview with the given search input */
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableViewComponents);
+    }
+
+    /** When saving files, the tab changes to the config tab to let user know
+     * they're saving or opening a config collection */
+    void changeTabOnFileAction(){
+        menuFile.setOnShown(event -> {
+            tabPane.getSelectionModel().selectLast();
+        });
     }
 
     /** Loads configuration data when user click on the configured PC tab */

@@ -3,115 +3,135 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="parentPane" prefHeight="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.popupControllers.PopupNewConfigurationController">
-   <children>
-      <TableView fx:id="tableViewComponents" prefHeight="300.0" prefWidth="200.0">
-        <columns>
-           <TableColumn maxWidth="200.0" minWidth="-Infinity" prefWidth="50.0" resizable="false" text="ID">
-              <cellValueFactory>
-                 <PropertyValueFactory property="PCComponentID" />
-              </cellValueFactory>
-           </TableColumn>
 
-           <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Name">
-              <cellValueFactory>
-                 <PropertyValueFactory property="componentName" />
-              </cellValueFactory>
-           </TableColumn>
-
-           <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Type">
-              <cellValueFactory>
-                 <PropertyValueFactory property="componentType" />
-              </cellValueFactory>
-           </TableColumn>
-
-           <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="Specifications">
-              <cellValueFactory>
-                 <PropertyValueFactory property="componentSpecs" />
-              </cellValueFactory>
-           </TableColumn>
-
-           <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Price">
-              <cellValueFactory>
-                 <PropertyValueFactory property="componentPrice" />
-              </cellValueFactory>
-           </TableColumn>
-        </columns>
-      </TableView>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0">
+<BorderPane prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.popupControllers.PopupNewConfigurationController">
+   <center>
+      <VBox fx:id="parentPane" prefHeight="800.0">
          <children>
-            <AnchorPane prefHeight="500.0" prefWidth="400.0">
+            <TableView fx:id="tableViewComponents" prefHeight="300.0" prefWidth="200.0">
+              <columns>
+                 <TableColumn maxWidth="200.0" minWidth="-Infinity" prefWidth="50.0" resizable="false" text="ID">
+                    <cellValueFactory>
+                       <PropertyValueFactory property="PCComponentID" />
+                    </cellValueFactory>
+                 </TableColumn>
+      
+                 <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Name">
+                    <cellValueFactory>
+                       <PropertyValueFactory property="componentName" />
+                    </cellValueFactory>
+                 </TableColumn>
+      
+                 <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Type">
+                    <cellValueFactory>
+                       <PropertyValueFactory property="componentType" />
+                    </cellValueFactory>
+                 </TableColumn>
+      
+                 <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="Specifications">
+                    <cellValueFactory>
+                       <PropertyValueFactory property="componentSpecs" />
+                    </cellValueFactory>
+                 </TableColumn>
+      
+                 <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Price">
+                    <cellValueFactory>
+                       <PropertyValueFactory property="componentPrice" />
+                    </cellValueFactory>
+                 </TableColumn>
+              </columns>
+            </TableView>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="860.0">
                <children>
-                  <ScrollPane fitToWidth="true" layoutY="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
-                     <content>
-                        <VBox fx:id="vBoxConfigurations" prefHeight="428.0" spacing="10.0" style="-fx-background-color: white;">
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </VBox>
-                     </content>
-                  </ScrollPane>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="385.0" text="Your PC" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
+                  <AnchorPane prefHeight="500.0" prefWidth="430.0">
+                     <children>
+                        <ScrollPane fitToWidth="true" layoutY="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                           <content>
+                              <VBox fx:id="vBoxConfigurations" prefHeight="428.0" spacing="10.0" style="-fx-background-color: white;">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="385.0" text="Your PC" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="435.0" prefHeight="500.0" prefWidth="430.0">
+                     <children>
+                        <ScrollPane fitToWidth="true" layoutY="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                           <content>
+                              <VBox fx:id="vBoxConfigurationOptions" prefHeight="428.0" spacing="10.0" style="-fx-background-color: white;">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="385.0" text="Components" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="400.0" prefHeight="500.0" prefWidth="400.0">
+            <AnchorPane>
                <children>
-                  <ScrollPane fitToWidth="true" layoutY="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
-                     <content>
-                        <VBox fx:id="vBoxConfigurationOptions" prefHeight="428.0" spacing="10.0" style="-fx-background-color: white;">
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </VBox>
-                     </content>
-                  </ScrollPane>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="385.0" text="Components" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <Label layoutX="437.0" layoutY="10.0" text="Total Price:" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="437.0" AnchorPane.topAnchor="10.0">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="517.0" layoutY="13.0" prefHeight="25.0" prefWidth="20.0" text="kr" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER_RIGHT" layoutY="10.0" mnemonicParsing="false" onAction="#addConfiguration" text="Add Configuration" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="totalPrice" alignment="CENTER_RIGHT" layoutX="492.0" layoutY="13.0" prefHeight="25.0" prefWidth="344.0" text="0.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
          </children>
-      </AnchorPane>
-      <AnchorPane>
-         <children>
-            <Label layoutX="400.0" layoutY="11.0" text="Total Price:" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="11.0">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="517.0" layoutY="13.0" prefHeight="25.0" prefWidth="20.0" text="kr" AnchorPane.rightAnchor="0.0">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <Button alignment="CENTER_RIGHT" layoutY="10.0" mnemonicParsing="false" onAction="#addConfiguration" text="Add Configuration" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="10.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Label fx:id="totalPrice" alignment="CENTER_RIGHT" layoutX="492.0" layoutY="13.0" prefHeight="25.0" prefWidth="282.0" text="0.0">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-   </children>
-   <padding>
-      <Insets left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+         <padding>
+            <Insets left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#saveConfiguration" text="Save Configuration" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

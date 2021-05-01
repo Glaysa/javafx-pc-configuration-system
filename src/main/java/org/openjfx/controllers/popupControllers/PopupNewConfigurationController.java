@@ -14,6 +14,7 @@ import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.guiUtilities.AlertDialog;
+import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
 import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 import java.net.URL;
@@ -45,6 +46,8 @@ public class PopupNewConfigurationController implements Initializable {
         PopupForComponents.showComponentDetails(tableViewComponents);
         // Layout Initialization
         HBox.setHgrow(vBoxConfigurations, Priority.ALWAYS);
+        // Initializes tableview tooltip
+        Indicators.showToolTip(tableViewComponents, "Double click to see component details");
     }
 
     /** Adds new configuration to a table view */
@@ -62,6 +65,13 @@ public class PopupNewConfigurationController implements Initializable {
         } catch (Exception e) {
             AlertDialog.showWarningDialog(e.getMessage(),"");
         }
+    }
+
+    /* TODO: Let user save the configuration they made */
+
+    @FXML
+    void saveConfiguration(){
+
     }
 
     /** Create buttons as configuration options based on all component types */
