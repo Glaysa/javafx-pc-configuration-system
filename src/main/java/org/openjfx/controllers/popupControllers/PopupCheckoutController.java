@@ -22,13 +22,37 @@ public class PopupCheckoutController {
         System.out.println("Saving receipt...");
     }
 
+    /** Loads product details */
+
     public void loadComponentCartItems(ArrayList<PCComponents> components){
-        HBox.setHgrow(vBoxComponents, Priority.ALWAYS);
+        if(!components.isEmpty()){
+            HBox.setHgrow(vBoxComponents, Priority.ALWAYS);
+            createComponentList(components, vBoxComponents);
+            createTotalPrice(vBoxComponents, ComponentsCartCollection.getTotalPrice());
+        } else {
+            createTitle("Components Cart is empty!", vBoxComponents);
+        }
+    }
 
-        Label title = createHeaderLabel("Components Cart: ");
-        vBoxComponents.getChildren().add(title);
-        vBoxComponents.getChildren().add(new Separator(Orientation.HORIZONTAL));
+    public void loadConfigurationCartItems(ArrayList<PCConfigurations> configurations){
+        if(!configurations.isEmpty()){
+            HBox.setHgrow(vBoxConfigurations, Priority.ALWAYS);
+            for(PCConfigurations config: configurations){
+                VBox wrapper = new VBox();
+                wrapper.setSpacing(5);
+                createTitle(config.getConfigurationName(), wrapper);
+                createComponentList(config.getPcComponents(), wrapper);
+                createTotalPrice(wrapper, config.getTotalPrice());
+                vBoxConfigurations.getChildren().add(wrapper);
+            }
+        } else {
+            createTitle("Configurations Cart is empty!", vBoxConfigurations);
+        }
+    }
 
+    /** Methods that create nodes needed to show product details */
+
+    void createComponentList(ArrayList<PCComponents> components, VBox container){
         for(PCComponents component: components){
             HBox wrapper = new HBox();
             wrapper.setSpacing(20);
@@ -36,55 +60,25 @@ public class PopupCheckoutController {
             Label componentPrice = createLabel(component.getComponentPrice() + " kr");
             wrapper.getChildren().add(componentName);
             wrapper.getChildren().add(componentPrice);
-            vBoxComponents.getChildren().add(wrapper);
+            container.getChildren().add(wrapper);
         }
+    }
 
-        vBoxComponents.getChildren().add(new Separator(Orientation.HORIZONTAL));
+    void createTitle(String title, VBox container){
+        Label label = createHeaderLabel(title);
+        container.getChildren().add(label);
+        container.getChildren().add(new Separator(Orientation.HORIZONTAL));
+    }
+
+    void createTotalPrice(VBox container, double price){
+        container.getChildren().add(new Separator(Orientation.HORIZONTAL));
         HBox wrapper = new HBox();
         wrapper.setSpacing(20);
         Label priceTitle = createHeaderLabel("TotalPrice: ");
-        Label totalPrice = createHeaderLabel(ComponentsCartCollection.getTotalPrice() + " kr");
+        Label totalPrice = createHeaderLabel( price + " kr");
         wrapper.getChildren().add(priceTitle);
         wrapper.getChildren().add(totalPrice);
-        vBoxComponents.getChildren().add(wrapper);
-    }
-
-    public void loadConfigurationCartItems(ArrayList<PCConfigurations> configurations){
-        HBox.setHgrow(vBoxConfigurations, Priority.ALWAYS);
-
-        Label cartTitle = createHeaderLabel("Configurations Cart: ");
-        vBoxConfigurations.getChildren().add(cartTitle);
-        vBoxConfigurations.getChildren().add(new Separator(Orientation.HORIZONTAL));
-
-        for(PCConfigurations config: configurations){
-
-            Label configName = createLabel("Configured PC Name: " + config.getConfigurationName());
-            vBoxConfigurations.getChildren().add(configName);
-            vBoxConfigurations.getChildren().add(new Separator(Orientation.HORIZONTAL));
-
-            Label configComponents = createLabel("Components: ");
-            vBoxConfigurations.getChildren().add(configComponents);
-            vBoxConfigurations.getChildren().add(new Separator(Orientation.HORIZONTAL));
-
-            for(PCComponents component: config.getPcComponents()){
-                HBox wrapper = new HBox();
-                wrapper.setSpacing(20);
-                Label componentName = createLabel(component.getComponentName());
-                Label componentPrice = createLabel(component.getComponentPrice() + " kr");
-                wrapper.getChildren().add(componentName);
-                wrapper.getChildren().add(componentPrice);
-                vBoxConfigurations.getChildren().add(wrapper);
-            }
-
-            vBoxConfigurations.getChildren().add(new Separator(Orientation.HORIZONTAL));
-            HBox wrapper = new HBox();
-            wrapper.setSpacing(20);
-            Label priceTitle = createHeaderLabel("Total Price: ");
-            Label totalPrice = createHeaderLabel(config.getTotalPrice() + " kr");
-            wrapper.getChildren().add(priceTitle);
-            wrapper.getChildren().add(totalPrice);
-            vBoxConfigurations.getChildren().add(wrapper);
-        }
+        container.getChildren().add(wrapper);
     }
 
     Label createLabel(String text){
@@ -97,7 +91,7 @@ public class PopupCheckoutController {
     Label createHeaderLabel(String text){
         Label label = new Label(text);
         label.setPrefWidth(400);
-        label.setStyle("-fx-font-size: 24px");
+        label.setStyle("-fx-font-size: 18px; -fx-font-weight: bold");
         return label;
     }
 }
