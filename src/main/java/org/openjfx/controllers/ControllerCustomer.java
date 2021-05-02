@@ -35,7 +35,7 @@ public class ControllerCustomer implements Initializable {
     @FXML private TableView<PCComponents> tableViewComponents;
     @FXML private TableView<PCConfigurations> tableViewCartConfigurations;
     @FXML private TableView<PCConfigurations> tableViewConfigurations;
-    private final FileActions<PCConfigurations> file = new FileActions<>();
+    private final FileActions file = new FileActions();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
     private final File defaultConfigs = new File("src/main/java/database/initialConfigurations.txt");
 

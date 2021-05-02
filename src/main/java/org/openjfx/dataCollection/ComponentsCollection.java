@@ -98,7 +98,7 @@ public class ComponentsCollection {
 
     /** Get/Set methods */
 
-    public static ArrayList<PCComponents> getComponentArrayList() {
+    public static ArrayList<Object> getComponentArrayList() {
         return new ArrayList<>(componentObsList);
     }
 

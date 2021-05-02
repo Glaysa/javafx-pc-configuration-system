@@ -33,14 +33,14 @@ import java.util.*;
  *   must always have a new instantiation. They get a new instance whether the save or open threads
  *   are successful or not. */
 
-class FileThreads<T> extends FileActions<T> {
+class FileThreads extends FileActions {
 
     private boolean threadRunning = false;
     private Alert loadingAlert;
     private File lastOpenedFile, currentOpenedFile;
-    private Writer<T> writer = new Writer<>();
-    private Reader<T> reader = new Reader<>();
-    private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();
+    private Writer<Object> writer = new Writer<>();
+    private Reader<Object> reader = new Reader<>();
+    private final Queue<FileThreadInfo<Object>> waitingThreads = new ArrayDeque<>();
     private File defaultSystemData;
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
@@ -48,7 +48,7 @@ class FileThreads<T> extends FileActions<T> {
     private static FileThreads INSTANCE;
     private FileThreads() { }
     public static FileThreads getInstance() {
-        if(INSTANCE == null) INSTANCE = new FileThreads<>();
+        if(INSTANCE == null) INSTANCE = new FileThreads();
         return INSTANCE;
     }
 
@@ -92,7 +92,7 @@ class FileThreads<T> extends FileActions<T> {
     /** These methods are responsible for running the Writer and Reader tasks on a thread
      * and are also responsible for showing their progress dialog. */
 
-    protected void runSaveThread(ArrayList<T> data, File file, String loadingMessage){
+    protected void runSaveThread(ArrayList<Object> data, File file, String loadingMessage){
         try {
             loadingAlert = AlertDialog.showLoadingDialog(writer, loadingMessage);
             assignWriters(file);
@@ -202,7 +202,7 @@ class FileThreads<T> extends FileActions<T> {
 
             String fileThread = waitingThreads.element().getFileThread();
             File file = waitingThreads.element().getFilename();
-            ArrayList<T> fileData = waitingThreads.element().getFileData();
+            ArrayList<Object> fileData = waitingThreads.element().getFileData();
             String message = waitingThreads.element().getFileMsg();
 
             if(fileThread.equals(SAVE_THREAD)){
@@ -221,12 +221,15 @@ class FileThreads<T> extends FileActions<T> {
     /* TODO: Fix issue, opens components in configuration window */
 
     /** Opening a file returns data, that data is processed here. */
-    private void processData(ArrayList<T> data) {
+    private void processData(ArrayList<Object> data) {
         try {
             reader = new Reader<>();
 
             // If opened file is empty
-            if(data.isEmpty()) AlertDialog.showWarningDialog("File is empty!","");
+            if(data.isEmpty()) {
+                AlertDialog.showWarningDialog("File is empty!","");
+                return;
+            }
 
             // Check object instance
             Object object = FileParser.convertToObject(data.get(0).toString());
@@ -235,7 +238,7 @@ class FileThreads<T> extends FileActions<T> {
             if(object instanceof PCComponents) {
                 defaultSystemData = new File("src/main/java/database/initialComponents.txt");
                 ComponentsCollection.clearCollection();
-                for(T datum : data){
+                for(Object datum : data){
                     Object p = FileParser.convertToObject(datum.toString());
                     ComponentsCollection.addToCollection((PCComponents) p);
                     lastOpenedFile = currentOpenedFile;
@@ -248,7 +251,7 @@ class FileThreads<T> extends FileActions<T> {
             } else if(object instanceof PCConfigurations){
                 defaultSystemData = new File("src/main/java/database/initialConfiguration.txt");
                 ConfigurationCollection.clearCollection();
-                for(T datum : data){
+                for(Object datum : data){
                     Object p = FileParser.convertToObject(datum.toString());
                     ConfigurationCollection.addConfiguration((PCConfigurations) p);
                     lastOpenedFile = currentOpenedFile;
@@ -261,7 +264,7 @@ class FileThreads<T> extends FileActions<T> {
     }
 
     /** Adds a thread to the waiting threads queue. */
-    public void addToWaitingThreads(FileThreadInfo<T> threadWaiting) {
+    public void addToWaitingThreads(FileThreadInfo<Object> threadWaiting) {
         waitingThreads.add(threadWaiting);
     }
 

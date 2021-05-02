@@ -89,7 +89,7 @@ public class ConfigurationCollection {
         return itemsObsList;
     }
 
-    public static ArrayList<PCConfigurations> getConfigsArrayList(){
+    public static ArrayList<Object> getConfigsArrayList(){
         return new ArrayList<>(configObsList);
     }
 }

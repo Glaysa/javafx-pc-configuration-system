@@ -31,7 +31,7 @@ public class ControllerAdmin implements Initializable {
     @FXML private TextField price;
     @FXML private TextArea cDesc;
     @FXML private ComboBox<String> typeOptions;
-    private final FileActions<PCComponents> file = new FileActions<>();
+    private final FileActions file = new FileActions();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
 
     @Override

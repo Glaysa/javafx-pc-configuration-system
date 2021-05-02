@@ -38,7 +38,7 @@ public class App extends Application {
         if(ComponentsCollection.isModified()) {
             String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
             if(response.equals("Yes")) {
-                FileActions<PCComponents> fileActions = new FileActions<>();
+                FileActions fileActions = new FileActions();
                 fileActions.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
             }
             stage.close();
