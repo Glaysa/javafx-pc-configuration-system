@@ -166,22 +166,15 @@ class FileThreads extends FileActions {
 
     private void saveFailed(WorkerStateEvent e){
         writer = new Writer<>();
-        loadingAlert.close();
-        threadRunning = false;
-
-        // Error shown to the user
-        String errorMessage = e.getSource().getException().getMessage();
-        AlertDialog.showWarningDialog("System error - Failed to save file", errorMessage);
-        // Run the next waiting threads if there are any
-        runWaitingThreads();
-        // Error shown to developers
-        System.err.println("Save Thread Failed: An error occurred!");
-        e.getSource().getException().printStackTrace();
-        System.out.println();
+        handleFailedThread(e);
     }
 
     private void openFailed(WorkerStateEvent e){
         reader = new Reader<>();
+        handleFailedThread(e);
+    }
+
+    private void handleFailedThread(WorkerStateEvent e){
         loadingAlert.close();
         threadRunning = false;
 
