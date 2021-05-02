@@ -35,7 +35,7 @@ public class ControllerCustomer implements Initializable {
     @FXML private TableView<PCComponents> tableViewComponents;
     @FXML private TableView<PCConfigurations> tableViewCartConfigurations;
     @FXML private TableView<PCConfigurations> tableViewConfigurations;
-    private final FileActions<Object> file = new FileActions<>();
+    private final FileActions<PCConfigurations> file = new FileActions<>();
     private final File defaultData = new File("src/main/java/database/initialComponents.txt");
     private final File defaultConfigs = new File("src/main/java/database/initialConfigurations.txt");
 
@@ -183,7 +183,7 @@ public class ControllerCustomer implements Initializable {
         ComponentsCollection.collectionSearch(searchInput, tableViewComponents);
     }
 
-    /** When saving files, the tab changes to the config tab to let user know
+    /** The tab changes to the config tab to let user know
      * they're saving or opening a config collection */
     void changeTabOnFileAction(){
         menuFile.setOnShown(event -> tabPane.getSelectionModel().selectLast());

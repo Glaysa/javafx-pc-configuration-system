@@ -17,13 +17,21 @@ import java.io.File;
 import java.util.*;
 
 /** Thread Operations:
+ *
  * - coded in a way where save thread and open thread does not run at the same time because they both have
  *   to show their progress dialog one at a time.
+ *
  * - with the help of booleans threadRunning and threadWaiting, we can tell which thread is running and waiting.
- * - when a thread is waiting, it will run after the previous thread is finished.
+ * - when a thread is waiting, it will run after the previous thread is finished. This is achieved by storing the
+ *   waiting thread in a queue.
+ *
  * - thread.join() cannot be called because it freezes the UI. It's going to wait for the main thread to finish
  *   doing it's task, but the main thread is only finished doing it's task when we quit the program, thus
- *   thread.join() will wait until we close the program and causes the UI to freeze. */
+ *   other threads will not be executed until the program stops, which basically means, nothing will run.
+ *
+ * - The same thread cannot run twice, therefore when opening or saving a file, the reader task and writer task
+ *   must always have a new instantiation. They get a new instance whether the save or open threads
+ *   are successful or not. */
 
 class FileThreads<T> extends FileActions<T> {
 
@@ -33,6 +41,7 @@ class FileThreads<T> extends FileActions<T> {
     private Writer<T> writer = new Writer<>();
     private Reader<T> reader = new Reader<>();
     private final Queue<FileThreadInfo<T>> waitingThreads = new ArrayDeque<>();
+    private File defaultSystemData;
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
@@ -55,7 +64,7 @@ class FileThreads<T> extends FileActions<T> {
             } else if(fileExtension.equals(".bin") || fileExtension.equals(".obj")) {
                 writer.setFileWriter(new IO_bin());
             } else {
-                throw new IllegalArgumentException("Invalid File.\nSave only *.txt, *.bin");
+                throw new IllegalArgumentException("Invalid File extension.\nSave only *.txt, *.bin");
             }
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -73,7 +82,7 @@ class FileThreads<T> extends FileActions<T> {
                 reader.setFileReader(new IO_bin());
                 currentOpenedFile = file;
             } else {
-                throw new IllegalArgumentException("Invalid File.\nOpen only *.txt, *.bin");
+                throw new IllegalArgumentException("Invalid File extension.\nOpen only *.txt, *.bin");
             }
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -132,8 +141,8 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
-    /** When save or open thread is a success, they run all waiting threads
-     * and open thread processes the data it opened.*/
+    /** When save or open thread is a success, all waiting threads will run one at a time
+     * and open thread processes the data the file contains. */
 
     private void saveSuccessful(){
         loadingAlert.close();
@@ -152,8 +161,8 @@ class FileThreads<T> extends FileActions<T> {
         runWaitingThreads();
     }
 
-    /** When save or open thread fails, this method shows error messages
-     * to user and developers and runs all waiting threads */
+    /** When save or open thread fails, this method will show error messages
+     * to user and developers and runs all waiting threads one at a time. */
 
     private void saveFailed(WorkerStateEvent e){
         writer = new Writer<>();
@@ -209,42 +218,45 @@ class FileThreads<T> extends FileActions<T> {
         }
     }
 
+    /* TODO: Fix issue, opens components in configuration window */
+
     /** Opening a file returns data, that data is processed here. */
     private void processData(ArrayList<T> data) {
+        try {
+            reader = new Reader<>();
 
-        // If opened file is empty
-        if(data.isEmpty()) {
-            lastOpenedFile = currentOpenedFile;
-            return;
-        }
+            // If opened file is empty
+            if(data.isEmpty()) AlertDialog.showWarningDialog("File is empty!","");
 
-        reader = new Reader<>();
-        Object object = FileParser.convertToObject(data.get(0).toString());
+            // Check object instance
+            Object object = FileParser.convertToObject(data.get(0).toString());
 
-        // Check if file contains PC components
-        if(object instanceof PCComponents) {
-            ComponentsCollection.clearCollection();
-            for(T datum : data){
-                Object p = FileParser.convertToObject(datum.toString());
-                ComponentsCollection.addToCollection((PCComponents) p);
-                lastOpenedFile = currentOpenedFile;
+            // If object instance is PC components
+            if(object instanceof PCComponents) {
+                defaultSystemData = new File("src/main/java/database/initialComponents.txt");
+                ComponentsCollection.clearCollection();
+                for(T datum : data){
+                    Object p = FileParser.convertToObject(datum.toString());
+                    ComponentsCollection.addToCollection((PCComponents) p);
+                    lastOpenedFile = currentOpenedFile;
+                }
+                ComponentsCollection.setModified(false);
+                Indicators.updateFilename(lastOpenedFile.getName());
+                Indicators.updateFileStatus(false);
+
+            // If object instance is PC configurations
+            } else if(object instanceof PCConfigurations){
+                defaultSystemData = new File("src/main/java/database/initialConfiguration.txt");
+                ConfigurationCollection.clearCollection();
+                for(T datum : data){
+                    Object p = FileParser.convertToObject(datum.toString());
+                    ConfigurationCollection.addConfiguration((PCConfigurations) p);
+                    lastOpenedFile = currentOpenedFile;
+                }
             }
-            ComponentsCollection.setModified(false);
-            Indicators.updateFilename(lastOpenedFile.getName());
-            Indicators.updateFileStatus(false);
-
-        // Check if file contains PC configurations
-        } else if(object instanceof PCConfigurations){
-            ConfigurationCollection.clearCollection();
-            for(T datum : data){
-                Object p = FileParser.convertToObject(datum.toString());
-                ConfigurationCollection.addConfiguration((PCConfigurations) p);
-                lastOpenedFile = currentOpenedFile;
-            }
-
-        // Otherwise, do not load anything
-        } else {
-            System.out.println("Unable to load data");
+        } catch (IllegalArgumentException e) {
+            AlertDialog.showWarningDialog(e.getMessage(),"The default system data will be loaded!");
+            open(defaultSystemData, "Loading system data...");
         }
     }
 
