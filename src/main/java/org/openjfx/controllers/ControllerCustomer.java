@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.openjfx.App;
-import org.openjfx.controllers.popupControllers.PopupCheckoutController;
 import org.openjfx.dataCollection.ComponentsCartCollection;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataCollection.ConfigurationCartCollection;
@@ -30,6 +29,10 @@ public class ControllerCustomer implements Initializable {
     @FXML private Menu menuFile;
     @FXML private TabPane tabPane;
     @FXML private Label totalPriceLabel;
+    @FXML private Label filename;
+    public static Label filenameStatic;
+    @FXML private Label fileStatus;
+    public static Label fileStatusStatic;
     @FXML private TextField searchInput;
     @FXML private TableView<PCComponents> tableViewCartComponents;
     @FXML private TableView<PCComponents> tableViewComponents;
@@ -50,9 +53,10 @@ public class ControllerCustomer implements Initializable {
 
         // (listener) Initializes detection of a change on the collections
         ComponentsCartCollection.collectionOnChange(totalPriceLabel);
-        ConfigurationCartCollection.collectionOnChange(totalPriceLabel);
         ComponentsCollection.collectionOnChange(null);
         ComponentsCollection.fillComponentTypeObsList();
+        ConfigurationCartCollection.collectionOnChange(totalPriceLabel);
+        ConfigurationCollection.collectionOnChange();
 
         // Initializes the tableviews
         ComponentsCollection.setTableView(tableViewComponents);
@@ -71,6 +75,10 @@ public class ControllerCustomer implements Initializable {
         Indicators.showToolTip(tableViewCartComponents, "Double click to see component details");
         Indicators.showToolTip(tableViewConfigurations, "Double click to see configuration details");
         Indicators.showToolTip(tableViewCartConfigurations, "Double click to see configuration details");
+
+        // Initializing gui variables, assigned to static vars to allow other classes to update its values
+        filenameStatic = filename;
+        fileStatusStatic = fileStatus;
     }
 
     /** Add products to cart */
@@ -184,28 +192,34 @@ public class ControllerCustomer implements Initializable {
     }
 
     /** The tab changes to the config tab to let user know
-     * they're saving or opening a config collection */
+     * they can only save or open a config collection */
     void changeTabOnFileAction(){
         menuFile.setOnShown(event -> tabPane.getSelectionModel().selectLast());
     }
 
     /** Loads configuration data when user click on the configured PC tab */
 
-    boolean loaded = false;
+    boolean tabOpened = false; // prevents from opening the file again and again when switching tabs
     @FXML
     void tabConfigurationsInit(){
-        if(!loaded) {
+        if(!tabOpened) {
             file.open(defaultConfigs, "Loading PC Configurations...");
-            loaded = true;
+            tabOpened = true;
         }
     }
 
-    /* TODO: Prompt user when there are unsaved changes */
-
     @FXML
     void logout() throws IOException {
-        ComponentsCollection.clearCollection();
-        ComponentsCollection.setModified(false);
+        // User is prompted when there are unsaved changes
+        if(ConfigurationCollection.isModified()) {
+            String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
+            if(response.equals("Yes")) {
+                file.saveChanges(ConfigurationCollection.getConfigsArrayList(), "Saving changes...");
+            }
+        }
+        // Otherwise, the user is logged out immediately
+        ConfigurationCollection.clearCollection();
+        ConfigurationCollection.setModified(false);
         App.setRoot("login");
     }
 }

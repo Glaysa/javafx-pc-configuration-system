@@ -36,11 +36,6 @@ public class PCComponents implements Serializable {
         return prevId + 1;
     }
 
-    public static String getClassReference(){
-        // Must be unique (id name)
-        return "PCComponentID";
-    }
-
     public void setComponentName(String componentName) {
         ComponentValidator.validateComponentName(componentName);
         this.componentName = ComponentValidator.getComponentName();

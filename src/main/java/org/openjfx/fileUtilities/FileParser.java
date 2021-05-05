@@ -10,12 +10,12 @@ public class FileParser {
 
     public static Object convertToObject(String dataToParse) {
         Gson gson = new Gson();
-        if(dataToParse.contains(PCConfigurations.getClassReference())) {
+        if(dataToParse.contains(PCConfigurations.getObjectReference())) {
             return gson.fromJson(dataToParse, PCConfigurations.class);
-        } else if(dataToParse.contains(PCComponents.getClassReference())) {
+        } else if(dataToParse.contains(PCComponents.getObjectReference())) {
             return gson.fromJson(dataToParse, PCComponents.class);
         } else {
-            throw new IllegalArgumentException("File is corrupted!\nThe system cannot read the file contents.");
+            throw new IllegalArgumentException("File is corrupted!");
         }
     }
 }

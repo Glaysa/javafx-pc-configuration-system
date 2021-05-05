@@ -2,19 +2,15 @@ package org.openjfx.fileUtilities.FileHandlers;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
-import org.openjfx.dataCollection.ComponentsCollection;
-import org.openjfx.dataCollection.ConfigurationCollection;
-import org.openjfx.dataModels.PCComponents;
-import org.openjfx.dataModels.PCConfigurations;
-import org.openjfx.fileUtilities.FileParser;
 import org.openjfx.fileUtilities.fileIO.IO_bin;
 import org.openjfx.fileUtilities.fileIO.IO_txt;
 import org.openjfx.fileUtilities.fileTasks.Reader;
 import org.openjfx.fileUtilities.fileTasks.Writer;
 import org.openjfx.guiUtilities.AlertDialog;
-import org.openjfx.guiUtilities.Indicators;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Queue;
 
 /** Thread Operations:
  *
@@ -35,20 +31,21 @@ import java.util.*;
 
 class FileThreads extends FileActions {
 
-    private boolean threadRunning = false;
-    private Alert loadingAlert;
+    private final Queue<FileThreadInfo<Object>> waitingThreads = new ArrayDeque<>();
     private File lastOpenedFile, currentOpenedFile;
     private Writer<Object> writer = new Writer<>();
     private Reader<Object> reader = new Reader<>();
-    private final Queue<FileThreadInfo<Object>> waitingThreads = new ArrayDeque<>();
-    private File defaultSystemData;
+    private boolean threadRunning = false;
+    private Alert loadingAlert;
 
     /** FileActions class can only use a single instance of FileThreads (Singleton Pattern Implemented) */
 
     private static FileThreads INSTANCE;
+
     private FileThreads() { }
+
     public static FileThreads getInstance() {
-        if(INSTANCE == null) INSTANCE = new FileThreads();
+        if (INSTANCE == null) INSTANCE = new FileThreads();
         return INSTANCE;
     }
 
@@ -64,7 +61,7 @@ class FileThreads extends FileActions {
             } else if(fileExtension.equals(".bin") || fileExtension.equals(".obj")) {
                 writer.setFileWriter(new IO_bin());
             } else {
-                throw new IllegalArgumentException("Invalid File extension.\nSave only *.txt, *.bin");
+                throw new IllegalArgumentException("Invalid File extension.\nSave only *.txt, *.bin. *.obj");
             }
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -82,7 +79,7 @@ class FileThreads extends FileActions {
                 reader.setFileReader(new IO_bin());
                 currentOpenedFile = file;
             } else {
-                throw new IllegalArgumentException("Invalid File extension.\nOpen only *.txt, *.bin");
+                throw new IllegalArgumentException("Invalid File extension.\nOpen only *.txt, *.bin, *.obj");
             }
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -148,7 +145,6 @@ class FileThreads extends FileActions {
         loadingAlert.close();
         threadRunning = false;
         System.out.println("Save Thread Successful!\n");
-        Indicators.updateFileStatus(false);
         writer = new Writer<>();
         runWaitingThreads();
     }
@@ -156,8 +152,10 @@ class FileThreads extends FileActions {
     private void openSuccessful(){
         loadingAlert.close();
         threadRunning = false;
-        processData(reader.getValue());
         System.out.println("Open Thread Successful!\n");
+        FileContents.processData(reader.getValue());
+        lastOpenedFile = currentOpenedFile;
+        reader = new Reader<>();
         runWaitingThreads();
     }
 
@@ -211,51 +209,6 @@ class FileThreads extends FileActions {
         }
     }
 
-    /* TODO: Fix issue, opens components in configuration window */
-
-    /** Opening a file returns data, that data is processed here. */
-    private void processData(ArrayList<Object> data) {
-        try {
-            reader = new Reader<>();
-
-            // If opened file is empty
-            if(data.isEmpty()) {
-                AlertDialog.showWarningDialog("File is empty!","");
-                return;
-            }
-
-            // Check object instance
-            Object object = FileParser.convertToObject(data.get(0).toString());
-
-            // If object instance is PC components
-            if(object instanceof PCComponents) {
-                defaultSystemData = new File("src/main/java/database/initialComponents.txt");
-                ComponentsCollection.clearCollection();
-                for(Object datum : data){
-                    Object p = FileParser.convertToObject(datum.toString());
-                    ComponentsCollection.addToCollection((PCComponents) p);
-                    lastOpenedFile = currentOpenedFile;
-                }
-                ComponentsCollection.setModified(false);
-                Indicators.updateFilename(lastOpenedFile.getName());
-                Indicators.updateFileStatus(false);
-
-            // If object instance is PC configurations
-            } else if(object instanceof PCConfigurations){
-                defaultSystemData = new File("src/main/java/database/initialConfiguration.txt");
-                ConfigurationCollection.clearCollection();
-                for(Object datum : data){
-                    Object p = FileParser.convertToObject(datum.toString());
-                    ConfigurationCollection.addConfiguration((PCConfigurations) p);
-                    lastOpenedFile = currentOpenedFile;
-                }
-            }
-        } catch (IllegalArgumentException e) {
-            AlertDialog.showWarningDialog(e.getMessage(),"The default system data will be loaded!");
-            open(defaultSystemData, "Loading system data...");
-        }
-    }
-
     /** Adds a thread to the waiting threads queue. */
     public void addToWaitingThreads(FileThreadInfo<Object> threadWaiting) {
         waitingThreads.add(threadWaiting);
@@ -267,7 +220,7 @@ class FileThreads extends FileActions {
     }
 
     /** Used to keep the current opened file for unsaved changes. */
-    protected File getCurrentOpenedFile(){
+    public File getCurrentOpenedFile(){
         return lastOpenedFile;
     }
 }

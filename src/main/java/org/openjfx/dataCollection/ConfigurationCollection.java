@@ -18,6 +18,7 @@ public class ConfigurationCollection {
 
     private static final ObservableList<PCConfigurations> configObsList = FXCollections.observableArrayList();
     private static final ObservableList<PCComponents> itemsObsList = FXCollections.observableArrayList();
+    private static boolean modified = false;
 
     /** Adds configured PC to configObsList */
     public static void addConfiguration(PCConfigurations toAdd){
@@ -37,26 +38,28 @@ public class ConfigurationCollection {
         tableView.setItems(configObsList);
     }
 
+    /** Listens to changes */
+    public static void collectionOnChange(){
+        configObsList.addListener((ListChangeListener<PCConfigurations>) change -> modified = true);
+    }
+
     /** Listens to changes and updates the list of selected components */
     public static void itemCollectionOnChange(VBox vBox, Label totalPrice){
-        itemsObsList.addListener(new ListChangeListener<PCComponents>() {
-            @Override
-            public void onChanged(Change<? extends PCComponents> change) {
-                vBox.getChildren().clear();
-                for(PCComponents component: itemsObsList){
-                    HBox wrapper = new HBox();
-                    Label type = new Label(component.getComponentType() + ": ");
-                    Label name = new Label(component.getComponentName() + "\t");
-                    Label price = new Label(Double.toString(component.getComponentPrice()));
-                    wrapper.setSpacing(10);
-                    wrapper.getChildren().add(type);
-                    wrapper.getChildren().add(name);
-                    wrapper.getChildren().add(price);
-                    wrapper.setStyle("-fx-background-color: gold; -fx-padding: 10px 10px 10px 10px");
-                    vBox.getChildren().add(wrapper);
-                }
-                totalPrice.setText(Double.toString(getTotalPrice()));
+        itemsObsList.addListener((ListChangeListener<PCComponents>) change -> {
+            vBox.getChildren().clear();
+            for (PCComponents component : itemsObsList) {
+                HBox wrapper = new HBox();
+                Label type = new Label(component.getComponentType() + ": ");
+                Label name = new Label(component.getComponentName() + "\t");
+                Label price = new Label(Double.toString(component.getComponentPrice()));
+                wrapper.setSpacing(10);
+                wrapper.getChildren().add(type);
+                wrapper.getChildren().add(name);
+                wrapper.getChildren().add(price);
+                wrapper.setStyle("-fx-background-color: gold; -fx-padding: 10px 10px 10px 10px");
+                vBox.getChildren().add(wrapper);
             }
+            totalPrice.setText(Double.toString(getTotalPrice()));
         });
     }
 
@@ -91,5 +94,17 @@ public class ConfigurationCollection {
 
     public static ArrayList<Object> getConfigsArrayList(){
         return new ArrayList<>(configObsList);
+    }
+
+    public static ObservableList<PCConfigurations> getConfigObsList(){
+        return configObsList;
+    }
+
+    public static boolean isModified() {
+        return modified;
+    }
+
+    public static void setModified(boolean modified) {
+        ConfigurationCollection.modified = modified;
     }
 }

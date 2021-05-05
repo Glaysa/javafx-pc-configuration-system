@@ -32,11 +32,6 @@ public class PCConfigurations implements Serializable {
         return prevId + 1;
     }
 
-    public static String getClassReference(){
-        // Must be unique (id name)
-        return "PCConfigurationID";
-    }
-
     public void setPcComponents(ArrayList<PCComponents> pcComponents) {
         this.pcComponents = pcComponents;
     }

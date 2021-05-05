@@ -1,31 +1,50 @@
 package org.openjfx.guiUtilities;
 
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import org.openjfx.controllers.ControllerAdmin;
-import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.controllers.ControllerCustomer;
 
 /** This class is responsible for updating the element indicators in the gui */
 
 public class Indicators {
 
+    /** labels at different views that needs to be updated */
+
+    public static void updateFileNameAtAdmin(String filename){
+        updateFilename(filename, ControllerAdmin.filenameLabelStatic);
+    }
+
+    public static void updateFileStatusAtAdmin(boolean isModified){
+        updateFileStatus(isModified, ControllerAdmin.fileStatusStatic);
+    }
+
+    public static void updateFileNameAtUser(String filename){
+        updateFilename(filename, ControllerCustomer.filenameStatic);
+    }
+
+    public static void updateFileStatusAtUser(boolean isModified){
+        updateFileStatus(isModified, ControllerCustomer.fileStatusStatic);
+    }
+
+
     /** Whenever a new file is opened, the filename of that file will be shown */
-    public static void updateFilename(String filename){
-        if(ControllerAdmin.filenameLabelStatic != null) {
-            ControllerAdmin.filenameLabelStatic.setText(filename);
+    private static void updateFilename(String filename, Label label){
+        if(label != null) {
+            label.setText(filename);
         }
     }
 
     /** Shows whether the current opened file is modified or not */
-    public static void updateFileStatus(boolean isModified){
-        if(ControllerAdmin.fileStatusStatic != null) {
-            ComponentsCollection.setModified(isModified);
+    private static void updateFileStatus(boolean isModified, Label label){
+        if(label != null) {
             if(isModified) {
-                ControllerAdmin.fileStatusStatic.setText("Modified");
-                ControllerAdmin.fileStatusStatic.setStyle("-fx-text-fill: darkred");
+                label.setText("Modified");
+                label.setStyle("-fx-text-fill: darkred");
             } else {
-                ControllerAdmin.fileStatusStatic.setText("Saved");
-                ControllerAdmin.fileStatusStatic.setStyle("-fx-text-fill: seagreen");
+                label.setText("Saved");
+                label.setStyle("-fx-text-fill: seagreen");
             }
         }
     }
