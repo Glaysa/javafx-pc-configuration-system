@@ -1,6 +1,5 @@
 package org.openjfx.fileUtilities.fileIO;
 
-import org.openjfx.fileUtilities.FileParser;
 import org.openjfx.fileUtilities.FileReaders;
 import org.openjfx.fileUtilities.FileWriters;
 import java.io.*;
@@ -13,10 +12,7 @@ public class IO_bin implements FileWriters, FileReaders {
         try {
             FileOutputStream fs = new FileOutputStream(file);
             ObjectOutputStream os = new ObjectOutputStream(fs);
-            for(T data : toSave){
-                Object object = FileParser.convertToObject(data.toString());
-                os.writeObject(object);
-            }
+            for(T data : toSave) os.writeObject(data);
             os.close();
         } catch (IOException e) {
             e.printStackTrace();
