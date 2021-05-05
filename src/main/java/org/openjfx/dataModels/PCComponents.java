@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 public class PCComponents implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final int PCComponentID;
     private String componentName;
     private String componentType;

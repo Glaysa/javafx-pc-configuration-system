@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class PCConfigurations implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final int PCConfigurationID;
     private ArrayList<PCComponents> pcComponents;
     private final double totalPrice;
