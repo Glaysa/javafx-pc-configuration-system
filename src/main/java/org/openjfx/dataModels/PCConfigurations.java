@@ -1,7 +1,6 @@
 package org.openjfx.dataModels;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import java.io.Serializable;
 import java.util.ArrayList;
