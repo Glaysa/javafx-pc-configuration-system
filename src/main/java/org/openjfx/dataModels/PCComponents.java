@@ -28,8 +28,9 @@ public class PCComponents implements Serializable {
 
     public String toString(){
         PCComponents object = new PCComponents(PCComponentID, componentName, componentType, componentSpecs, Double.toString(componentPrice));
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(object);
+        Gson gson = new Gson();
+        String objectStr = gson.toJson(object);
+        return String.format("%s\n", objectStr);
     }
 
     public static int createUniqueId(){

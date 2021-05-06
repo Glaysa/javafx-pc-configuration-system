@@ -24,8 +24,9 @@ public class PCConfigurations implements Serializable {
 
     public String toString() {
         PCConfigurations object = new PCConfigurations(configurationName, PCConfigurationID, pcComponents, totalPrice);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(object);
+        Gson gson = new Gson();
+        String objectStr = gson.toJson(object);
+        return String.format("%s\n", objectStr);
     }
 
     public static int createID() {
