@@ -1,6 +1,7 @@
 package org.openjfx.dataModels;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataValidator.ComponentValidator;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 public class PCComponents implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final String IDKey = "PCComponentID";
     private final int PCComponentID;
     private String componentName;
     private String componentType;
@@ -25,11 +27,9 @@ public class PCComponents implements Serializable {
     }
 
     public String toString(){
-        // Gson -> easy conversion of object from string to object when deserializing
-        PCComponents p = new PCComponents(PCComponentID, componentName, componentType, componentSpecs, Double.toString(componentPrice));
-        Gson gson = new Gson();
-        String objectStr = gson.toJson(p);
-        return String.format("%s\n", objectStr);
+        PCComponents object = new PCComponents(PCComponentID, componentName, componentType, componentSpecs, Double.toString(componentPrice));
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(object);
     }
 
     public static int createUniqueId(){
@@ -75,5 +75,9 @@ public class PCComponents implements Serializable {
 
     public double getComponentPrice() {
         return componentPrice;
+    }
+
+    public static String getObjectIDKey(){
+        return IDKey;
     }
 }

@@ -1,6 +1,7 @@
 package org.openjfx.dataModels;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 public class PCConfigurations implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final String IDKey = "PCConfigurationID";
     private final int PCConfigurationID;
     private ArrayList<PCComponents> pcComponents;
     private final double totalPrice;
@@ -21,11 +23,9 @@ public class PCConfigurations implements Serializable {
     }
 
     public String toString() {
-        // Gson -> easy conversion of object from string to object when deserializing
-        PCConfigurations configuration = new PCConfigurations(configurationName, PCConfigurationID, pcComponents, totalPrice);
-        Gson gson = new Gson();
-        String objectStr = gson.toJson(configuration);
-        return String.format("%s\n", objectStr);
+        PCConfigurations object = new PCConfigurations(configurationName, PCConfigurationID, pcComponents, totalPrice);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(object);
     }
 
     public static int createID() {
@@ -51,5 +51,9 @@ public class PCConfigurations implements Serializable {
 
     public String getConfigurationName() {
         return configurationName;
+    }
+
+    public static String getObjectIDKey(){
+        return IDKey;
     }
 }
