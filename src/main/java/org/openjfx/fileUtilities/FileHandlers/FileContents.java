@@ -7,6 +7,7 @@ import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileParser;
 import org.openjfx.fileUtilities.FileRestrictions;
 import org.openjfx.guiUtilities.AlertDialog;
+import org.openjfx.guiUtilities.Indicators;
 import java.util.ArrayList;
 
 /** This class is responsible for handling the contents of a file when opened.
@@ -16,6 +17,9 @@ import java.util.ArrayList;
  *  if NOT valid, an exception will be thrown. */
 
 public class FileContents extends FileRestrictions {
+
+    /** Used to get access of the current opened file */
+    private static final FileThreads fileThreads = FileThreads.getInstance();
 
     /** Checks if the file contains a valid data */
     public static void processData(ArrayList<Object> data){
@@ -32,9 +36,11 @@ public class FileContents extends FileRestrictions {
         Object object = data.get(0);
         if(object instanceof PCComponents) {
             FileRestrictions.checkIfRestricted(PCComponents.getObjectIDKey());
+            fileThreads.setLastOpenedFile(fileThreads.getCurrentOpenedFile());
             loadComponents(data);
         } else if(object instanceof PCConfigurations) {
             FileRestrictions.checkIfRestricted(PCConfigurations.getObjectIDKey());
+            fileThreads.setLastOpenedFile(fileThreads.getCurrentOpenedFile());
             loadConfiguration(data);
         } else {
             parseContents(data);
@@ -56,7 +62,8 @@ public class FileContents extends FileRestrictions {
         for(Object object: data){
             ComponentsCollection.addToCollection((PCComponents) object);
         }
-        ComponentsCollection.setModified(false);
+        Indicators.updateFileNameAtAdmin(fileThreads.getLastOpenedFile().getName());
+        Indicators.updateFileStatusAtAdmin(false);
     }
 
     /** If the file contains PC Configurations, display it on the tableView */
@@ -65,6 +72,7 @@ public class FileContents extends FileRestrictions {
         for(Object object: data){
             ConfigurationCollection.addConfiguration((PCConfigurations) object);
         }
-        ConfigurationCollection.setModified(false);
+        Indicators.updateFileNameAtUser(fileThreads.getLastOpenedFile().getName());
+        Indicators.updateFileStatusAtUser(false);
     }
 }

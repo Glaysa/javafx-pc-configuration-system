@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import org.openjfx.controllers.ControllerAdmin;
 import org.openjfx.controllers.ControllerCustomer;
+import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataCollection.ConfigurationCollection;
 
 /** This class is responsible for updating the element indicators in the gui */
 
@@ -16,16 +18,23 @@ public class Indicators {
         updateFilename(filename, ControllerAdmin.filenameLabelStatic);
     }
 
-    public static void updateFileStatusAtAdmin(boolean isModified){
-        updateFileStatus(isModified, ControllerAdmin.fileStatusStatic);
-    }
-
     public static void updateFileNameAtUser(String filename){
         updateFilename(filename, ControllerCustomer.filenameStatic);
     }
 
+    public static void updateFileStatusAtAdmin(boolean isModified){
+        updateFileStatus(isModified, ControllerAdmin.fileStatusStatic);
+        ComponentsCollection.setModified(isModified);
+    }
+
     public static void updateFileStatusAtUser(boolean isModified){
         updateFileStatus(isModified, ControllerCustomer.fileStatusStatic);
+        ConfigurationCollection.setModified(isModified);
+    }
+
+    public static void updateAllFileStatuses(){
+        updateFileStatusAtUser(false);
+        updateFileStatusAtAdmin(false);
     }
 
 

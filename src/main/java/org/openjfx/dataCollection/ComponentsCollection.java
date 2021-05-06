@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.*;
 import org.openjfx.dataModels.PCComponents;
+import org.openjfx.guiUtilities.Indicators;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
@@ -62,12 +63,10 @@ public class ComponentsCollection {
     public static void collectionOnChange(ComboBox<String> typeOptions) {
         componentObsList.addListener((ListChangeListener<PCComponents>) change -> {
             try {
-                // Keeps track of the obs list if it's modified or not
                 modified = true;
-                // Checks if there are new component type, if yes, it adds it to the combobox given
                 fillComponentTypeObsList();
-                // Update the combobox of component types
                 fillComponentTypeComboBox(typeOptions);
+                Indicators.updateFileStatusAtAdmin(true);
             } catch (NullPointerException ignore){}
         });
     }

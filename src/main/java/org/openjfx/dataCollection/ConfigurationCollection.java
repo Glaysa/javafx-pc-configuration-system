@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.dataValidator.ConfigurationValidator;
+import org.openjfx.guiUtilities.Indicators;
 import java.util.ArrayList;
 
 /** This class is responsible of all methods related to the configuration tableview in the customer view */
@@ -40,7 +41,10 @@ public class ConfigurationCollection {
 
     /** Listens to changes */
     public static void collectionOnChange(){
-        configObsList.addListener((ListChangeListener<PCConfigurations>) change -> modified = true);
+        configObsList.addListener((ListChangeListener<PCConfigurations>) change -> {
+            modified = true;
+            Indicators.updateFileStatusAtUser(true);
+        });
     }
 
     /** Listens to changes and updates the list of selected components */

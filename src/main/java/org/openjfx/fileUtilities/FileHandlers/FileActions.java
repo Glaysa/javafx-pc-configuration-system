@@ -34,7 +34,7 @@ public class FileActions {
 
     public void saveChanges(ArrayList<Object> dataToSave, String msg){
         threadHandlers = FileThreads.getInstance();
-        File currentOpenedFile = threadHandlers.getCurrentOpenedFile();
+        File currentOpenedFile = threadHandlers.getLastOpenedFile();
         save(dataToSave, currentOpenedFile, msg);
     }
 

@@ -7,6 +7,8 @@ import org.openjfx.fileUtilities.fileIO.IO_txt;
 import org.openjfx.fileUtilities.fileTasks.Reader;
 import org.openjfx.fileUtilities.fileTasks.Writer;
 import org.openjfx.guiUtilities.AlertDialog;
+import org.openjfx.guiUtilities.Indicators;
+
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -145,6 +147,7 @@ class FileThreads extends FileActions {
         loadingAlert.close();
         threadRunning = false;
         System.out.println("Save Thread Successful!\n");
+        Indicators.updateAllFileStatuses();
         writer = new Writer<>();
         runWaitingThreads();
     }
@@ -154,7 +157,6 @@ class FileThreads extends FileActions {
         threadRunning = false;
         System.out.println("Open Thread Successful!\n");
         FileContents.processData(reader.getValue());
-        lastOpenedFile = currentOpenedFile;
         reader = new Reader<>();
         runWaitingThreads();
     }
@@ -221,6 +223,14 @@ class FileThreads extends FileActions {
 
     /** Used to keep the current opened file for unsaved changes. */
     public File getCurrentOpenedFile(){
+        return currentOpenedFile;
+    }
+
+    public void setLastOpenedFile(File file){
+        lastOpenedFile = file;
+    }
+
+    public File getLastOpenedFile(){
         return lastOpenedFile;
     }
 }
