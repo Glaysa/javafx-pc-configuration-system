@@ -11,7 +11,7 @@ import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
-import org.openjfx.fileUtilities.FileHandlers.FileContents;
+import org.openjfx.fileUtilities.FileRestrictions;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
@@ -40,7 +40,7 @@ public class ControllerAdmin implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Opens a file containing the default list of components.
         file.open(defaultData, "Loading system data...");
-        FileContents.setRestrictedDataKey(null);
+        FileRestrictions.setRestrictedDataKey(null);
         // Initializes the tableview.
         ComponentsCollection.setTableView(tableView);
         // Fills the component type combobox with values.
@@ -96,7 +96,7 @@ public class ControllerAdmin implements Initializable {
     @FXML
     void openFile(){
         // The admin is not allowed to open files that contain PC Configurations
-        FileContents.setRestrictedDataKey(PCConfigurations.getObjectIDKey());
+        FileRestrictions.setRestrictedDataKey(PCConfigurations.getObjectIDKey());
         FileChooser fileChooser = file.getFileChooser();
         File fileToOpen = fileChooser.showOpenDialog(new Stage());
         if(fileToOpen == null) {

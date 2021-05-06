@@ -14,7 +14,7 @@ import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
-import org.openjfx.fileUtilities.FileHandlers.FileContents;
+import org.openjfx.fileUtilities.FileRestrictions;
 import org.openjfx.guiUtilities.*;
 import org.openjfx.guiUtilities.popupDialogs.PopupForCheckout;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
@@ -47,7 +47,7 @@ public class ControllerCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Opens a file containing the default list of components.
         file.open(defaultData, "Loading products...");
-        FileContents.setRestrictedDataKey(null);
+        FileRestrictions.setRestrictedDataKey(null);
         // Changes tab to config tab to let user know, they saving or opening a config collection
         changeTabOnFileAction();
         // (listener) Initializes search functionality
@@ -130,7 +130,7 @@ public class ControllerCustomer implements Initializable {
     @FXML
     void openFile() {
         // Users are not allowed to open files that contain PC Components
-        FileContents.setRestrictedDataKey(PCComponents.getObjectIDKey());
+        FileRestrictions.setRestrictedDataKey(PCComponents.getObjectIDKey());
         FileChooser fileChooser = file.getFileChooser();
         File fileToOpen = fileChooser.showOpenDialog(new Stage());
         if(fileToOpen == null) {
