@@ -212,6 +212,8 @@ public class ControllerCustomer implements Initializable {
         }
     }
 
+    /** Change view to login view */
+
     @FXML
     void logout() throws IOException {
         // User is prompted when there are unsaved changes
@@ -223,7 +225,7 @@ public class ControllerCustomer implements Initializable {
         }
         // Otherwise, the user is logged out immediately
         ConfigurationCollection.clearCollection();
-        ConfigurationCollection.setModified(false);
+        ComponentsCollection.clearCollection();
         App.setRoot("login");
     }
 }

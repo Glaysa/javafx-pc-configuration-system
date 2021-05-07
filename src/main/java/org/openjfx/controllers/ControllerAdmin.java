@@ -133,25 +133,6 @@ public class ControllerAdmin implements Initializable {
         PopupForTableView.showFilterOptions(tableView);
     }
 
-    /** Change view to login view */
-
-    @FXML
-    void logout() throws IOException {
-
-        // Admin is prompted when there are unsaved changes
-        if(ComponentsCollection.isModified()) {
-            String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
-            if(response.equals("Yes")) {
-                file.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
-            }
-        }
-
-        // Otherwise, the admin is logged out immediately
-        ComponentsCollection.clearCollection();
-        ComponentsCollection.setModified(false);
-        App.setRoot("login");
-    }
-
     /** Searches through the tableview with the given search input */
     void search() {
         ComponentsCollection.collectionSearch(searchInput, tableView);
@@ -187,5 +168,21 @@ public class ControllerAdmin implements Initializable {
         cDesc.setText("");
         price.setText("");
         tableView.refresh();
+    }
+
+    /** Change view to login view */
+
+    @FXML
+    void logout() throws IOException {
+        // Admin is prompted when there are unsaved changes
+        if(ComponentsCollection.isModified()) {
+            String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
+            if(response.equals("Yes")) {
+                file.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
+            }
+        }
+        // Otherwise, the admin is logged out immediately
+        ComponentsCollection.clearCollection();
+        App.setRoot("login");
     }
 }

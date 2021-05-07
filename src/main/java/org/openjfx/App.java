@@ -6,12 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCollection;
-import org.openjfx.dataModels.PCComponents;
+import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
 import java.io.IOException;
 
-/** JAVAFX Application */
+/**
+ * JAVAFX Application
+ */
 
 public class App extends Application {
 
@@ -34,20 +36,20 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    private static void stageClose(Stage stage){
-        if(ComponentsCollection.isModified()) {
+    private static void stageClose(Stage stage) {
+        FileActions fileActions = new FileActions();
+        if (ComponentsCollection.isModified()) {
             String response = AlertDialog.showConfirmDialog("Do you want to save your changes?");
-            if(response.equals("Yes")) {
-                FileActions fileActions = new FileActions();
+            if (response.equals("Yes")) {
                 fileActions.saveChanges(ComponentsCollection.getComponentArrayList(), "Saving changes...");
             }
-            stage.close();
-            ComponentsCollection.setModified(false);
+        } else if (ConfigurationCollection.isModified()) {
+            fileActions.saveChanges(ConfigurationCollection.getConfigsArrayList(), "Saving Configurations...");
         }
+        stage.close();
     }
 
     public static void main(String[] args) {
         launch();
     }
-
 }
