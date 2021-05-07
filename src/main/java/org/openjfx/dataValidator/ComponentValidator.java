@@ -1,7 +1,5 @@
 package org.openjfx.dataValidator;
 
-import org.openjfx.customExceptions.InvalidNumberException;
-
 /** This class is responsible for validating components added on a tableview. */
 
 public class ComponentValidator {
@@ -50,10 +48,10 @@ public class ComponentValidator {
                 txtComponentPrice = txtComponentPrice.replace(',','.');
             }
             double componentPrice = Double.parseDouble(txtComponentPrice);
-            if(componentPrice <= 0) { throw new InvalidNumberException("Price must greater than 0"); }
+            if(componentPrice <= 0) { throw new NumberFormatException("Price must greater than 0"); }
             ComponentValidator.componentPrice = componentPrice;
 
-        } catch (InvalidNumberException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid price format");
