@@ -4,11 +4,12 @@ import com.google.gson.Gson;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class PCConfigurations implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final String IDKey = "PCConfigurationID";
+    private static final UUID uuid = UUID.randomUUID();
     private final int PCConfigurationID;
     private ArrayList<PCComponents> pcComponents;
     private final double totalPrice;
@@ -53,7 +54,7 @@ public class PCConfigurations implements Serializable {
         return configurationName;
     }
 
-    public static String getObjectIDKey(){
-        return IDKey;
+    public static UUID getUUID(){
+        return uuid;
     }
 }

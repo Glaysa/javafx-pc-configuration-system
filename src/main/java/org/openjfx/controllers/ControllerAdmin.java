@@ -96,7 +96,7 @@ public class ControllerAdmin implements Initializable {
     @FXML
     void openFile(){
         // The admin is not allowed to open files that contain PC Configurations
-        FileRestrictions.setRestrictedDataKey(PCConfigurations.getObjectIDKey());
+        FileRestrictions.setRestrictedDataKey(PCConfigurations.getUUID());
         FileChooser fileChooser = file.getFileChooser();
         File fileToOpen = fileChooser.showOpenDialog(new Stage());
         if(fileToOpen == null) {

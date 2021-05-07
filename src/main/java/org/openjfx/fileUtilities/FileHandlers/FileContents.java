@@ -35,11 +35,11 @@ public class FileContents extends FileRestrictions {
     static void processContents(ArrayList<Object> data){
         Object object = data.get(0);
         if(object instanceof PCComponents) {
-            FileRestrictions.checkIfRestricted(PCComponents.getObjectIDKey());
+            FileRestrictions.checkIfRestricted(PCComponents.getUUID());
             fileThreads.setLastOpenedFile(fileThreads.getCurrentOpenedFile());
             loadComponents(data);
         } else if(object instanceof PCConfigurations) {
-            FileRestrictions.checkIfRestricted(PCConfigurations.getObjectIDKey());
+            FileRestrictions.checkIfRestricted(PCConfigurations.getUUID());
             fileThreads.setLastOpenedFile(fileThreads.getCurrentOpenedFile());
             loadConfiguration(data);
         } else {

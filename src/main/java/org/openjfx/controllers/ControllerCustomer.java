@@ -130,7 +130,7 @@ public class ControllerCustomer implements Initializable {
     @FXML
     void openFile() {
         // Users are not allowed to open files that contain PC Components
-        FileRestrictions.setRestrictedDataKey(PCComponents.getObjectIDKey());
+        FileRestrictions.setRestrictedDataKey(PCComponents.getUUID());
         FileChooser fileChooser = file.getFileChooser();
         File fileToOpen = fileChooser.showOpenDialog(new Stage());
         if(fileToOpen == null) {

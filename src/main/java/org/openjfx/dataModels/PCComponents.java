@@ -4,13 +4,14 @@ import com.google.gson.Gson;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataValidator.ComponentValidator;
 import java.io.Serializable;
+import java.util.UUID;
 
 /** Model of Pc components. */
 
 public class PCComponents implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final String IDKey = "PCComponentID";
+    private static final UUID uuid = UUID.randomUUID();
     private final int PCComponentID;
     private String componentName;
     private String componentType;
@@ -77,7 +78,7 @@ public class PCComponents implements Serializable {
         return componentPrice;
     }
 
-    public static String getObjectIDKey(){
-        return IDKey;
+    public static UUID getUUID(){
+        return uuid;
     }
 }
