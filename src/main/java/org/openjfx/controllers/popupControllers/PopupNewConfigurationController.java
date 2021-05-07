@@ -9,14 +9,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
+import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
 import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -67,11 +71,27 @@ public class PopupNewConfigurationController implements Initializable {
         }
     }
 
-    /* TODO: Let user save the configuration they made */
+    /** Let user save the configuration they made */
 
     @FXML
     void saveConfiguration(){
+        // Add the configured PC in the collection
+        addConfiguration();
 
+        // Take the last added configured PC and add it on an arraylist
+        int index = ConfigurationCollection.getConfigObsList().size() - 1;
+        ArrayList<Object> singleConfigToSave = new ArrayList<>();
+        singleConfigToSave.add(ConfigurationCollection.getConfigObsList().get(index));
+
+        // Open a file chooser and save the arraylist
+        FileActions file = new FileActions();
+        FileChooser fileChooser = file.getFileChooser();
+        File fileToSave = fileChooser.showSaveDialog(new Stage());
+        if(fileToSave == null) {
+            AlertDialog.showWarningDialog("No file was chosen","");
+        } else {
+            file.save(singleConfigToSave, fileToSave, "Saving Configuration...");
+        }
     }
 
     /** Create buttons as configuration options based on all component types */
