@@ -55,9 +55,10 @@ class FileThreads extends FileActions {
         extension. */
 
     private void assignWriters(File file){
-        String filename = file.getName();
-        String fileExtension = filename.substring(filename.lastIndexOf("."));
         try {
+            String filename = file.getName();
+            String fileExtension = filename.substring(filename.lastIndexOf("."));
+
             if(fileExtension.equals(".txt")) {
                 writer.setFileWriter(new IO_txt());
             } else if(fileExtension.equals(".bin") || fileExtension.equals(".obj")) {
@@ -65,15 +66,18 @@ class FileThreads extends FileActions {
             } else {
                 throw new IllegalArgumentException("Invalid File extension.\nSave only *.txt, *.bin. *.obj");
             }
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("Unknown file extension");
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
     private void assignReaders(File file){
-        String filename = file.getName();
-        String fileExtension = filename.substring(filename.lastIndexOf("."));
         try {
+            String filename = file.getName();
+            String fileExtension = filename.substring(filename.lastIndexOf("."));
+
             if(fileExtension.equals(".txt")) {
                 reader.setFileReader(new IO_txt());
                 currentOpenedFile = file;
@@ -83,6 +87,8 @@ class FileThreads extends FileActions {
             } else {
                 throw new IllegalArgumentException("Invalid File extension.\nOpen only *.txt, *.bin, *.obj");
             }
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("Unknown file extension");
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
