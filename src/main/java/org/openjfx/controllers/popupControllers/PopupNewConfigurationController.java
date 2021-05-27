@@ -68,6 +68,7 @@ public class PopupNewConfigurationController implements Initializable {
             PopupUtilities.closePopup(parentPane);
         } catch (Exception e) {
             AlertDialog.showWarningDialog(e.getMessage(),"");
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -75,23 +76,32 @@ public class PopupNewConfigurationController implements Initializable {
 
     @FXML
     void saveConfiguration(){
-        // Add the configured PC in the collection
-        addConfiguration();
 
-        // Take the last added configured PC and add it on an arraylist
-        int index = ConfigurationCollection.getConfigObsList().size() - 1;
-        ArrayList<Object> singleConfigToSave = new ArrayList<>();
-        singleConfigToSave.add(ConfigurationCollection.getConfigObsList().get(index));
+        // try/catch -> if exception in addConfiguration(), the following code blocks will not be executed
+        // If try/block is removed, a file chooser will still open which is unnecessary when an exception occurs
 
-        // Open a file chooser and save the arraylist
-        FileActions file = new FileActions();
-        FileChooser fileChooser = file.getFileChooser();
-        File fileToSave = fileChooser.showSaveDialog(new Stage());
-        if(fileToSave == null) {
-            AlertDialog.showWarningDialog("No file was chosen","");
-        } else {
-            file.save(singleConfigToSave, fileToSave, "Saving Configuration...");
-        }
+        try {
+
+            // Add the configured PC in the collection
+            addConfiguration();
+
+            // Take the last added configured PC and add it on an arraylist
+            int index = ConfigurationCollection.getConfigObsList().size() - 1;
+            ArrayList<Object> singleConfigToSave = new ArrayList<>();
+            singleConfigToSave.add(ConfigurationCollection.getConfigObsList().get(index));
+
+            // Open a file chooser and save the arraylist
+            FileActions file = new FileActions();
+            FileChooser fileChooser = file.getFileChooser();
+            File fileToSave = fileChooser.showSaveDialog(new Stage());
+            if(fileToSave == null) {
+                AlertDialog.showWarningDialog("No file was chosen","");
+            } else {
+                file.save(singleConfigToSave, fileToSave, "Saving Configuration...");
+            }
+
+        // Exception ignored because already shown in addConfiguration() with an alert dialog
+        } catch (Exception ignored){}
     }
 
     /** Create buttons as configuration options based on all component types */
