@@ -12,8 +12,7 @@ import java.util.ArrayList;
 
 /** This class is responsible for handling the contents of a file when opened.
  *  The system can only process files containing PC Component objects and PC Configuration Objects.
- *  If the file contains text, the file will be parsed.
- *  if valid, the contents will be converted to objects.
+ *  If the file contains text, the file will be parsed and if valid, the contents will be converted to objects.
  *  if NOT valid, an exception will be thrown. */
 
 public class FileContents extends FileRestrictions {

@@ -195,14 +195,12 @@ public class ControllerCustomer implements Initializable {
         ComponentsCollection.collectionSearch(searchInput, tableViewComponents);
     }
 
-    /** The tab changes to the config tab to let user know
-     * they can only save or open a config collection */
+    /** The tab changes to the config tab to let user know they can only save or open a config collection */
     void changeTabOnFileAction(){
         menuFile.setOnShown(event -> tabPane.getSelectionModel().selectLast());
     }
 
     /** Loads configuration data when user click on the configured PC tab */
-
     boolean tabOpened = false; // prevents from opening the file again and again when switching tabs
     @FXML
     void tabConfigurationsInit(){
