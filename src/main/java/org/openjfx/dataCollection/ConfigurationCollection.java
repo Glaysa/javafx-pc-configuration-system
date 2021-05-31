@@ -60,7 +60,10 @@ public class ConfigurationCollection {
                 wrapper.getChildren().add(type);
                 wrapper.getChildren().add(name);
                 wrapper.getChildren().add(price);
-                wrapper.setStyle("-fx-background-color: gold; -fx-padding: 10px 10px 10px 10px");
+                wrapper.setStyle(
+                        "-fx-background-color: #033F63; " +
+                        "-fx-padding: 10px 10px 10px 10px;" +
+                        "-fx-text-fill: white");
                 vBox.getChildren().add(wrapper);
             }
             totalPrice.setText(Double.toString(getTotalPrice()));

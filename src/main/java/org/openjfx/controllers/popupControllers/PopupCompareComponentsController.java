@@ -27,7 +27,7 @@ public class PopupCompareComponentsController{
         vBox.setAlignment(Pos.TOP_LEFT);
         vBox.setPrefWidth(200);
         vBox.setSpacing(10);
-        vBox.setStyle("-fx-padding: 20px 20px 20px 20px");
+        vBox.setStyle("-fx-padding: 20px 20px 20px 20px; -fx-background-color: #023350");
         HBox.setHgrow(vBox, Priority.ALWAYS);
 
         HBox addToCartWrapper = createButton(component);
@@ -53,10 +53,7 @@ public class PopupCompareComponentsController{
     /** All components vBoxes are displayed in h box to be compared */
     public void compareComponents(){
         for(Node component: list){
-            Separator s = new Separator();
-            s.setOrientation(Orientation.VERTICAL);
             hBox.getChildren().add(component);
-            hBox.getChildren().add(s);
         }
     }
 

@@ -15,8 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.popupControllers.PopupNewConfigurationController">
+<BorderPane prefWidth="900.0" styleClass="parent" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.popupControllers.PopupNewConfigurationController">
    <center>
       <VBox fx:id="parentPane" prefHeight="800.0">
          <children>
@@ -57,9 +56,9 @@
                <children>
                   <AnchorPane prefHeight="500.0" prefWidth="430.0">
                      <children>
-                        <ScrollPane fitToWidth="true" layoutY="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                        <ScrollPane fitToWidth="true" layoutY="70.0" style="-fx-background-color: #023350;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                            <content>
-                              <VBox fx:id="vBoxConfigurations" prefHeight="428.0" spacing="10.0" style="-fx-background-color: white;">
+                              <VBox fx:id="vBoxConfigurations" prefHeight="428.0" spacing="10.0" styleClass="myVBox">
                                  <padding>
                                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                  </padding>
@@ -75,9 +74,9 @@
                   </AnchorPane>
                   <AnchorPane layoutX="435.0" prefHeight="500.0" prefWidth="430.0">
                      <children>
-                        <ScrollPane fitToWidth="true" layoutY="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                        <ScrollPane fitToWidth="true" layoutY="70.0" style="-fx-background-color: #023350;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                            <content>
-                              <VBox fx:id="vBoxConfigurationOptions" prefHeight="428.0" spacing="10.0" style="-fx-background-color: white;">
+                              <VBox fx:id="vBoxConfigurationOptions" prefHeight="428.0" spacing="10.0" styleClass="myVBox">
                                  <padding>
                                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                  </padding>

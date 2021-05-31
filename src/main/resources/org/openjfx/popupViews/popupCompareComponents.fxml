@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parentPane" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.popupControllers.PopupCompareComponentsController">
+<AnchorPane fx:id="parentPane" prefHeight="600.0" prefWidth="1024.0" styleClass="parent" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.popupControllers.PopupCompareComponentsController">
    <children>
       <Label alignment="CENTER" text="Compare" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
@@ -19,9 +19,9 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <HBox fx:id="hBox" alignment="CENTER_LEFT" layoutY="50.0" prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50.0">
+      <HBox fx:id="hBox" alignment="CENTER_LEFT" layoutY="50.0" prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: #023350;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50.0">
          <children>
-            <VBox minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: whitesmoke;">
+            <VBox minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #033F63;">
                <children>
                   <Button mnemonicParsing="false" opacity="0.0" text="Button">
                      <font>
@@ -62,7 +62,6 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </VBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
          </children>
       </HBox>
    </children>

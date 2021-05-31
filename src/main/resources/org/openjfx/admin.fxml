@@ -16,9 +16,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1274.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerAdmin">
+<BorderPane styleClass="parent" stylesheets="@styles/styles.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1274.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerAdmin">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <TableView fx:id="tableView" editable="true" layoutX="58.0" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="88.0">
               <columns>
@@ -83,7 +83,7 @@
          </children></AnchorPane>
    </center>
    <left>
-      <AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="cName" layoutX="75.0" layoutY="130.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="130.0">
                <font>

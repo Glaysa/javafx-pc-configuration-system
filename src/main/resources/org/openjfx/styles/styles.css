@@ -1,0 +1,182 @@
+.parent {
+    -fx-background-color: #033F63;
+}
+
+Label {
+    -fx-text-fill: white;
+}
+
+Button {
+    -fx-background-color: #28666E;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+Button:hover {
+    -fx-background-color: #7C9885;
+}
+
+.combo-box{
+    -fx-background-color: #033F63;
+    -fx-text-fill: white;
+}
+.combo-box .arrow-button {
+    -fx-background-color: #28666E;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
+}
+.combo-box .cell:selected {
+    -fx-text-fill: #7C9885;
+}
+.combo-box-popup .list-view {
+    -fx-background-color: #033F63;
+    -fx-border-color: #033F63;
+}
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #033F63;
+    -fx-text-fill: white;
+}
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #7C9885;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+.combo-box-popup .list-view .scroll-bar:vertical .track {
+    -fx-background-color: #023350;
+}
+.combo-box-popup .list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #28666E;
+}
+.combo-box-popup .list-view .increment-button {
+    -fx-background-color: #023350;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-shape: "";
+}
+.combo-box-popup .list-view .decrement-button {
+    -fx-background-color: #023350;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-shape: "";
+}
+
+.text-field {
+    -fx-background-color: #023350;
+    -fx-text-fill: white;
+}
+
+.text-area {
+    -fx-background-color: #023350;
+    -fx-text-fill: white;
+}
+
+.text-area .content {
+    -fx-background-color: #023350;
+    -fx-border-width: 0 0 0 0;
+}
+
+.table-view {
+    -fx-background-color: #023350;
+    -fx-text-fill: white;
+}
+
+.table-view .filler {
+    -fx-background-color: #28666E;
+}
+
+.table-view .column-header {
+    -fx-background-color: #28666E;
+}
+
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+    -fx-text-fill: white;
+}
+
+.table-view .table-row-cell:odd{
+    -fx-background-color: #93f9b911;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-view .table-row-cell:even{
+    -fx-background-color: #1dbbdd11;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #7C9885;
+    -fx-cursor: hand;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #7C9885;
+}
+
+.table-view .increment-button ,.table-view .decrement-button {
+    -fx-background-color: #023350;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-shape: "";
+}
+
+.table-view .scroll-bar:vertical .track{
+    -fx-background-color: #023350;
+    -fx-border-color: #023350;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #28666E;
+    -fx-border-color: transparent;
+}
+
+.table-view .scroll-bar:horizontal * {
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: #023350;
+}
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #28666E;
+}
+.scroll-pane .increment-button, .scroll-pane .decrement-button {
+    -fx-background-color: #023350;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-shape: "";
+}
+
+.radio-button .radio {
+    -fx-background-color: #28666E;
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: white;
+}
+
+.check-box {
+    -fx-text-fill: white;
+}
+
+.check-box .box {
+    -fx-background-color: #28666E;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.myVBox {
+    -fx-background-color: #023350;
+}
