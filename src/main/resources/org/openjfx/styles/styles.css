@@ -180,3 +180,29 @@ Button:hover {
 .myVBox {
     -fx-background-color: #023350;
 }
+
+.tab-pane .tab {
+    -fx-background-color: #033F63;
+    -fx-focus-color: transparent;
+    -fx-padding: 5px 10px;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #28666E;
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color: #7C9885;
+    -fx-cursor: hand;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #033F63;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #28666E;
+    -fx-border-style: solid;
+}
