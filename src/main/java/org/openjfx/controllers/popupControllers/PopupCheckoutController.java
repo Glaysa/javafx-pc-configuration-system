@@ -10,14 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCartCollection;
-import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataCollection.ConfigurationCartCollection;
-import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
-
 import java.io.File;
 import java.util.ArrayList;
 
