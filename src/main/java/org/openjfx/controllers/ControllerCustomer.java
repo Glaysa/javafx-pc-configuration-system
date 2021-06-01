@@ -224,6 +224,8 @@ public class ControllerCustomer implements Initializable {
         // Otherwise, the user is logged out immediately
         ConfigurationCollection.clearCollection();
         ComponentsCollection.clearCollection();
+        ConfigurationCollection.setModified(false);
+        ComponentsCollection.setModified(false);
         App.setRoot("login");
     }
 }
