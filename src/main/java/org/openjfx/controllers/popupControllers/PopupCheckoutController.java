@@ -7,9 +7,18 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.openjfx.dataCollection.ComponentsCartCollection;
+import org.openjfx.dataCollection.ComponentsCollection;
+import org.openjfx.dataCollection.ConfigurationCartCollection;
+import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
+import org.openjfx.fileUtilities.FileHandlers.FileActions;
+import org.openjfx.guiUtilities.AlertDialog;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class PopupCheckoutController {
@@ -17,9 +26,24 @@ public class PopupCheckoutController {
     @FXML private VBox vBoxComponents;
     @FXML private VBox vBoxConfigurations;
 
+    /* TODO: Needs improvements */
+
     @FXML
     void saveReceipt(){
-        System.out.println("Saving receipt...");
+        String totalPrice = "\nTotal Price: " + ComponentsCartCollection.getTotalPrice() + ConfigurationCartCollection.getTotalPrice() + "kr";
+        ArrayList<Object> purchasedProducts = new ArrayList<>();
+        purchasedProducts.addAll(ComponentsCartCollection.getCartObsList());
+        purchasedProducts.addAll(ConfigurationCartCollection.getCartObsList());
+        purchasedProducts.add(totalPrice);
+
+        FileActions fileActions = new FileActions();
+        FileChooser fileChooser = fileActions.getFileChooser();
+        File fileToSave = fileChooser.showSaveDialog(new Stage());
+        if(fileToSave == null) {
+            AlertDialog.showWarningDialog("No file was chosen","");
+        } else {
+            fileActions.save(purchasedProducts, fileToSave, "Saving receipt...");
+        }
     }
 
     /** Loads product details */

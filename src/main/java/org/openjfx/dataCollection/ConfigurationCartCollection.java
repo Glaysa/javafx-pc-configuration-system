@@ -69,4 +69,8 @@ public class ConfigurationCartCollection {
     public static ArrayList<PCConfigurations> getCartArraylist(){
         return new ArrayList<>(cartObsList);
     }
+
+    public static ObservableList<PCConfigurations> getCartObsList() {
+        return cartObsList;
+    }
 }
