@@ -46,9 +46,9 @@ public class ControllerLogin implements Initializable, Callable<Void> {
         String usernameInput = username.getText();
 
         if(usernameInput.equals("admin") && passwordInput.equals("1234")) {
-            App.setRoot("admin");
+            App.setRoot("admin", "Admin");
         } else if (usernameInput.equals("user") && passwordInput.equals("1234")) {
-            App.setRoot("customer");
+            App.setRoot("customer", "PC Configuration System");
         } else {
             AlertDialog.showWarningDialog("Wrong password/username combination","");
         }

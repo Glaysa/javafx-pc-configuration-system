@@ -18,17 +18,21 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private static Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("login"), 1300, 900);
         stage.setScene(scene);
+        stage.setTitle("Login");
         stage.show();
         stage.setOnCloseRequest(windowEvent -> stageClose(stage));
+        App.stage = stage;
     }
 
-    public static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml, String title) throws IOException {
         scene.setRoot(loadFXML(fxml));
+        stage.setTitle(title);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

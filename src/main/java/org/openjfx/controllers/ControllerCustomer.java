@@ -228,6 +228,6 @@ public class ControllerCustomer implements Initializable {
         ComponentsCollection.clearCollection();
         ConfigurationCollection.setModified(false);
         ComponentsCollection.setModified(false);
-        App.setRoot("login");
+        App.setRoot("login", "Login");
     }
 }

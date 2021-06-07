@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="parent" stylesheets="@styles/styles.css" prefHeight="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerCustomer">
+<BorderPane prefHeight="900.0" styleClass="parent" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controllers.ControllerCustomer">
     <center>
         <TabPane fx:id="tabPane">
             <tabs>
@@ -240,7 +240,7 @@
         </TabPane>
     </center>
     <top>
-        <MenuBar BorderPane.alignment="CENTER">
+        <MenuBar style="-fx-background-color: whitesmoke;" BorderPane.alignment="CENTER">
             <menus>
                 <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
                     <items>

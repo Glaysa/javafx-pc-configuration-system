@@ -185,6 +185,6 @@ public class ControllerAdmin implements Initializable {
         // Otherwise, the admin is logged out immediately
         ComponentsCollection.clearCollection();
         ComponentsCollection.setModified(false);
-        App.setRoot("login");
+        App.setRoot("login", "Login");
     }
 }
