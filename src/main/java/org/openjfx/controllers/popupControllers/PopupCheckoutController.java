@@ -15,7 +15,9 @@ import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
+import org.openjfx.guiUtilities.JsonBeautify;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PopupCheckoutController {
@@ -23,15 +25,19 @@ public class PopupCheckoutController {
     @FXML private VBox vBoxComponents;
     @FXML private VBox vBoxConfigurations;
 
-    /* TODO: Needs improvements */
-
     @FXML
     void saveReceipt(){
-        String totalPrice = "\nTotal Price: " + ComponentsCartCollection.getTotalPrice() + ConfigurationCartCollection.getTotalPrice() + "kr";
+        double tempPrice = ComponentsCartCollection.getTotalPrice() + ConfigurationCartCollection.getTotalPrice();
+        DecimalFormat df = new DecimalFormat("#.00");
+
         ArrayList<Object> purchasedProducts = new ArrayList<>();
         purchasedProducts.addAll(ComponentsCartCollection.getCartObsList());
         purchasedProducts.addAll(ConfigurationCartCollection.getCartObsList());
-        purchasedProducts.add(totalPrice);
+        purchasedProducts.add("Total Price: " + df.format(tempPrice) + "kr");
+
+        String formatted = JsonBeautify.beautify(purchasedProducts);
+        ArrayList<Object> dataToSave = new ArrayList<>();
+        dataToSave.add(formatted);
 
         FileActions fileActions = new FileActions();
         FileChooser fileChooser = fileActions.getFileChooser();
@@ -39,7 +45,7 @@ public class PopupCheckoutController {
         if(fileToSave == null) {
             AlertDialog.showWarningDialog("No file was chosen","");
         } else {
-            fileActions.save(purchasedProducts, fileToSave, "Saving receipt...");
+            fileActions.save(dataToSave, fileToSave, "Saving receipt...");
         }
     }
 
