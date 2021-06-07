@@ -43,6 +43,11 @@ public class ConfigurationCartCollection {
         else AlertDialog.showWarningDialog("Please select a configured PC to remove", "");
     }
 
+    /** Clears the cartObsList */
+    public static void clearCollection(){
+        cartObsList.clear();
+    }
+
     /** Updates the total price whenever there is change on all carts */
     public static void collectionOnChange(Label totalPrice){
         cartObsList.addListener(new ListChangeListener<PCConfigurations>() {

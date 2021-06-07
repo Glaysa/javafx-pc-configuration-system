@@ -8,7 +8,6 @@ public class FileRestrictions {
 
     protected static UUID restrictedDataKey;
 
-    /** Used for bin files */
     protected static void checkIfRestricted(UUID objectUUID){
         if(objectUUID.equals(restrictedDataKey)) {
             throw new IllegalArgumentException("Restricted Data!\nYou don't have the right user privileges.");

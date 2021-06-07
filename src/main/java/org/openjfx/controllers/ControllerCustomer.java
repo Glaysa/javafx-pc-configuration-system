@@ -221,8 +221,10 @@ public class ControllerCustomer implements Initializable {
                 file.saveChanges(ConfigurationCollection.getConfigsArrayList(), "Saving changes...");
             }
         }
-        // Otherwise, the user is logged out immediately
+        // Otherwise, the user is logged out immediately and clears all data of all tableviews
+        ConfigurationCartCollection.clearCollection();
         ConfigurationCollection.clearCollection();
+        ComponentsCartCollection.clearCollection();
         ComponentsCollection.clearCollection();
         ConfigurationCollection.setModified(false);
         ComponentsCollection.setModified(false);
