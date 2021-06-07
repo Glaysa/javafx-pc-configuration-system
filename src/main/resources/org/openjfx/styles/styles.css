@@ -206,3 +206,14 @@ Button:hover {
     -fx-border-color: #28666E;
     -fx-border-style: solid;
 }
+
+.success, .warning, .confirm, .loading {
+    -fx-background-color: #033F63;
+    -fx-text-fill: white;
+}
+
+.success .header-panel, .warning .header-panel,
+.confirm .header-panel, .loading .header-panel {
+    -fx-background-color: #033F63;
+    -fx-text-fill: white;
+}

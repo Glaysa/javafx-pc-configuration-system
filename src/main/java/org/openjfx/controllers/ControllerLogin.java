@@ -21,6 +21,7 @@ public class ControllerLogin implements Initializable, Callable<Void> {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        AlertDialog.applyAlertStyles();
         // Initializes key event listener
         onEnterKey();
     }

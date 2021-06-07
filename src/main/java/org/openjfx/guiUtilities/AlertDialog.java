@@ -2,46 +2,47 @@ package org.openjfx.guiUtilities;
 
 import javafx.concurrent.Task;
 import javafx.event.Event;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.openjfx.App;
+
+import java.util.Objects;
 
 /** This class is responsible for opening dialogs of success, warning, confirmation and loading operations. */
 
 public class AlertDialog {
 
+    static Alert success = new Alert(Alert.AlertType.INFORMATION);
+    static Alert warning = new Alert(Alert.AlertType.WARNING);
+    static Alert confirm = new Alert(Alert.AlertType.INFORMATION);
+
     public static void showSuccessDialog(String dialogMessage){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(dialogMessage);
-        alert.setTitle("Success");
-        alert.showAndWait();
+        success.setHeaderText(dialogMessage);
+        success.setTitle("Success");
+        success.showAndWait();
     }
 
     public static void showWarningDialog(String dialogMessage, String dialogContent){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setHeaderText(dialogMessage);
-        alert.setContentText(dialogContent);
-        alert.setTitle("Warning");
-        alert.showAndWait();
+        warning.setHeaderText(dialogMessage);
+        warning.setContentText(dialogContent);
+        warning.setTitle("Warning");
+        warning.showAndWait();
     }
 
     public static String showConfirmDialog(String dialogMessage){
         ButtonType y = new ButtonType("Yes");
         ButtonType n = new ButtonType("No");
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(dialogMessage);
-        alert.getButtonTypes().setAll(y,n);
-        alert.setTitle("Confirm");
-        alert.showAndWait();
+        confirm.setHeaderText(dialogMessage);
+        confirm.getButtonTypes().setAll(y,n);
+        confirm.setTitle("Confirm");
+        confirm.showAndWait();
 
-        return alert.getResult().getText();
+        return confirm.getResult().getText();
     }
 
-    public synchronized static <V> Alert showLoadingDialog(Task<V> task, String dialogMessage){
+    public static <V> Alert showLoadingDialog(Task<V> task, String dialogMessage){
         // Children
         ProgressBar p = new ProgressBar();
         p.progressProperty().bind(task.progressProperty());
@@ -56,18 +57,36 @@ public class AlertDialog {
 
         // Alert Dialog
         ButtonType ok = new ButtonType("Ok");
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setHeaderText(dialogMessage);
-        alert.getButtonTypes().setAll(ok);
-        alert.setTitle("Loading");
-        alert.getDialogPane().setContent(box);
-        alert.getDialogPane().setPrefWidth(300);
-        alert.getDialogPane().setPrefHeight(175);
-        alert.getDialogPane().lookupButton(ok).setDisable(true);
+        Alert loading = new Alert(Alert.AlertType.NONE);
+        loading.setHeaderText(dialogMessage);
+        loading.getButtonTypes().setAll(ok);
+        loading.setTitle("Loading");
+        loading.getDialogPane().setContent(box);
+        loading.getDialogPane().setPrefWidth(300);
+        loading.getDialogPane().setPrefHeight(175);
+        loading.getDialogPane().lookupButton(ok).setDisable(true);
 
-        Stage s = (Stage) alert.getDialogPane().getScene().getWindow();
+        Stage s = (Stage) loading.getDialogPane().getScene().getWindow();
         s.setOnCloseRequest(Event::consume);
 
-        return alert;
+        DialogPane loadingPane = loading.getDialogPane();
+        loadingPane.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles/styles.css")).toExternalForm());
+        loadingPane.getStyleClass().add("loading");
+
+        return loading;
+    }
+
+    public static void applyAlertStyles(){
+        DialogPane successPane = success.getDialogPane();
+        successPane.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles/styles.css")).toExternalForm());
+        successPane.getStyleClass().add("success");
+
+        DialogPane warningPane = warning.getDialogPane();
+        warningPane.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles/styles.css")).toExternalForm());
+        warningPane.getStyleClass().add("warning");
+
+        DialogPane confirmPane = confirm.getDialogPane();
+        confirmPane.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles/styles.css")).toExternalForm());
+        confirmPane.getStyleClass().add("confirm");
     }
 }
