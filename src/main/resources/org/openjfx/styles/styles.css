@@ -12,6 +12,17 @@ Button {
     -fx-cursor: hand;
 }
 
+Button.dangerBtn {
+    -fx-background-color: transparent;
+    -fx-text-fill: red;
+}
+
+Button.dangerBtn:hover {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
 Button:hover {
     -fx-background-color: #7C9885;
 }
@@ -231,4 +242,34 @@ Button:hover {
 
 .progress-bar .bar {
     -fx-background-color: gold;
+}
+
+.menu-bar {
+    -fx-padding: 0;
+}
+
+.menu:hover {
+    -fx-background-color: #7C9885;
+    -fx-cursor: hand;
+}
+
+.menu:showing {
+    -fx-background-color: #7C9885;
+}
+
+.menu-item {
+    -fx-background-color: white;
+}
+
+.menu-item .label {
+    -fx-text-fill: black;
+}
+
+.menu-item:hover {
+    -fx-background-color: #7C9885;
+    -fx-cursor: hand;
+}
+
+.menu-item:hover .label {
+    -fx-text-fill: white;
 }

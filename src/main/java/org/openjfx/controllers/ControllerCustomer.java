@@ -65,6 +65,8 @@ public class ControllerCustomer implements Initializable {
         ComponentsCartCollection.setTableView(tableViewCartComponents);
         ConfigurationCollection.setTableView(tableViewConfigurations);
         ConfigurationCartCollection.setTableView(tableViewCartConfigurations);
+        tableViewCartComponents.setPlaceholder(new Label("Components Cart"));
+        tableViewCartConfigurations.setPlaceholder(new Label("Configurations Cart"));
 
         // (listener) Initializes detection of double click on row of tableviews
         PopupForComponents.showComponentDetails(tableViewComponents);

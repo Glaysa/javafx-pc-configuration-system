@@ -37,7 +37,7 @@
                                           <Insets left="10.0" />
                                        </padding>
                                                 </Label>
-                                                <Button layoutX="214.0" layoutY="47.0" mnemonicParsing="false" onAction="#removeFromComponentsCart" prefHeight="30.0" prefWidth="170.0" text="Remove Component" AnchorPane.rightAnchor="10.0" />
+                                                <Button alignment="CENTER_RIGHT" layoutX="214.0" layoutY="47.0" mnemonicParsing="false" onAction="#removeFromComponentsCart" prefHeight="30.0" prefWidth="170.0" styleClass="dangerBtn" text="Remove Component" AnchorPane.rightAnchor="10.0" />
                                                 <Button layoutX="186.0" layoutY="698.0" mnemonicParsing="false" onAction="#checkout" prefHeight="25.0" prefWidth="204.0" text="Checkout" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                                     <font>
                                                         <Font size="14.0" />
@@ -103,7 +103,7 @@
 
                                                     </columns>
                                                 </TableView>
-                                    <Button layoutX="220.0" layoutY="428.0" mnemonicParsing="false" onAction="#removeFromConfigurationsCart" prefHeight="30.0" prefWidth="170.0" text="Remove Configured PC" AnchorPane.bottomAnchor="388.0" AnchorPane.rightAnchor="10.0" />
+                                    <Button alignment="CENTER_RIGHT" layoutX="220.0" layoutY="428.0" mnemonicParsing="false" onAction="#removeFromConfigurationsCart" prefHeight="30.0" prefWidth="170.0" styleClass="dangerBtn" text="Remove Configured PC" AnchorPane.bottomAnchor="388.0" AnchorPane.rightAnchor="10.0" />
 
                                             </children>
                                         </AnchorPane>
