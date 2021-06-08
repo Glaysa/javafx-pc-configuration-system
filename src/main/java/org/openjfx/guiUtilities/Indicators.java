@@ -50,10 +50,10 @@ public class Indicators {
         if(label != null) {
             if(isModified) {
                 label.setText("Modified");
-                label.setStyle("-fx-text-fill: darkred");
+                label.setStyle("-fx-text-fill: red");
             } else {
                 label.setText("Saved");
-                label.setStyle("-fx-text-fill: seagreen");
+                label.setStyle("-fx-text-fill: yellowgreen");
             }
         }
     }

@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.openjfx.App;
 
 import java.util.Objects;
@@ -59,6 +60,7 @@ public class AlertDialog {
         // Alert Dialog
         ButtonType ok = new ButtonType("Ok");
         Alert loading = new Alert(Alert.AlertType.NONE);
+        loading.initStyle(StageStyle.TRANSPARENT);
         loading.setHeaderText(dialogMessage);
         loading.getButtonTypes().setAll(ok);
         loading.setTitle("Loading");
