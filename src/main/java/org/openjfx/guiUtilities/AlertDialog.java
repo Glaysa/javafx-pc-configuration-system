@@ -3,6 +3,7 @@ package org.openjfx.guiUtilities;
 import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.openjfx.App;
@@ -80,13 +81,25 @@ public class AlertDialog {
         DialogPane successPane = success.getDialogPane();
         successPane.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles/styles.css")).toExternalForm());
         successPane.getStyleClass().add("success");
+        ImageView successIcon = new ImageView(Objects.requireNonNull(App.class.getResource("images/success.png")).toExternalForm());
+        successIcon.setFitWidth(50);
+        successIcon.setFitHeight(50);
+        successPane.setGraphic(successIcon);
 
         DialogPane warningPane = warning.getDialogPane();
         warningPane.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles/styles.css")).toExternalForm());
         warningPane.getStyleClass().add("warning");
+        ImageView warningIcon = new ImageView(Objects.requireNonNull(App.class.getResource("images/warning.png")).toExternalForm());
+        warningIcon.setFitWidth(50);
+        warningIcon.setFitHeight(50);
+        warningPane.setGraphic(warningIcon);
 
         DialogPane confirmPane = confirm.getDialogPane();
         confirmPane.getStylesheets().add(Objects.requireNonNull(App.class.getResource("styles/styles.css")).toExternalForm());
         confirmPane.getStyleClass().add("confirm");
+        ImageView confirmIcon = new ImageView(Objects.requireNonNull(App.class.getResource("images/confirm.png")).toExternalForm());
+        confirmIcon.setFitWidth(50);
+        confirmIcon.setFitHeight(50);
+        confirmPane.setGraphic(confirmIcon);
     }
 }
