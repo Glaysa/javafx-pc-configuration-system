@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -35,6 +36,7 @@ public class PopupNewConfigurationController implements Initializable {
     @FXML private VBox vBoxConfigurationOptions;
     @FXML private VBox vBoxConfigurations;
     @FXML private TableView<PCComponents> tableViewComponents;
+    @FXML private TextField configName;
     @FXML private Label totalPrice;
     public static Label totalPriceStatic;
 
@@ -65,9 +67,10 @@ public class PopupNewConfigurationController implements Initializable {
             int id = PCConfigurations.createID();
             ArrayList<PCComponents> list = ConfigurationCollection.getItemsArrayList();
             double totalPrice = ConfigurationCollection.getTotalPrice();
+            if(configName.getText().equals("")) configName.setText("Configuration " + id);
 
             // Instantiation of config object
-            PCConfigurations configuration = new PCConfigurations("Configuration " + id, id, list, totalPrice);
+            PCConfigurations configuration = new PCConfigurations(configName.getText(), id, list, totalPrice);
 
             // Config object is added to the tv and the popup is closed
             ConfigurationCollection.addConfiguration(configuration); // validation occurs here
@@ -90,9 +93,10 @@ public class PopupNewConfigurationController implements Initializable {
             int id = PCConfigurations.createID();
             ArrayList<PCComponents> list = ConfigurationCollection.getItemsArrayList();
             double totalPrice = ConfigurationCollection.getTotalPrice();
+            if(configName.getText().equals("")) configName.setText("Configuration " + id);
 
             // Instantiation of config object
-            PCConfigurations configuration = new PCConfigurations("Configuration " + id, id, list, totalPrice);
+            PCConfigurations configuration = new PCConfigurations(configName.getText(), id, list, totalPrice);
 
             // Validates config object before saving
             ConfigurationValidator.validateConfiguredPC(configuration);
@@ -104,6 +108,7 @@ public class PopupNewConfigurationController implements Initializable {
             // Open a file chooser and saves the arraylist
             FileActions file = new FileActions();
             FileChooser fileChooser = file.getFileChooser();
+            fileChooser.setInitialFileName(configName.getText());
             File fileToSave = fileChooser.showSaveDialog(new Stage());
             if(fileToSave == null) {
                 AlertDialog.showWarningDialog("No file was chosen","");
