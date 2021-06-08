@@ -1,6 +1,8 @@
 package org.openjfx.fileUtilities.FileHandlers;
 
 import javafx.stage.FileChooser;
+import org.openjfx.guiUtilities.Indicators;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -36,6 +38,7 @@ public class FileActions {
         threadHandlers = FileThreads.getInstance();
         File currentOpenedFile = threadHandlers.getLastOpenedFile();
         save(dataToSave, currentOpenedFile, msg);
+        Indicators.updateAllFileStatuses();
     }
 
     /** Initializes a file chooser */

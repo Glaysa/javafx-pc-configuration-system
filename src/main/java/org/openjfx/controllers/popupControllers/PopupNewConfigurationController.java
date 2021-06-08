@@ -109,6 +109,7 @@ public class PopupNewConfigurationController implements Initializable {
                 AlertDialog.showWarningDialog("No file was chosen","");
             } else {
                 file.save(singleConfigToSave, fileToSave, "Saving Configuration...");
+                addConfiguration();
             }
 
         } catch (Exception e){

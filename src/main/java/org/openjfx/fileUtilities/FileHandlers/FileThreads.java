@@ -153,7 +153,6 @@ class FileThreads extends FileActions {
         loadingAlert.close();
         threadRunning = false;
         System.out.println("Save Thread Successful!\n");
-        Indicators.updateAllFileStatuses();
         writer = new Writer<>();
         runWaitingThreads();
     }
