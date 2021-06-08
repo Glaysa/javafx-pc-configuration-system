@@ -15,6 +15,7 @@ import org.openjfx.dataCollection.ComponentsCollection;
 import org.openjfx.dataCollection.ConfigurationCollection;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
+import org.openjfx.dataValidator.ConfigurationValidator;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
@@ -59,16 +60,22 @@ public class PopupNewConfigurationController implements Initializable {
     @FXML
     void addConfiguration(){
         try {
+
+            // Properties needed to instantiate a configuration object
             int id = PCConfigurations.createID();
             ArrayList<PCComponents> list = ConfigurationCollection.getItemsArrayList();
             double totalPrice = ConfigurationCollection.getTotalPrice();
+
+            // Instantiation of config object
             PCConfigurations configuration = new PCConfigurations("Configuration " + id, id, list, totalPrice);
-            ConfigurationCollection.addConfiguration(configuration);
+
+            // Config object is added to the tv and the popup is closed
+            ConfigurationCollection.addConfiguration(configuration); // validation occurs here
             ConfigurationCollection.clearItemCollection();
             PopupUtilities.closePopup(parentPane);
+
         } catch (Exception e) {
             AlertDialog.showWarningDialog(e.getMessage(),"");
-            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -77,20 +84,24 @@ public class PopupNewConfigurationController implements Initializable {
     @FXML
     void saveConfiguration(){
 
-        // try/catch -> if exception in addConfiguration(), the following code blocks will not be executed
-        // If try/block is removed, a file chooser will still open which is unnecessary when an exception occurs
-
         try {
 
-            // Add the configured PC in the collection
-            addConfiguration();
+            // Properties needed to instantiate a configuration object
+            int id = PCConfigurations.createID();
+            ArrayList<PCComponents> list = ConfigurationCollection.getItemsArrayList();
+            double totalPrice = ConfigurationCollection.getTotalPrice();
 
-            // Take the last added configured PC and add it on an arraylist
-            int index = ConfigurationCollection.getConfigObsList().size() - 1;
+            // Instantiation of config object
+            PCConfigurations configuration = new PCConfigurations("Configuration " + id, id, list, totalPrice);
+
+            // Validates config object before saving
+            ConfigurationValidator.validateConfiguredPC(configuration);
+
+            // Save operation only accepts arraylist therefore must be declared here even though it only contains 1 element
             ArrayList<Object> singleConfigToSave = new ArrayList<>();
-            singleConfigToSave.add(ConfigurationCollection.getConfigObsList().get(index));
+            singleConfigToSave.add(configuration);
 
-            // Open a file chooser and save the arraylist
+            // Open a file chooser and saves the arraylist
             FileActions file = new FileActions();
             FileChooser fileChooser = file.getFileChooser();
             File fileToSave = fileChooser.showSaveDialog(new Stage());
@@ -100,8 +111,9 @@ public class PopupNewConfigurationController implements Initializable {
                 file.save(singleConfigToSave, fileToSave, "Saving Configuration...");
             }
 
-        // Exception ignored because already shown in addConfiguration() with an alert dialog
-        } catch (Exception ignored){}
+        } catch (Exception e){
+            AlertDialog.showWarningDialog(e.getMessage(),"");
+        }
     }
 
     /** Create buttons as configuration options based on all component types */
