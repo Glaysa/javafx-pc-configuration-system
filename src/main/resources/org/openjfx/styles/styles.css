@@ -217,3 +217,16 @@ Button:hover {
     -fx-background-color: #033F63;
     -fx-text-fill: white;
 }
+
+.progress-bar {
+    -fx-shadow-highlight-color: transparent;
+}
+
+.progress-bar .track {
+    -fx-text-box-border: #033F63;
+    -fx-control-inner-background: #033F63;
+}
+
+.progress-bar .bar {
+    -fx-background-color: gold;
+}

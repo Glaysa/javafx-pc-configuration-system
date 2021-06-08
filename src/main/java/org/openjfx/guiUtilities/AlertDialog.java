@@ -49,7 +49,7 @@ public class AlertDialog {
         p.setPrefWidth(300);
         p.setPrefHeight(15);
         Label label = new Label("Thread running...");
-        label.setStyle("-fx-padding: 10px 0 0 0; -fx-font-size: 14px; -fx-text-fill: seagreen");
+        label.setStyle("-fx-padding: 10px 0 0 0; -fx-font-size: 14px; -fx-text-fill: gold");
 
         // Parent
         VBox box = new VBox();
