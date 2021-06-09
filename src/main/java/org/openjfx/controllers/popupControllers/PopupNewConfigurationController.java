@@ -7,6 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -18,6 +21,7 @@ import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.dataValidator.ConfigurationValidator;
 import org.openjfx.fileUtilities.FileHandlers.FileActions;
+import org.openjfx.fileUtilities.FileParser;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
@@ -54,7 +58,10 @@ public class PopupNewConfigurationController implements Initializable {
         // Layout Initialization
         HBox.setHgrow(vBoxConfigurations, Priority.ALWAYS);
         // Initializes tableview tooltip
-        Indicators.showToolTip(tableViewComponents, "Double click to see component details");
+        Indicators.showToolTip(tableViewComponents, "Double click to see component details\nDrag to add to component list");
+        // (listener) tableview on drag
+        tvOnDragDetected();
+        vboxOnDrag();
     }
 
     /** Adds new configuration to a table view */
@@ -141,5 +148,30 @@ public class PopupNewConfigurationController implements Initializable {
         filteredList.setPredicate(matchesType);
         tableViewComponents.setItems(filteredList);
         tableViewComponents.refresh();
+    }
+
+    /** Let's user drag item from tv to vbox to add component to config pc */
+    void tvOnDragDetected(){
+        tableViewComponents.setOnDragDetected((event) -> {
+            Dragboard db = tableViewComponents.startDragAndDrop(TransferMode.ANY);
+            ClipboardContent cc = new ClipboardContent();
+            cc.putString(tableViewComponents.getSelectionModel().getSelectedItem().toString());
+            db.setContent(cc);
+            event.consume();
+        });
+    }
+
+    /** Accept dragged item from tv */
+    void vboxOnDrag(){
+        // Enable reception
+        vBoxConfigurations.setOnDragOver((event) -> {
+            event.acceptTransferModes(TransferMode.ANY);
+        });
+        // Process received data
+        vBoxConfigurations.setOnDragDropped((event) -> {
+            String data = event.getDragboard().getString();
+            PCComponents component = (PCComponents) FileParser.parseObject(data);
+            ConfigurationCollection.addConfigurationItem(component);
+        });
     }
 }

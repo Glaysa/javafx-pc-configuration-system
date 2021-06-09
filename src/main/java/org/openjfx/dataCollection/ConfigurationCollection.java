@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.dataValidator.ConfigurationValidator;
-import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
 
