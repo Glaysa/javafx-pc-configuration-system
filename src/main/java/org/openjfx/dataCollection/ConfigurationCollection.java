@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import org.openjfx.dataModels.PCComponents;
 import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.dataValidator.ConfigurationValidator;
+import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
 import java.util.ArrayList;
 
@@ -63,11 +64,25 @@ public class ConfigurationCollection {
                 wrapper.setStyle(
                         "-fx-background-color: #033F63; " +
                         "-fx-padding: 10px 10px 10px 10px;" +
-                        "-fx-text-fill: white");
+                        "-fx-text-fill: white;" +
+                        "-fx-border-width: 1px;" +
+                        "-fx-border-color: #7C9885");
                 vBox.getChildren().add(wrapper);
+                wrapper.setOnMouseClicked((e) -> removeFromList(wrapper, vBox, component));
+                Indicators.showToolTip(wrapper, "Click to remove from the list");
             }
             totalPrice.setText(Double.toString(getTotalPrice()));
         });
+    }
+
+    /** Removes component from config pc */
+    static void removeFromList(HBox wrapper, VBox vbox, PCComponents component){
+        String response = AlertDialog.showConfirmDialog(component.getComponentName() + " will be removed. Do you wish to continue?");
+        if(response.equals("Yes")) {
+            vbox.getChildren().remove(wrapper);
+            itemsObsList.remove(component);
+            AlertDialog.showSuccessDialog(component.getComponentName() + " removed!");
+        }
     }
 
     /** Calculates the total price of all the items added to configure a PC in the newConfiguration view */

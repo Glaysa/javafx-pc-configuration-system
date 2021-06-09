@@ -1,5 +1,6 @@
 package org.openjfx.guiUtilities;
 
+import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -63,5 +64,11 @@ public class Indicators {
         Tooltip tooltip = new Tooltip(toolTipMessage);
         object.setTooltip(tooltip);
         object.getTooltip().setStyle("-fx-text-fill: black; -fx-background-color: gold; -fx-font-size: 12px;");
+    }
+
+    public static void showToolTip(Node node, String toolTipMessage){
+        Tooltip tooltip = new Tooltip(toolTipMessage);
+        tooltip.setStyle("-fx-text-fill: black; -fx-background-color: gold; -fx-font-size: 12px;");
+        Tooltip.install(node, tooltip);
     }
 }
