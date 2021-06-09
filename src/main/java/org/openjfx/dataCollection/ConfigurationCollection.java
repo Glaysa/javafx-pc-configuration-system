@@ -5,6 +5,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.openjfx.dataModels.PCComponents;
@@ -12,6 +13,8 @@ import org.openjfx.dataModels.PCConfigurations;
 import org.openjfx.dataValidator.ConfigurationValidator;
 import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.Indicators;
+import org.openjfx.guiUtilities.popupDialogs.PopupForComponents;
+
 import java.util.ArrayList;
 
 /** This class is responsible of all methods related to the configuration tableview in the customer view */
@@ -68,20 +71,17 @@ public class ConfigurationCollection {
                         "-fx-border-width: 1px;" +
                         "-fx-border-color: #7C9885");
                 vBox.getChildren().add(wrapper);
-                wrapper.setOnMouseClicked((e) -> removeFromList(wrapper, vBox, component));
-                Indicators.showToolTip(wrapper, "Click to remove from the list");
+                wrapper.setOnMouseClicked((e) -> showSelectedComponent(component, e));
+                Indicators.showToolTip(wrapper, "Click to see component details");
             }
             totalPrice.setText(Double.toString(getTotalPrice()));
         });
     }
 
-    /** Removes component from config pc */
-    static void removeFromList(HBox wrapper, VBox vbox, PCComponents component){
-        String response = AlertDialog.showConfirmDialog(component.getComponentName() + " will be removed. Do you wish to continue?");
-        if(response.equals("Yes")) {
-            vbox.getChildren().remove(wrapper);
-            itemsObsList.remove(component);
-            AlertDialog.showSuccessDialog(component.getComponentName() + " removed!");
+    /** Shows selected component from config pc */
+    static void showSelectedComponent(PCComponents component, MouseEvent event){
+        if(event.getClickCount() == 2) {
+            PopupForComponents.showComponent(component, null, "configurationItem");
         }
     }
 

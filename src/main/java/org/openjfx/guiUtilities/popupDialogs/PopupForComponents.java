@@ -53,7 +53,7 @@ public class PopupForComponents {
     }
 
     /** Opens a popup window to show component details */
-    private static void showComponent(PCComponents componentToShow, TableView<PCComponents> tv) {
+    public static void showComponent(PCComponents componentToShow, TableView<PCComponents> tv, String condition) {
         try {
             String fileUrl = PopupUtilities.getPopupPath("popupShowComponent");
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileUrl));
@@ -65,19 +65,26 @@ public class PopupForComponents {
             // Send the component to show
             controller.setComponentToShow(componentToShow);
             // Depending on which table view we are on, different button will show up
-            switch (tv.getId()) {
-                case "configurationsSelectTableView":
-                    controller.setButtonAsSelect(componentToShow);
-                    break;
-                case "componentsTableView":
-                    controller.setButtonAsAddToCart(componentToShow);
-                    break;
-                case "componentsCartTableView":
-                    controller.setButtonAsRemoveFromCart(componentToShow);
-                    break;
-                default:
-                    controller.hideButton();
-                    break;
+            if(tv != null) {
+                switch (tv.getId()) {
+                    case "configurationsSelectTableView":
+                        controller.setButtonAsSelect(componentToShow);
+                        break;
+                    case "componentsTableView":
+                        controller.setButtonAsAddToCart(componentToShow);
+                        break;
+                    case "componentsCartTableView":
+                        controller.setButtonAsRemoveFromCart(componentToShow);
+                        break;
+                    default:
+                        controller.hideButton();
+                        break;
+                }
+            // If tv is not given, the param condition will be checked instead
+            } else {
+                if(condition.equals("configurationItem")) {
+                    controller.setButtonAsRemoveConfigItem(componentToShow);
+                }
             }
 
             // Opens the popup window
@@ -129,7 +136,7 @@ public class PopupForComponents {
                         // Component to show
                         PCComponents componentToShow = row.getItem();
                         // opens a popup window to show component details
-                        PopupForComponents.showComponent(componentToShow, tableView);
+                        PopupForComponents.showComponent(componentToShow, tableView,"");
                     }
                 }
             });

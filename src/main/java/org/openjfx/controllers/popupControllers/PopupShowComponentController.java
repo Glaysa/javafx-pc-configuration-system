@@ -11,8 +11,8 @@ import org.openjfx.guiUtilities.AlertDialog;
 import org.openjfx.guiUtilities.popupDialogs.PopupUtilities;
 
 /** This controller is used for the popup window of components when being shown. This popup is shown
- * when double clicking a tableview and is used by different tableviews. Different buttons show up depending
- * on which tableview the user has double clicked. */
+ * when double clicking a tableview or other jfx nodes. Different buttons show up depending
+ * on which tableview/node the user has double clicked. */
 
 public class PopupShowComponentController{
 
@@ -61,6 +61,15 @@ public class PopupShowComponentController{
             } catch (Exception e) {
                 AlertDialog.showWarningDialog(e.getMessage(),"");
             }
+        });
+    }
+
+    /** When viewing a component for the pc configuration, the remove button is shown */
+    public void setButtonAsRemoveConfigItem(PCComponents toRemove){
+        button.setText("Remove Component");
+        button.setOnAction((e) -> {
+            ConfigurationCollection.getItemsObsList().remove(toRemove);
+            PopupUtilities.closePopup(parentPane);
         });
     }
 
